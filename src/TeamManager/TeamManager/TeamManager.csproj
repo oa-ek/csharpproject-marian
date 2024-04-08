@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-TeamManager.Core-2edf22b9-47f2-4b04-857f-ea29ebc37003</UserSecretsId>
+    <UserSecretsId>aspnet-TeamManager-f992d362-f95c-4162-915a-fd2f73cec90c</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

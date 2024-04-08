@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using TeamManager.Core.Models;
+using TeamManager.Models;
 
-namespace TeamManager.Core.Controllers
+namespace TeamManager.Controllers
 {
     public class HomeController : Controller
     {

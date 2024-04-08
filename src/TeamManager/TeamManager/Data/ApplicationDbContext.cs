@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace TeamManager.Core.Data
+namespace TeamManager.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
