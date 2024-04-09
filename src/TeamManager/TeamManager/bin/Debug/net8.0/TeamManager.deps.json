@@ -14,7 +14,8 @@
           "Microsoft.EntityFrameworkCore.Design": "8.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.3",
           "Microsoft.EntityFrameworkCore.Tools": "8.0.3",
-          "TeamManager.Core": "1.0.0"
+          "TeamManager.Core": "1.0.0",
+          "TeamManager.Repository": "1.0.0"
         },
         "runtime": {
           "TeamManager.dll": {}
@@ -972,6 +973,14 @@
         "runtime": {
           "TeamManager.Core.dll": {}
         }
+      },
+      "TeamManager.Repository/1.0.0": {
+        "dependencies": {
+          "TeamManager.Core": "1.0.0"
+        },
+        "runtime": {
+          "TeamManager.Repository.dll": {}
+        }
       }
     }
   },
@@ -1577,6 +1586,11 @@
       "hashPath": "system.windows.extensions.6.0.0.nupkg.sha512"
     },
     "TeamManager.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TeamManager.Repository/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

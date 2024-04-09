@@ -1686,6 +1686,19 @@
         "runtime": {
           "bin/placeholder/TeamManager.Core.dll": {}
         }
+      },
+      "TeamManager.Repository/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "TeamManager.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/TeamManager.Repository.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TeamManager.Repository.dll": {}
+        }
       }
     }
   },
@@ -4560,6 +4573,11 @@
       "type": "project",
       "path": "../TeamManager.Core/TeamManager.Core.csproj",
       "msbuildProject": "../TeamManager.Core/TeamManager.Core.csproj"
+    },
+    "TeamManager.Repository/1.0.0": {
+      "type": "project",
+      "path": "../TeamManager.Repository/TeamManager.Repository.csproj",
+      "msbuildProject": "../TeamManager.Repository/TeamManager.Repository.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4570,7 +4588,8 @@
       "Microsoft.EntityFrameworkCore.Design >= 8.0.3",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.3",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.3",
-      "TeamManager.Core >= 1.0.0"
+      "TeamManager.Core >= 1.0.0",
+      "TeamManager.Repository >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -4607,6 +4626,9 @@
           "projectReferences": {
             "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager.Core\\TeamManager.Core.csproj": {
               "projectPath": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager.Core\\TeamManager.Core.csproj"
+            },
+            "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager.Repository\\TeamManager.Repository.csproj": {
+              "projectPath": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager.Repository\\TeamManager.Repository.csproj"
             }
           }
         }
