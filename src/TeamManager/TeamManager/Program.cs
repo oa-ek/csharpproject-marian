@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TeamManager.Core.Contrext;
 using TeamManager.Core.Entities;
+using TeamManager.Repository.Common;
 
 
 namespace TeamManager
@@ -12,6 +13,7 @@ namespace TeamManager
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("ProjectConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ProjectContext>(options =>
@@ -22,6 +24,7 @@ namespace TeamManager
             .AddEntityFrameworkStores<ProjectContext>().AddDefaultTokenProviders();
 
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
             var app = builder.Build();
 
