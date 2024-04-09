@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeamManager.Core.Contrext;
+using TeamManager.Core.Entities;
 
 namespace TeamManager.Repository.Common
 {
