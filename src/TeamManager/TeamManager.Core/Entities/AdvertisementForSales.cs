@@ -1,10 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TeamManager.Core.Entities
 {
@@ -27,5 +22,9 @@ namespace TeamManager.Core.Entities
         [ForeignKey(nameof(advertisementStatus))]
         public Guid? advertisementStatusId { get; set; }
         public bool IsActive { get; set; }
+
+        public string MainImage { get; set; } = $"img\\noPhoto.jpg";
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
     }
 }

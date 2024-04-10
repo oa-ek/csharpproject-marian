@@ -27,4 +27,9 @@
     <ProjectReference Include="..\TeamManager.Repository\TeamManager.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\AccountPlatform\" />
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
 </Project>

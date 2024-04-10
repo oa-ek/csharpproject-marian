@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TeamManager.Core.Entities
 {
@@ -13,5 +9,8 @@ namespace TeamManager.Core.Entities
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public virtual ICollection<User> Users { get; set; } = new HashSet<User>();
+        public string MainImage { get; set; } = $"img\\noPhoto.jpg";
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
     }
 }

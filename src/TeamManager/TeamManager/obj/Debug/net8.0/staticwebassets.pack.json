@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\noPhoto.jpg",
+      "PackagePath": "staticwebassets\\img\\noPhoto.jpg"
+    },
+    {
       "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

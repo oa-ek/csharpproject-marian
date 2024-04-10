@@ -1,0 +1,30 @@
+﻿@model List<TeamManager.Core.Entities.GameAccount>
+
+@{
+    ViewData["Title"] = "List of Game Accounts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a href="@Url.Action("Create", "GameAccount")" class="btn btn-success float-end">Add Game Account</a>
+
+<h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
+
+<div class="row">
+  @*   @foreach (var gameAccount in Model)
+    {
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@gameAccount.Name</h5>
+                    <p class="card-text">@gameAccount.Description</p>
+                    <p class="card-text">Type: @gameAccount.AccountType</p>
+                    <p class="card-text">Status: @(gameAccount.IsActive ? "Active" : "Inactive")</p>
+
+                    <a href="@Url.Action("Delete", "GameAccount", new { id = gameAccount.Id })" class="btn btn-danger">Delete</a>
+                    <a href="@Url.Action("Edit", "GameAccount", new { id = gameAccount.Id })" class="btn btn-primary">Edit</a>
+
+                </div>
+            </div>
+        </div> *@
+    }
+</div>
