@@ -1,0 +1,33 @@
+﻿@model IEnumerable<TeamManager.Core.Entities.Game>
+
+@{
+    ViewData["Title"] = "List of Games";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a href="@Url.Action("Create")" class="btn btn-success float-end">Add Game</a>
+
+<h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
+
+<div class="row">
+    @foreach (var game in Model)
+    {
+        <div class="col-md-3">
+            <div class="card mb-3">
+                @if (!string.IsNullOrEmpty(game.MainImage))
+                {
+                    <img src="@game.MainImage" class="card-img-top" alt="Game Image">
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@game.Name</h5>
+                    <p class="card-text">@game.Description</p>
+                    <p class="card-text">Price: @game.Price</p>
+                    <p class="card-text">Released Date: @game.ReleasedDate.ToShortDateString()</p>
+
+                    <a href="@Url.Action("Delete", new { id = game.Id })" class="btn btn-danger">Delete</a>
+                    <a href="@Url.Action("Edit", new { id = game.Id })" class="btn btn-primary">Edit</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

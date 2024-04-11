@@ -1,5 +1,21 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model TeamManager.Core.Entities.UserGroup
+
 @{
+    ViewData["Title"] = "Delete User Group";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>Are you sure you want to delete this user group?</h4>
+    <div>
+        <h3>@Model.Name</h3>
+        <p>@Model.Description</p>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

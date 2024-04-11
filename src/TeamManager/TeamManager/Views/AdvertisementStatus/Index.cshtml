@@ -1,0 +1,31 @@
+﻿@model List<TeamManager.Core.Entities.AdvertisementStatus>
+
+@{
+    ViewData["Title"] = "List of Advertisements Status";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a href="@Url.Action("Create", "AdvertisementStatus")" class="btn btn-success float-end">Add Advertisement Status</a>
+
+<h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var status in Model)
+        {
+            <tr>
+                <td>@status.Name</td>
+                <td>
+                    <a href="@Url.Action("Edit", "AdvertisementStatus", new { id = status.Id })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Delete", "AdvertisementStatus", new { id = status.Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

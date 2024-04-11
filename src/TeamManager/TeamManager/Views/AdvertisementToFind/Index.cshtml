@@ -19,8 +19,8 @@
                 <div class="card-body">
                     <h5 class="card-title">@advertisement.Name</h5>
                     <p class="card-text">@advertisement.Description</p>
-                    <p class="card-text">Ціна: @advertisement.Price</p>
-                    <p class="card-text">Статус: @(advertisement.IsActive ? "Active" : "Passive")</p>
+                    <p class="card-text">Price: @advertisement.Price</p>
+                    <p class="card-text">Status: @(advertisement.IsActive ? "Active" : "Passive")</p>
 
                     <a href="@Url.Action("Delete", "AdvertisementToFind", new { id = advertisement.Id })" class="btn btn-danger">Видалити</a>
                     <a href="@Url.Action("Edit", "AdvertisementToFind", new { id = advertisement.Id })" class="btn btn-primary">Редагувати</a>

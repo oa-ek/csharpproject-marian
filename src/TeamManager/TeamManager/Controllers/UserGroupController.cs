@@ -7,13 +7,17 @@ namespace TeamManager.Controllers
     public class UserGroupController : Controller
     {
         private readonly IRepository<UserGroup, Guid> _UserGroupRepository;
+        private readonly IWebHostEnvironment _environment;
+
 
         public UserGroupController(
 
-            IRepository<UserGroup, Guid> userGroupRepository
+            IRepository<UserGroup, Guid> userGroupRepository,
+            IWebHostEnvironment environment
             )
         {
             _UserGroupRepository = userGroupRepository;
+            _environment = environment;
         }
 
         // GET: Projects
@@ -32,10 +36,23 @@ namespace TeamManager.Controllers
         // POST: Projects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UserGroup userGroup)
+       public async Task<IActionResult> Create(UserGroup userGroup, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    // Save uploaded image to wwwroot/img directory
+                    var uploadsDir = Path.Combine(_environment.WebRootPath, "img");
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
+                    var filePath = Path.Combine(uploadsDir, uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(fileStream);
+                    }
+                    userGroup.MainImage = "img/" + uniqueFileName;
+                }
+
                 await _UserGroupRepository.CreateAsync(userGroup);
                 return RedirectToAction(nameof(Index));
             }
@@ -56,7 +73,7 @@ namespace TeamManager.Controllers
         // POST: Projects/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, UserGroup userGroup)
+        public async Task<IActionResult> Edit(Guid id, UserGroup userGroup, IFormFile imageFile)
         {
             if (id != userGroup.Id)
             {
@@ -67,6 +84,23 @@ namespace TeamManager.Controllers
             {
                 try
                 {
+                    if (imageFile != null && imageFile.Length > 0)
+                    {
+                        // Save the new image file
+                        var uploadsDir = Path.Combine(_environment.WebRootPath, "uploads");
+                        if (!Directory.Exists(uploadsDir))
+                        {
+                            Directory.CreateDirectory(uploadsDir);
+                        }
+                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(imageFile.FileName);
+                        var filePath = Path.Combine(uploadsDir, uniqueFileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await imageFile.CopyToAsync(fileStream);
+                        }
+                        userGroup.MainImage = "/uploads/" + uniqueFileName;
+                    }
+
                     await _UserGroupRepository.UpdateAsync(userGroup);
                 }
                 catch (Exception)
@@ -84,9 +118,10 @@ namespace TeamManager.Controllers
             }
             return View(userGroup);
         }
+    
 
-        // GET: Projects/Delete/5
-        public async Task<IActionResult> Delete(Guid id)
+    // GET: Projects/Delete/5
+    public async Task<IActionResult> Delete(Guid id)
         {
             var userGroup = await _UserGroupRepository.GetAsync(id);
             if (userGroup == null)

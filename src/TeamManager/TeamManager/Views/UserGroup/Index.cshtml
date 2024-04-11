@@ -1,5 +1,31 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<TeamManager.Core.Entities.UserGroup>
+
 @{
+    ViewData["Title"] = "List of User Groups";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<a href="@Url.Action("Create")" class="btn btn-success float-end">Add User Group</a>
+
+<h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
+
+<div class="row">
+    @foreach (var userGroup in Model)
+    {
+        <div class="col-md-3">
+            <div class="card mb-3">
+                @if (!string.IsNullOrEmpty(userGroup.MainImage))
+                {
+                    <img src="@userGroup.MainImage" class="card-img-top" alt="User Group Image">
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@userGroup.Name</h5>
+                    <p class="card-text">@userGroup.Description</p>
+
+                    <a href="@Url.Action("Delete", new { id = userGroup.Id })" class="btn btn-danger">Delete</a>
+                    <a href="@Url.Action("Edit", new { id = userGroup.Id })" class="btn btn-primary">Edit</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using TeamManager.Core.Entities;
 using TeamManager.Repository.Common;
 
@@ -7,41 +8,55 @@ namespace TeamManager.Controllers
     public class AdvertisementForSalesController : Controller
     {
         private readonly IRepository<AdvertisementForSales, Guid> _advertisementForSalesRepository;
+        private readonly IWebHostEnvironment _environment;
 
         public AdvertisementForSalesController(
-            IRepository<AdvertisementForSales, Guid> advertisementForSalesRepository
-            )
+            IRepository<AdvertisementForSales, Guid> advertisementForSalesRepository,
+            IWebHostEnvironment environment)
         {
             _advertisementForSalesRepository = advertisementForSalesRepository;
+            _environment = environment;
         }
 
-        // GET: Projects
+        // GET: AdvertisementForSales
         public async Task<IActionResult> Index()
         {
-            var advertisementForSales = await _advertisementForSalesRepository.GetAllAsync();
-            return View(advertisementForSales);
+            var advertisementsForSales = await _advertisementForSalesRepository.GetAllAsync();
+            return View(advertisementsForSales);
         }
 
-        // GET: Projects/Create
+        // GET: AdvertisementForSales/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Projects/Create
+        // POST: AdvertisementForSales/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AdvertisementForSales advertisementForSales)
+        public async Task<IActionResult> Create(AdvertisementForSales advertisementForSales, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    var uploadsDir = Path.Combine(_environment.WebRootPath, "img");
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
+                    var filePath = Path.Combine(uploadsDir, uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(fileStream);
+                    }
+                    advertisementForSales.MainImage = "img/" + uniqueFileName;
+                }
+
                 await _advertisementForSalesRepository.CreateAsync(advertisementForSales);
                 return RedirectToAction(nameof(Index));
             }
             return View(advertisementForSales);
         }
 
-        // GET: Projects/Edit/5
+        // GET: AdvertisementForSales/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
             var advertisementForSales = await _advertisementForSalesRepository.GetAsync(id);
@@ -52,10 +67,10 @@ namespace TeamManager.Controllers
             return View(advertisementForSales);
         }
 
-        // POST: Projects/Edit/5
+        // POST: AdvertisementForSales/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, AdvertisementForSales advertisementForSales)
+        public async Task<IActionResult> Edit(Guid id, AdvertisementForSales advertisementForSales, IFormFile imageFile)
         {
             if (id != advertisementForSales.Id)
             {
@@ -66,6 +81,18 @@ namespace TeamManager.Controllers
             {
                 try
                 {
+                    if (imageFile != null && imageFile.Length > 0)
+                    {
+                        var uploadsDir = Path.Combine(_environment.WebRootPath, "img");
+                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
+                        var filePath = Path.Combine(uploadsDir, uniqueFileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await imageFile.CopyToAsync(fileStream);
+                        }
+                        advertisementForSales.MainImage = "img/" + uniqueFileName;
+                    }
+
                     await _advertisementForSalesRepository.UpdateAsync(advertisementForSales);
                 }
                 catch (Exception)
@@ -84,7 +111,7 @@ namespace TeamManager.Controllers
             return View(advertisementForSales);
         }
 
-        // GET: Projects/Delete/5
+        // GET: AdvertisementForSales/Delete/5
         public async Task<IActionResult> Delete(Guid id)
         {
             var advertisementForSales = await _advertisementForSalesRepository.GetAsync(id);
@@ -95,7 +122,7 @@ namespace TeamManager.Controllers
             return View(advertisementForSales);
         }
 
-        // POST: Projects/Delete/5
+        // POST: AdvertisementForSales/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

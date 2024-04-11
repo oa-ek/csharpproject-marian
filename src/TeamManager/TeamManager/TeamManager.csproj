@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\AccountPlatform\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 

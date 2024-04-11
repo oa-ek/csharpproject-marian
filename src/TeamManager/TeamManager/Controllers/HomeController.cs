@@ -8,16 +8,13 @@ namespace TeamManager.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        //private readonly IRepository<Project, Guid> repository;
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            //this.repository = repository;
         }
 
         public IActionResult Index()
         {
-            //return View(repository.GetAllAsync());
             return View();
         }
 

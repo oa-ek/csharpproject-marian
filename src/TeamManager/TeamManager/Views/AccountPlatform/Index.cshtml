@@ -1,0 +1,31 @@
+﻿@model List<TeamManager.Core.Entities.AccountPlatform>
+
+@{
+    ViewData["Title"] = "List of Account Platforms";  
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+<a href="@Url.Action("Create", "AccountPlatform")" class="btn btn-success float-end">Add Account Platform</a>  
+
+<h2 class="mt-3 mb-3">@ViewData["Title"]</h2>  
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var platform in Model) 
+        {
+            <tr>
+                <td>@platform.Name</td>  
+                <td>
+                    <a href="@Url.Action("Edit", "AccountPlatform", new { id = platform.Id })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Delete", "AccountPlatform", new { id = platform.Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
