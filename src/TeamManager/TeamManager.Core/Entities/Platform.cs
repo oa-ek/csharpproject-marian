@@ -2,7 +2,7 @@
 
 namespace TeamManager.Core.Entities
 {
-    public class AccountPlatform: IEntity<Guid>
+    public class Platform: IEntity<Guid>
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }

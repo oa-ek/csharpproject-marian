@@ -14,5 +14,9 @@ namespace TeamManager.Core.Entities
         public string MainImage { get; set; } = $"img\\noPhoto.jpg";
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
+        public virtual ICollection<Platform> Platforms { get; set; } = new HashSet<Platform>();
+        public virtual ICollection<Genre> Genres { get; set; } = new HashSet<Genre>();
+        public virtual ICollection<Developer> Developers { get; set; } = new HashSet<Developer>();
+        public virtual ICollection<Language> Languages { get; set; } = new HashSet<Language>();
     }
 }

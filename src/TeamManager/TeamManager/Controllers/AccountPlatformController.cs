@@ -6,9 +6,9 @@ namespace TeamManager.Controllers
 {
     public class AccountPlatformController : Controller
     {
-        private readonly IRepository<AccountPlatform, Guid> _accountPlatformRepository;
+        private readonly IRepository<Platform, Guid> _accountPlatformRepository;
         public AccountPlatformController(
-            IRepository<AccountPlatform, Guid> accountPlatformRepository
+            IRepository<Platform, Guid> accountPlatformRepository
             )
         {
             _accountPlatformRepository = accountPlatformRepository;
@@ -30,7 +30,7 @@ namespace TeamManager.Controllers
         // POST: Projects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AccountPlatform accountPlatform)
+        public async Task<IActionResult> Create(Platform accountPlatform)
         {
             if (ModelState.IsValid)
             {
@@ -54,7 +54,7 @@ namespace TeamManager.Controllers
         // POST: Projects/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, AccountPlatform accountPlatform)
+        public async Task<IActionResult> Edit(Guid id, Platform accountPlatform)
         {
             if (id != accountPlatform.Id)
             {

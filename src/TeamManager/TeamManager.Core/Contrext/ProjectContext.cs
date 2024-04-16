@@ -11,15 +11,19 @@ namespace TeamManager.Core.Contrext
         public ProjectContext(DbContextOptions<ProjectContext> options)
             : base(options)
         { }
-        public DbSet<AccountPlatform> AccountPlatforms => Set<AccountPlatform>();
+        public DbSet<Platform> Platforms => Set<Platform>();
         public DbSet<AdvertisementForSales> AdvertisementsForSales => Set<AdvertisementForSales>();
-        public DbSet<AdvertisementStatus> advertisementStatuses => Set<AdvertisementStatus>();
+        public DbSet<AdvertisementStatus> AdvertisementStatuses => Set<AdvertisementStatus>();
         public DbSet<AdvertisementToFind> AdvertisementsToFind => Set<AdvertisementToFind>();
         public DbSet<Game> Games => Set<Game>();
         public DbSet<GameAccount> UserAccounts => Set<GameAccount>();
         public DbSet<UserGroup> UserGroups => Set<UserGroup>();
+        public DbSet<Genre> Genres => Set<Genre>();
+        public DbSet<Developer> Developers => Set<Developer>();
+        public DbSet<Language> Languages => Set<Language>();
+
 
     }
-       
-    
+
+
 }
