@@ -17,10 +17,28 @@ namespace TeamManager.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AdvertisementToFindGame", b =>
+                {
+                    b.Property<Guid>("AdvertisementsToFindId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GamesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AdvertisementsToFindId", "GamesId");
+
+                    b.HasIndex("GamesId");
+
+                    b.ToTable("AdvertisementToFindGame");
+                });
 
             modelBuilder.Entity("DeveloperGame", b =>
                 {
@@ -80,6 +98,21 @@ namespace TeamManager.Core.Migrations
                     b.HasIndex("LanguagesId");
 
                     b.ToTable("GameLanguage");
+                });
+
+            modelBuilder.Entity("GamePlatform", b =>
+                {
+                    b.Property<Guid>("GamesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PlatformsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("GamesId", "PlatformsId");
+
+                    b.HasIndex("PlatformsId");
+
+                    b.ToTable("GamePlatform");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -415,16 +448,11 @@ namespace TeamManager.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GameId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameId");
 
                     b.ToTable("Platforms");
                 });
@@ -533,6 +561,21 @@ namespace TeamManager.Core.Migrations
                     b.ToTable("UserUserGroup");
                 });
 
+            modelBuilder.Entity("AdvertisementToFindGame", b =>
+                {
+                    b.HasOne("TeamManager.Core.Entities.AdvertisementToFind", null)
+                        .WithMany()
+                        .HasForeignKey("AdvertisementsToFindId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TeamManager.Core.Entities.Game", null)
+                        .WithMany()
+                        .HasForeignKey("GamesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DeveloperGame", b =>
                 {
                     b.HasOne("TeamManager.Core.Entities.Developer", null)
@@ -589,6 +632,21 @@ namespace TeamManager.Core.Migrations
                     b.HasOne("TeamManager.Core.Entities.Language", null)
                         .WithMany()
                         .HasForeignKey("LanguagesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GamePlatform", b =>
+                {
+                    b.HasOne("TeamManager.Core.Entities.Game", null)
+                        .WithMany()
+                        .HasForeignKey("GamesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TeamManager.Core.Entities.Platform", null)
+                        .WithMany()
+                        .HasForeignKey("PlatformsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -689,13 +747,6 @@ namespace TeamManager.Core.Migrations
                     b.Navigation("accountPlatform");
                 });
 
-            modelBuilder.Entity("TeamManager.Core.Entities.Platform", b =>
-                {
-                    b.HasOne("TeamManager.Core.Entities.Game", null)
-                        .WithMany("Platforms")
-                        .HasForeignKey("GameId");
-                });
-
             modelBuilder.Entity("UserUserGroup", b =>
                 {
                     b.HasOne("TeamManager.Core.Entities.UserGroup", null)
@@ -714,11 +765,6 @@ namespace TeamManager.Core.Migrations
             modelBuilder.Entity("TeamManager.Core.Entities.AdvertisementStatus", b =>
                 {
                     b.Navigation("AdvertisementsForSales");
-                });
-
-            modelBuilder.Entity("TeamManager.Core.Entities.Game", b =>
-                {
-                    b.Navigation("Platforms");
                 });
 
             modelBuilder.Entity("TeamManager.Core.Entities.Platform", b =>

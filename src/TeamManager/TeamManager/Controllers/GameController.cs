@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using TeamManager.Core.Entities;
 using TeamManager.Repository.Common;
 
@@ -9,15 +7,27 @@ namespace TeamManager.Controllers
     public class GameController : Controller
     {
         private readonly IRepository<Game, Guid> _gameRepository;
+        private readonly IRepository<Platform, Guid> _platformsRepository;
+        private readonly IRepository<Genre, Guid> _genresRepository;
+        private readonly IRepository<Language, Guid> _languagesRepository;
+        private readonly IRepository<Developer, Guid> _developersRepository;
         private readonly IWebHostEnvironment _environment;
 
         public GameController(
             IRepository<Game, Guid> gameRepository,
+            IRepository<Platform, Guid> platformsRepository,
+            IRepository<Genre, Guid> genresRepository,
+            IRepository<Language, Guid> languagesRepository,
+            IRepository<Developer, Guid> developersRepository,
             IWebHostEnvironment environment
             )
         {
             _gameRepository = gameRepository;
             _environment = environment;
+            _platformsRepository = platformsRepository;
+            _genresRepository = genresRepository;
+            _languagesRepository = languagesRepository;
+            _developersRepository = developersRepository;
         }
 
         // GET: Projects
@@ -28,22 +38,24 @@ namespace TeamManager.Controllers
         }
 
         // GET: Projects/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
-            return View();
-
+            ViewBag.Platforms = (await _platformsRepository.GetAllAsync()).ToList();
+            ViewBag.Genres = (await _genresRepository.GetAllAsync()).ToList();
+            ViewBag.Languages = (await _languagesRepository.GetAllAsync()).ToList();
+            ViewBag.Developers = (await _developersRepository.GetAllAsync()).ToList();
+            return View(new Game());
         }
 
         // POST: Projects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Game Game, IFormFile imageFile)
+        public async Task<IActionResult> Create(Game game, IFormFile imageFile, string[] Platforms, string[] Genres, string[] Languages, string[] Developers)
         {
             if (ModelState.IsValid)
             {
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    // Save uploaded image to wwwroot/img directory
                     var uploadsDir = Path.Combine(_environment.WebRootPath, "img");
                     var uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
                     var filePath = Path.Combine(uploadsDir, uniqueFileName);
@@ -51,13 +63,67 @@ namespace TeamManager.Controllers
                     {
                         await imageFile.CopyToAsync(fileStream);
                     }
-                    Game.MainImage = "img/" + uniqueFileName;
+                    game.MainImage = "img/" + uniqueFileName;
                 }
 
-                await _gameRepository.CreateAsync(Game);
+                foreach (var platformId in Platforms)
+                {
+                    if (!string.IsNullOrEmpty(platformId))
+                    {
+                        var platform = await _platformsRepository.GetAsync(Guid.Parse(platformId));
+                        if (platform != null)
+                        {
+                            game.Platforms.Add(platform);
+                        }
+                    }
+                }
+
+                foreach (var genreId in Genres)
+                {
+                    if (!string.IsNullOrEmpty(genreId))
+                    {
+                        var genre = await _genresRepository.GetAsync(Guid.Parse(genreId));
+                        if (genre != null)
+                        {
+                            game.Genres.Add(genre);
+                        }
+                    }
+                }
+
+                foreach (var languageId in Languages)
+                {
+                    if (!string.IsNullOrEmpty(languageId))
+                    {
+                        var language = await _languagesRepository.GetAsync(Guid.Parse(languageId));
+                        if (language != null)
+                        {
+                            game.Languages.Add(language);
+                        }
+                    }
+                }
+
+                foreach (var developerId in Developers)
+                {
+                    if (!string.IsNullOrEmpty(developerId))
+                    {
+                        var developer = await _developersRepository.GetAsync(Guid.Parse(developerId));
+                        if (developer != null)
+                        {
+                            game.Developers.Add(developer);
+                        }
+                    }
+                }
+
+                await _gameRepository.CreateAsync(game);
                 return RedirectToAction(nameof(Index));
             }
-            return View(Game);
+
+            ViewBag.Platforms = await _platformsRepository.GetAllAsync();
+            ViewBag.Genres = await _genresRepository.GetAllAsync();
+            ViewBag.Languages = await _languagesRepository.GetAllAsync();
+            ViewBag.Developers = await _developersRepository.GetAllAsync();
+
+            return View(game);
         }
 
         // GET: Projects/Edit/5
@@ -74,7 +140,7 @@ namespace TeamManager.Controllers
         // POST: Projects/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, Game game, IFormFile imageFile)
+        public async Task<IActionResult> Edit(Guid id, Game game, IFormFile imageFile, string[] Platforms, string[] Genres, string[] Languages, string[] Developers)
         {
             if (id != game.Id)
             {
@@ -87,38 +153,96 @@ namespace TeamManager.Controllers
                 {
                     if (imageFile != null && imageFile.Length > 0)
                     {
-                        // Save the new image file
-                        var uploadsDir = Path.Combine(_environment.WebRootPath, "uploads");
-                        if (!Directory.Exists(uploadsDir))
-                        {
-                            Directory.CreateDirectory(uploadsDir);
-                        }
-                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(imageFile.FileName);
+                        var uploadsDir = Path.Combine(_environment.WebRootPath, "img");
+                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
                         var filePath = Path.Combine(uploadsDir, uniqueFileName);
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
                             await imageFile.CopyToAsync(fileStream);
                         }
-                        game.MainImage = "/uploads/" + uniqueFileName;
+                        game.MainImage = "img/" + uniqueFileName;
                     }
 
-                    await _gameRepository.UpdateAsync(game);
-                }
-                catch (Exception)
-                {
-                    if (!AdvertisementExists(game.Id))
+                    var gameToUpdate = await _gameRepository.GetAsync(id);
+                    if (gameToUpdate == null)
                     {
                         return NotFound();
                     }
-                    else
+
+                    gameToUpdate.Name = game.Name;
+                    gameToUpdate.Description = game.Description;
+                    gameToUpdate.Price = game.Price;
+                    gameToUpdate.ReleasedDate = game.ReleasedDate;
+
+                    gameToUpdate.Platforms.Clear();
+                    foreach (var platformId in Platforms)
                     {
-                        throw;
+                        if (!string.IsNullOrEmpty(platformId))
+                        {
+                            var platform = await _platformsRepository.GetAsync(Guid.Parse(platformId));
+                            if (platform != null)
+                            {
+                                gameToUpdate.Platforms.Add(platform);
+                            }
+                        }
                     }
+
+                    gameToUpdate.Genres.Clear();
+                    foreach (var genreId in Genres)
+                    {
+                        if (!string.IsNullOrEmpty(genreId))
+                        {
+                            var genre = await _genresRepository.GetAsync(Guid.Parse(genreId));
+                            if (genre != null)
+                            {
+                                gameToUpdate.Genres.Add(genre);
+                            }
+                        }
+                    }
+
+                    gameToUpdate.Languages.Clear();
+                    foreach (var languageId in Languages)
+                    {
+                        if (!string.IsNullOrEmpty(languageId))
+                        {
+                            var language = await _languagesRepository.GetAsync(Guid.Parse(languageId));
+                            if (language != null)
+                            {
+                                gameToUpdate.Languages.Add(language);
+                            }
+                        }
+                    }
+
+                    gameToUpdate.Developers.Clear();
+                    foreach (var developerId in Developers)
+                    {
+                        if (!string.IsNullOrEmpty(developerId))
+                        {
+                            var developer = await _developersRepository.GetAsync(Guid.Parse(developerId));
+                            if (developer != null)
+                            {
+                                gameToUpdate.Developers.Add(developer);
+                            }
+                        }
+                    }
+
+                    await _gameRepository.UpdateAsync(gameToUpdate);
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+                catch (Exception)
+                {
+                    throw;
+                }
             }
+
+            ViewBag.Platforms = await _platformsRepository.GetAllAsync();
+            ViewBag.Genres = await _genresRepository.GetAllAsync();
+            ViewBag.Languages = await _languagesRepository.GetAllAsync();
+            ViewBag.Developers = await _developersRepository.GetAllAsync();
+
             return View(game);
         }
+
 
         // GET: Projects/Delete/5
         public async Task<IActionResult> Delete(Guid id)
@@ -140,7 +264,7 @@ namespace TeamManager.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AdvertisementExists(Guid id)
+        private bool GameExists(Guid id)
         {
             return true;
         }

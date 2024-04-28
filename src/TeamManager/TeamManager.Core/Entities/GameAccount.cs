@@ -6,12 +6,12 @@ namespace TeamManager.Core.Entities
     public class GameAccount : IEntity<Guid>
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public User? User { get; set; }
+        public virtual User? User { get; set; }
 
         [ForeignKey(nameof(User))]
         public Guid? userId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public Platform accountPlatform { get; set; }
+        public virtual Platform accountPlatform { get; set; }
 
         [ForeignKey(nameof(accountPlatform))]
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TeamManager.Core.Entities
 {
-    public class Developer
+    public class Developer : IEntity<Guid>
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }

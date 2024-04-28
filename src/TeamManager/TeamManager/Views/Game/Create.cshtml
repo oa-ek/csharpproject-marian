@@ -1,8 +1,16 @@
-﻿@model TeamManager.Core.Entities.Game
+﻿@using TeamManager.Core.Entities
+@model TeamManager.Core.Entities.Game
 
 @{
     ViewData["Title"] = "Create Game";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    List<Developer>? developers = ViewBag.Developers as List<Developer>;
+    List<Genre>? genres = ViewBag.Genres as List<Genre>;
+    List<Language>? languages = ViewBag.Languages as List<Language>;
+    List<Platform>? platforms = ViewBag.Platforms as List<Platform>;
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -33,11 +41,76 @@
         <input type="file" name="imageFile" class="form-control-file" />
         <span asp-validation-for="MainImage" class="text-danger"></span>
     </div>
+
+    <div class="mb-3">
+        <label for="platforms">Select Platforms:</label>
+        @Html.DisplayNameFor(model => model.Platforms)
+
+        <select id="platforms" class="form-select" name="Platforms" multiple>
+    
+                @foreach (var platform in platforms)
+                {
+                    var selected = Model.Platforms.Any(x => x.Name == platform.Name) ? true : false;
+
+                    <!option value="@platform.Id" @(selected ? "selected" : "")>@platform.Name</!option>
+                }
+            
+        </select>
+    </div>
+
+    <div class="mb-3">
+        @Html.DisplayNameFor(model => model.Genres)
+
+        <select id="genres" class="form-select" name="Genres" multiple>
+            @foreach (var genre in genres)
+            {
+                var selected = Model.Genres.Any(x => x.Name == genre.Name) ? true : false;
+                <!option value="@genre.Id" @(selected ? "selected" : "")>@genre.Name</!option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+    @Html.DisplayNameFor(model => model.Developers)
+
+    <select id="developers" class="form-select" name="Developers" multiple>
+            @foreach (var developer in developers)
+            {
+                var selected = Model.Developers.Any(x => x.Name == developer.Name) ? true : false;
+                <!option value="@developer.Id" @(selected ? "selected" : "")>@developer.Name</!option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        @Html.DisplayNameFor(model => model.Languages)
+
+        <select id="languages" class="form-select" name="Languages" multiple>
+            @foreach (var language in languages)
+            {
+                var selected = Model.Languages.Any(x => x.Name == language.Name) ? true : false;
+                <!option value="@language.Id" @(selected ? "selected" : "")>@language.Name</!option>
+            }
+        </select>
+    </div>
+
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
 
-<script>
-    function updatePriceValue(value) {
-        document.getElementById('priceValue').textContent = value;
-    }
-</script>
+@section Scripts
+{
+   
+    <script>
+        $(function () {
+            $("#platforms").select2();
+            $("#genres").select2();
+            $("#languages").select2();
+            $("#developers").select2();
+        });
+
+        function updatePriceValue(value) {
+            document.getElementById('priceValue').textContent = value;
+        }
+    </script>
+}
+

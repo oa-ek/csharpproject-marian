@@ -1,9 +1,13 @@
-﻿@model AdvertisementToFind
-﻿@using TeamManager.Core.Entities;
+﻿@using TeamManager.Core.Entities
+@model TeamManager.Core.Entities.AdvertisementToFind
 
 @{
-    ViewData["Title"] = "Edit Advertisement";
+    ViewData["Title"] = "Edit AdvertisementToFind";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    List<Game> games = ViewBag.Games as List<Game>;
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -24,8 +28,8 @@
     </div>
 
     <div class="form-group">
-        <label>Price: <span id="priceValue">0</span></label>
-        <input type="range" id="priceRange" name="Price" min="0" max="1000000" step="10" value="0" class="form-range" oninput="updatePriceValue(this.value)">
+        <label>Price: <span id="priceValue">@Model.Price</span></label>
+        <input type="range" id="priceRange" name="Price" min="0" max="1000000" step="10" value="@Model.Price" class="form-range" oninput="updatePriceValue(this.value)">
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
 
@@ -38,12 +42,33 @@
         <span asp-validation-for="IsActive" class="text-danger"></span>
     </div>
 
+    @if (games != null)
+    {
+        <div class="mb-3">
+            <label for="games">Select Games:</label>
+            <select id="games" class="form-select" name="Games" multiple>
+                @foreach (var game in games)
+                {
+                    var selected = Model.Games.Any(x => x.Name == game.Name) ? "selected" : "";
+                    <!option value="@game.Id" @selected>@game.Name</!option>
+                }
+            </select>
+        </div>
+    }
+
     <button type="submit" class="btn btn-primary">Save</button>
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
 
-<script>
-    function updatePriceValue(value) {
-        document.getElementById('priceValue').textContent = value;
-    }
-</script>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#games").select2();
+        });
+
+        function updatePriceValue(value) {
+            document.getElementById('priceValue').textContent = value;
+        }
+    </script>
+}

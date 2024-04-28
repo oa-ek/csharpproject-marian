@@ -149,3 +149,6 @@ D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\bin\Debug\net8.0\Team
 D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\bin\Debug\net8.0\TeamManager.Core.pdb
 D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\bin\Debug\net8.0\TeamManager.Repository.dll
 D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\bin\Debug\net8.0\TeamManager.Repository.pdb
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\bin\Debug\net8.0\libman.json
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\bin\Debug\net8.0\Castle.Core.dll
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Proxies.dll

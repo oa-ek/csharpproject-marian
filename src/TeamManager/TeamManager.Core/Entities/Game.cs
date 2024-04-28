@@ -18,5 +18,8 @@ namespace TeamManager.Core.Entities
         public virtual ICollection<Genre> Genres { get; set; } = new HashSet<Genre>();
         public virtual ICollection<Developer> Developers { get; set; } = new HashSet<Developer>();
         public virtual ICollection<Language> Languages { get; set; } = new HashSet<Language>();
+        public virtual ICollection<AdvertisementToFind> AdvertisementsToFind { get; set; } = new HashSet<AdvertisementToFind>();
+
+
     }
 }

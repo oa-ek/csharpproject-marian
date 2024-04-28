@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using TeamManager.Core.Entities;
 using TeamManager.Repository.Common;
 
@@ -7,14 +8,16 @@ namespace TeamManager.Controllers
     public class AdvertisementToFindController : Controller
     {
         private readonly IRepository<AdvertisementToFind, Guid> _advertisementToFindRepository;
+        private readonly IRepository<Game, Guid> _gameRepository;
 
         public AdvertisementToFindController(
 
-            IRepository<AdvertisementToFind, Guid> advertisementToFindRepository
+            IRepository<AdvertisementToFind, Guid> advertisementToFindRepository,
+            IRepository<Game, Guid> gameRepository
             )
         {
             _advertisementToFindRepository = advertisementToFindRepository;
-
+            _gameRepository = gameRepository;
         }
 
         // GET: Projects
@@ -25,18 +28,31 @@ namespace TeamManager.Controllers
         }
 
         // GET: Projects/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
-            return View();
+            ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
+
+            return View(new AdvertisementToFind());
         }
 
         // POST: Projects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AdvertisementToFind advertisementToFind)
+        public async Task<IActionResult> Create(AdvertisementToFind advertisementToFind, string[] Games)
         {
             if (ModelState.IsValid)
             {
+                foreach (var gameId in Games)
+                {
+                    if (!string.IsNullOrEmpty(gameId))
+                    {
+                        var game = await _gameRepository.GetAsync(Guid.Parse(gameId));
+                        if (game != null)
+                        {
+                            advertisementToFind.Games.Add(game);
+                        }
+                    }
+                }
                 await _advertisementToFindRepository.CreateAsync(advertisementToFind);
                 return RedirectToAction(nameof(Index));
             }
@@ -51,13 +67,16 @@ namespace TeamManager.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList(); // Додайте цей рядок для передачі списку ігор у представлення
+
             return View(advertisementToFind);
         }
 
         // POST: Projects/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, AdvertisementToFind advertisementToFind)
+        public async Task<IActionResult> Edit(Guid id, AdvertisementToFind advertisementToFind, string[] Games)
         {
             if (id != advertisementToFind.Id)
             {
@@ -68,7 +87,33 @@ namespace TeamManager.Controllers
             {
                 try
                 {
-                    await _advertisementToFindRepository.UpdateAsync(advertisementToFind);
+                    var advertisementToUpdate = await _advertisementToFindRepository.GetAsync(id);
+                    if (advertisementToUpdate == null)
+                    {
+                        return NotFound();
+                    }
+
+                    advertisementToUpdate.Name = advertisementToFind.Name;
+                    advertisementToUpdate.Description = advertisementToFind.Description;
+                    advertisementToUpdate.Price = advertisementToFind.Price;
+                    advertisementToUpdate.IsActive = advertisementToFind.IsActive;
+
+                    advertisementToUpdate.Games.Clear();
+                    foreach (var gameId in Games)
+                    {
+                        if (!string.IsNullOrEmpty(gameId))
+                        {
+                            var game = await _gameRepository.GetAsync(Guid.Parse(gameId));
+                            if (game != null)
+                            {
+                                advertisementToUpdate.Games.Add(game);
+                            }
+                        }
+                    }
+
+                    await _advertisementToFindRepository.UpdateAsync(advertisementToUpdate);
+
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (Exception)
                 {
@@ -81,10 +126,11 @@ namespace TeamManager.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
+            ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList(); // Передати список ігор у вигляд, якщо є помилки в ModelState
             return View(advertisementToFind);
         }
+
 
         // GET: Projects/Delete/5
         public async Task<IActionResult> Delete(Guid id)

@@ -9,13 +9,16 @@ namespace TeamManager.Controllers
     {
         private readonly IRepository<AdvertisementForSales, Guid> _advertisementForSalesRepository;
         private readonly IWebHostEnvironment _environment;
+        private readonly IRepository<GameAccount, Guid> _gameAccountRepository;
 
         public AdvertisementForSalesController(
             IRepository<AdvertisementForSales, Guid> advertisementForSalesRepository,
+            IRepository<GameAccount, Guid> gameAccountRepository,
             IWebHostEnvironment environment)
         {
             _advertisementForSalesRepository = advertisementForSalesRepository;
             _environment = environment;
+            _gameAccountRepository = gameAccountRepository;
         }
 
         // GET: AdvertisementForSales
@@ -26,15 +29,16 @@ namespace TeamManager.Controllers
         }
 
         // GET: AdvertisementForSales/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
-            return View();
+            ViewBag.AdForSales = (await _advertisementForSalesRepository.GetAllAsync()).ToList();
+            return View(new AdvertisementForSales());
         }
 
         // POST: AdvertisementForSales/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AdvertisementForSales advertisementForSales, IFormFile imageFile)
+        public async Task<IActionResult> Create(AdvertisementForSales advertisementForSales, IFormFile imageFile, string accountForSaleId)
         {
             if (ModelState.IsValid)
             {
@@ -48,6 +52,14 @@ namespace TeamManager.Controllers
                         await imageFile.CopyToAsync(fileStream);
                     }
                     advertisementForSales.MainImage = "img/" + uniqueFileName;
+                }
+                if (!string.IsNullOrEmpty(accountForSaleId))
+                {
+                    var advertisementForSale = await _advertisementForSalesRepository.GetAsync(Guid.Parse(accountForSaleId));
+                    if (advertisementForSale != null)
+                    {
+                        advertisementForSales.gameAccount = advertisementForSale.gameAccount;
+                    }
                 }
 
                 await _advertisementForSalesRepository.CreateAsync(advertisementForSales);

@@ -1,8 +1,12 @@
 ﻿@model TeamManager.Core.Entities.GameAccount
 @using TeamManager.Core.Entities
+
 @{
     ViewData["Title"] = "Create Game Account";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<Game>? games = ViewBag.Games as List<Game>;
+    List<Platform>? platforms = ViewBag.Platforms as List<Platform>;
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -15,21 +19,41 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="accountPlatform"></label>
+        <label asp-for="accountPlatformId">Select Account Platform</label>
         <select asp-for="accountPlatformId" class="form-control">
             <option value="">Select Account Platform</option>
-            @foreach (var platform in ViewBag.Platforms)
+            @foreach (var platform in platforms)
             {
-                <option value="@platform.Id">@platform.Name</option>
+                <!option value="@platform.Id">@platform.Name</!option>
             }
         </select>
-        <span asp-validation-for="accountPlatformId" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="MainImage">Upload Image</label>
+        <label asp-for="ImageFile">Upload Image</label>
         <input type="file" name="ImageFile" class="form-control-file" />
         <span asp-validation-for="ImageFile" class="text-danger"></span>
     </div>
+
+    <div class="mb-3">
+        <label for="games">Select Games:</label>
+
+        <select id="games" class="form-select" name="Games" multiple>
+            @foreach (var game in games)
+            {
+                var selected = Model.Games.Any(x => x.Name == game.Name) ? true : false;
+                <!option value="@game.Id" @(selected ? "selected" : "")>@game.Name</!option>
+            }
+        </select>
+    </div>
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#games").select2();
+        });
+    </script>
+}

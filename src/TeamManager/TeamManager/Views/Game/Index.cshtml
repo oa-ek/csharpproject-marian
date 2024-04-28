@@ -1,33 +1,82 @@
-﻿@model IEnumerable<TeamManager.Core.Entities.Game>
+﻿@using TeamManager.Core.Entities
+
+@model List<TeamManager.Core.Entities.Game>
 
 @{
     ViewData["Title"] = "List of Games";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<a href="@Url.Action("Create")" class="btn btn-success float-end">Add Game</a>
+@{
+    List<Developer>? developers = ViewBag.Developers as List<Developer>;
+    List<Genre>? genres = ViewBag.Genres as List<Genre>;
+    List<Language>? languages = ViewBag.Languages as List<Language>;
+    List<Platform>? platforms = ViewBag.Platforms as List<Platform>;
+}
+
+<a href="@Url.Action("Create", "Game")" class="btn btn-success float-end">Add Game</a>
 
 <h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
 
 <div class="row">
     @foreach (var game in Model)
     {
-        <div class="col-md-3">
-            <div class="card mb-3">
-                @if (!string.IsNullOrEmpty(game.MainImage))
-                {
-                    <img src="@game.MainImage" class="card-img-top" alt="Game Image">
-                }
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <img src="@game.MainImage" class="card-img-top" alt="Game Image">
                 <div class="card-body">
                     <h5 class="card-title">@game.Name</h5>
                     <p class="card-text">@game.Description</p>
-                    <p class="card-text">Price: @game.Price</p>
-                    <p class="card-text">Released Date: @game.ReleasedDate.ToShortDateString()</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Price: @game.Price</li>
+                    <li class="list-group-item">Released Date: @game.ReleasedDate.ToString("yyyy-MM-dd")</li>
+                    <li class="list-group-item">
+                        Platforms:
+                        <ul>
+                                @foreach (var platform in game.Platforms){
+                                            
+                                   
+                                    <li>@platform.Name</li>
+                                }
+                        </ul>
+                    </li>
+                    <li class="list-group-item">
+                        Genres:
+                        <ul>
+                                @foreach (var genre in game.Genres)
+                                {
+                                    <li>@genre.Name</li>
+                                }
+                        </ul>
+                    </li>
+                    <li class="list-group-item">
+                        Developers:
+                        <ul>
 
-                    <a href="@Url.Action("Delete", new { id = game.Id })" class="btn btn-danger">Delete</a>
-                    <a href="@Url.Action("Edit", new { id = game.Id })" class="btn btn-primary">Edit</a>
+                                @foreach (var developer in game.Developers)
+                                {
+                                    <li>@developer.Name</li>
+                                }
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item">
+                        Languages:
+                        <ul>
+                                @foreach (var language in game.Languages)
+                                {
+                                    <li>@language.Name</li>
+                                }
+                        </ul>
+                    </li>
+                </ul>
+                <div class="card-body">
+                    <a href="@Url.Action("Edit", "Game", new { id = game.Id })" class="card-link btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Delete", "Game", new { id = game.Id })" class="card-link btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>
     }
 </div>
+

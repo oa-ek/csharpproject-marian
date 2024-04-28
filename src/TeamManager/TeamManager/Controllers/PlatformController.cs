@@ -4,20 +4,20 @@ using TeamManager.Repository.Common;
 
 namespace TeamManager.Controllers
 {
-    public class AccountPlatformController : Controller
+    public class PlatformController : Controller
     {
-        private readonly IRepository<Platform, Guid> _accountPlatformRepository;
-        public AccountPlatformController(
-            IRepository<Platform, Guid> accountPlatformRepository
+        private readonly IRepository<Platform, Guid> _platformRepository;
+        public PlatformController(
+            IRepository<Platform, Guid> platformRepository
             )
         {
-            _accountPlatformRepository = accountPlatformRepository;
+            _platformRepository = platformRepository;
         }
 
         // GET: Projects
         public async Task<IActionResult> Index()
         {
-            var accountPlatform = await _accountPlatformRepository.GetAllAsync();
+            var accountPlatform = await _platformRepository.GetAllAsync();
             return View(accountPlatform);
         }
 
@@ -34,7 +34,7 @@ namespace TeamManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _accountPlatformRepository.CreateAsync(accountPlatform);
+                await _platformRepository.CreateAsync(accountPlatform);
                 return RedirectToAction(nameof(Index));
             }
             return View(accountPlatform);
@@ -43,7 +43,7 @@ namespace TeamManager.Controllers
         // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
-            var accountPlatform = await _accountPlatformRepository.GetAsync(id);
+            var accountPlatform = await _platformRepository.GetAsync(id);
             if (accountPlatform == null)
             {
                 return NotFound();
@@ -65,7 +65,7 @@ namespace TeamManager.Controllers
             {
                 try
                 {
-                    await _accountPlatformRepository.UpdateAsync(accountPlatform);
+                    await _platformRepository.UpdateAsync(accountPlatform);
                 }
                 catch (Exception)
                 {
@@ -86,7 +86,7 @@ namespace TeamManager.Controllers
         // GET: Projects/Delete/5
         public async Task<IActionResult> Delete(Guid id)
         {
-            var accountPlatform = await _accountPlatformRepository.GetAsync(id);
+            var accountPlatform = await _platformRepository.GetAsync(id);
             if (accountPlatform == null)
             {
                 return NotFound();
@@ -99,7 +99,7 @@ namespace TeamManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            await _accountPlatformRepository.DeleteAsync(id);
+            await _platformRepository.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 

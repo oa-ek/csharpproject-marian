@@ -1,4 +1,16 @@
-﻿@model TeamManager.Core.Entities.AdvertisementToFind
+﻿@using TeamManager.Core.Entities
+@model TeamManager.Core.Entities.AdvertisementToFind
+
+@{
+    ViewData["Title"] = "Create AdvertisementToFind";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    List<Game>? games = ViewBag.Games as List<Game>;
+}
+
+<h2>@ViewData["Title"]</h2>
 
 <form asp-action="Create" method="post">
     <div class="form-group">
@@ -21,11 +33,35 @@
             <input asp-for="IsActive" type="checkbox" /> Is Active
         </label>
     </div>
+
+    <div class="mb-3">
+        <label for="games">Select Games:</label>
+        @Html.DisplayNameFor(model => model.Games)
+
+        <select id="games" class="form-select" name="Games" multiple>
+    
+                @foreach (var game in games)
+                {
+                    var selected = Model.Games.Any(x => x.Name == game.Name) ? true : false;
+
+                    <!option value="@game.Id" @(selected ? "selected" : "")>@game.Name</!option>
+                }
+            
+        </select>
+    </div>
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
 
-<script>
-    function updatePriceValue(value) {
-        document.getElementById('priceValue').textContent = value;
-    }
-</script>
+@section Scripts
+{
+
+    <script>
+        $(function () {
+            $("#games").select2();
+        });
+
+        function updatePriceValue(value) {
+            document.getElementById('priceValue').textContent = value;
+        }
+    </script>
+}

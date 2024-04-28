@@ -1,8 +1,16 @@
-﻿@model TeamManager.Core.Entities.Game
+﻿@using TeamManager.Core.Entities
+@model TeamManager.Core.Entities.Game
 
 @{
     ViewData["Title"] = "Edit Game";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    List<Developer>? developers = ViewBag.Developers as List<Developer>;
+    List<Genre>? genres = ViewBag.Genres as List<Genre>;
+    List<Language>? languages = ViewBag.Languages as List<Language>;
+    List<Platform>? platforms = ViewBag.Platforms as List<Platform>;
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -21,8 +29,8 @@
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label>Price: <span id="priceValue">0</span></label>
-        <input type="range" id="priceRange" name="Price" min="0" max="1000000" step="10" value="0" class="form-range" oninput="updatePriceValue(this.value)">
+        <label>Price: <span id="priceValue">@(Model.Price)</span></label>
+        <input type="range" id="priceRange" name="Price" min="0" max="1000000" step="10" value="@Model.Price" class="form-range" oninput="updatePriceValue(this.value)">
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -35,11 +43,83 @@
         <input type="file" name="ImageFile" class="form-control-file" />
         <span asp-validation-for="ImageFile" class="text-danger"></span>
     </div>
+
+    <!-- Platforms selection -->
+    @if (platforms != null)
+    {
+        <div class="form-group">
+            <label>Select Platforms:</label>
+            <select id="platforms" class="form-select" name="Platforms" multiple>
+                @foreach (var platform in platforms)
+                {
+                    var selected = Model.Platforms.Any(x => x.Name == platform.Name) ? "selected" : "";
+
+                    <!option value="@platform.Id" @selected>@platform.Name</!option>
+                }
+            </select>
+        </div>
+    }
+    <!-- Genres selection -->
+    @if (genres != null)
+    {
+        <div class="form-group">
+            <label>Select Genres:</label>
+            <select asp-for="Genres" class="form-control" multiple>
+                @foreach (var genre in genres)
+                {
+                    var selected = Model.Genres.Any(g => g.Id == genre.Id) ? "selected" : "";
+                    <!option value="@genre.Id" @selected>@genre.Name</!option>
+                }
+            </select>
+        </div>
+    }
+
+<!-- Languages selection -->
+    @if (languages != null)
+    {
+        <div class="form-group">
+            <label>Select Languages:</label>
+            <select asp-for="Languages" class="form-control" multiple>
+                @foreach (var language in languages)
+                {
+                    var selected = Model.Languages.Any(l => l.Id == language.Id) ? "selected" : "";
+                    <!option value="@language.Id" @selected>@language.Name</!option>
+                }
+            </select>
+        </div>
+    }
+
+<!-- Developers selection -->
+    @if (developers != null)
+    {
+        <div class="form-group">
+            <label>Select Developers:</label>
+            <select asp-for="Developers" class="form-control" multiple>
+                @foreach (var developer in developers)
+                {
+                    var selected = Model.Developers.Any(d => d.Id == developer.Id) ? "selected" : "";
+                    <!option value="@developer.Id" @selected>@developer.Name</!option>
+                }
+            </select>
+        </div>
+    }
+
     <button type="submit" class="btn btn-primary">Save Changes</button>
 </form>
 
-<script>
-    function updatePriceValue(value) {
-        document.getElementById('priceValue').textContent = value;
-    }
-</script>
+@section Scripts
+{
+
+    <script>
+        $(function () {
+            $("#platforms").select2();
+            $("#genres").select2();
+            $("#languages").select2();
+            $("#developers").select2();
+        });
+
+        function updatePriceValue(value) {
+            document.getElementById('priceValue').textContent = value;
+        }
+    </script>
+}
