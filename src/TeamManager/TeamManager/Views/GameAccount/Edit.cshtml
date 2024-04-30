@@ -1,7 +1,11 @@
-﻿@model TeamManager.Core.Entities.GameAccount
+﻿@using TeamManager.Core.Entities
+@model TeamManager.Core.Entities.GameAccount
 @{
     ViewData["Title"] = "Edit Game Account";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<Game> games = ViewBag.Games as List<Game>;
+    List<Platform> platforms = ViewBag.Platforms as List<Platform>;
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -16,13 +20,37 @@
         <label asp-for="accountPlatformId" class="control-label">Select Account Platform</label>
         <select asp-for="accountPlatformId" class="form-control">
             <option value="">Select Account Platform</option>
-            @foreach (var platform in ViewBag.Platforms)
+            @foreach (var platform in platforms)
             {
                 <!option value="@platform.Id" @(Model.accountPlatformId == platform.Id ? "selected" : "")>@platform.Name</!option>
             }
         </select>
         <span asp-validation-for="accountPlatformId" class="text-danger"></span>
     </div>
+
+    @if (games != null && platforms != null)
+{
+    <div class="mb-3">
+        <label for="games">Select Games:</label>
+        <select id="games" class="form-select" name="Games" multiple>
+            @foreach (var game in games)
+            {
+                var selected = Model.Games.Any(x => x.Name == game.Name) ? "selected" : "";
+                <!option value="@game.Id" @selected>@game.Name</!option>
+            }
+        </select>
+    </div>
+}
+
     <button type="submit" class="btn btn-primary">Save</button>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </form>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#games").select2();
+        });
+    </script>
+}

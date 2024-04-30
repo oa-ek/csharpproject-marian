@@ -8,8 +8,8 @@ namespace TeamManager.Controllers
     {
         private readonly IRepository<GameAccount, Guid> _gameAccountRepository;
         private readonly IRepository<Game, Guid> _gameRepository;
-        private readonly IWebHostEnvironment _environment;
         private readonly IRepository<Platform, Guid> _platformRepository;
+        private readonly IWebHostEnvironment _environment;
 
         public GameAccountController(
             IRepository<GameAccount, Guid> gameAccountRepository,
@@ -34,7 +34,7 @@ namespace TeamManager.Controllers
         public async Task<IActionResult> CreateAsync()
         {
             ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
-            ViewBag.Platforms = (await _platformRepository.GetAllAsync()).ToList(); 
+            ViewBag.Platforms = (await _platformRepository.GetAllAsync()).ToList();
             return View(new GameAccount());
         }
 
@@ -72,6 +72,10 @@ namespace TeamManager.Controllers
                 await _gameAccountRepository.CreateAsync(gameAccount);
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.Games = await _gameRepository.GetAllAsync();
+            ViewBag.Platforms = await _platformRepository.GetAllAsync();
+
             return View(gameAccount);
         }
 
@@ -85,7 +89,7 @@ namespace TeamManager.Controllers
             }
 
             ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
-            ViewBag.Platforms = (await _platformRepository.GetAllAsync()).ToList(); 
+            ViewBag.Platforms = (await _platformRepository.GetAllAsync()).ToList();
             return View(gameAccount);
         }
 
@@ -109,8 +113,11 @@ namespace TeamManager.Controllers
                         return NotFound();
                     }
 
+                    // Оновлення властивостей моделі gameAccountToUpdate з отриманими з форми значеннями
                     gameAccountToUpdate.Name = gameAccount.Name;
                     gameAccountToUpdate.accountPlatformId = gameAccount.accountPlatformId;
+
+                    // Очистка списку ігор та додавання нових
                     gameAccountToUpdate.Games.Clear();
                     foreach (var gameId in Games)
                     {
@@ -124,6 +131,7 @@ namespace TeamManager.Controllers
                         }
                     }
 
+                    // Перевірка і завантаження зображення, якщо воно було вибрано
                     if (imageFile != null && imageFile.Length > 0)
                     {
                         var uploadsDir = Path.Combine(_environment.WebRootPath, "img");
@@ -136,11 +144,15 @@ namespace TeamManager.Controllers
                         gameAccountToUpdate.MainImage = "img/" + uniqueFileName;
                     }
 
+                    // Оновлення моделі в репозиторії
                     await _gameAccountRepository.UpdateAsync(gameAccountToUpdate);
+
+                    // Перенаправлення на дію Index після успішного оновлення
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception)
                 {
+                    // Обробка винятку у разі невдачі оновлення
                     if (!GameAccountExists(gameAccount.Id))
                     {
                         return NotFound();
@@ -151,20 +163,12 @@ namespace TeamManager.Controllers
                     }
                 }
             }
+
+            // Якщо ModelState не є валідним, повертаємо форму знову з поточними значеннями
             ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
             return View(gameAccount);
         }
 
-        // GET: GameAccounts/Delete/5
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var gameAccount = await _gameAccountRepository.GetAsync(id);
-            if (gameAccount == null)
-            {
-                return NotFound();
-            }
-            return View(gameAccount);
-        }
 
         // POST: GameAccounts/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -177,7 +181,7 @@ namespace TeamManager.Controllers
 
         private bool GameAccountExists(Guid id)
         {
-            return true; 
+            return true;
         }
     }
 }

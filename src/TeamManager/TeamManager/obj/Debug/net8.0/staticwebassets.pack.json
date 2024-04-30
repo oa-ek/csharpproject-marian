@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\02e5876e-269b-4139-83ba-d0597be970df_M_ Lineham Art.jpg",
+      "PackagePath": "staticwebassets\\img\\02e5876e-269b-4139-83ba-d0597be970df_M_ Lineham Art.jpg"
+    },
+    {
       "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\41f80294-0080-43ef-86d2-b875d2cd6239_Жарчинський.png",
       "PackagePath": "staticwebassets\\img\\41f80294-0080-43ef-86d2-b875d2cd6239_Жарчинський.png"
     },
@@ -39,6 +43,14 @@
     {
       "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\96046076-b3f0-406c-b547-b9cf21063f1f_6896e005f10f604bc3d4218ebe8598f9.jpg",
       "PackagePath": "staticwebassets\\img\\96046076-b3f0-406c-b547-b9cf21063f1f_6896e005f10f604bc3d4218ebe8598f9.jpg"
+    },
+    {
+      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\bdc6b672-dbb1-4cd3-9be2-3cca7fc5d823_7c5b665a3122f108012148b163f057a4.jpg",
+      "PackagePath": "staticwebassets\\img\\bdc6b672-dbb1-4cd3-9be2-3cca7fc5d823_7c5b665a3122f108012148b163f057a4.jpg"
+    },
+    {
+      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\be6e4cad-7875-4c1b-a296-c082f8ace45d_89195e75d31375331a381706590fb50f.jpg",
+      "PackagePath": "staticwebassets\\img\\be6e4cad-7875-4c1b-a296-c082f8ace45d_89195e75d31375331a381706590fb50f.jpg"
     },
     {
       "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\c1c3a78a-f715-4ea6-8a02-9b05a46803c3_Lab7UML.png",

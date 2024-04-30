@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TeamManager.Core.Entities;
 using TeamManager.Repository.Common;
 
@@ -8,17 +7,20 @@ namespace TeamManager.Controllers
     public class AdvertisementForSalesController : Controller
     {
         private readonly IRepository<AdvertisementForSales, Guid> _advertisementForSalesRepository;
-        private readonly IWebHostEnvironment _environment;
         private readonly IRepository<GameAccount, Guid> _gameAccountRepository;
+        private readonly IRepository<AdvertisementStatus, Guid> _advertisementStatusRepository;
+        private readonly IWebHostEnvironment _environment;
 
         public AdvertisementForSalesController(
             IRepository<AdvertisementForSales, Guid> advertisementForSalesRepository,
             IRepository<GameAccount, Guid> gameAccountRepository,
+            IRepository<AdvertisementStatus, Guid> advertisementStatusRepository,
             IWebHostEnvironment environment)
         {
             _advertisementForSalesRepository = advertisementForSalesRepository;
-            _environment = environment;
             _gameAccountRepository = gameAccountRepository;
+            _advertisementStatusRepository = advertisementStatusRepository;
+            _environment = environment;
         }
 
         // GET: AdvertisementForSales
@@ -31,14 +33,16 @@ namespace TeamManager.Controllers
         // GET: AdvertisementForSales/Create
         public async Task<IActionResult> CreateAsync()
         {
-            ViewBag.AdForSales = (await _advertisementForSalesRepository.GetAllAsync()).ToList();
+            ViewBag.GameAccounts = (await _gameAccountRepository.GetAllAsync()).ToList();
+            ViewBag.AdvertisementStatuses = (await _advertisementStatusRepository.GetAllAsync()).ToList();
+
             return View(new AdvertisementForSales());
         }
 
         // POST: AdvertisementForSales/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AdvertisementForSales advertisementForSales, IFormFile imageFile, string accountForSaleId)
+        public async Task<IActionResult> Create(AdvertisementForSales advertisementForSales, IFormFile imageFile, string gameAccountId, string advertisementStatusId)
         {
             if (ModelState.IsValid)
             {
@@ -53,12 +57,20 @@ namespace TeamManager.Controllers
                     }
                     advertisementForSales.MainImage = "img/" + uniqueFileName;
                 }
-                if (!string.IsNullOrEmpty(accountForSaleId))
+                if (!string.IsNullOrEmpty(gameAccountId))
                 {
-                    var advertisementForSale = await _advertisementForSalesRepository.GetAsync(Guid.Parse(accountForSaleId));
-                    if (advertisementForSale != null)
+                    var gameAccount = await _gameAccountRepository.GetAsync(Guid.Parse(gameAccountId));
+                    if (gameAccount != null)
                     {
-                        advertisementForSales.gameAccount = advertisementForSale.gameAccount;
+                        advertisementForSales.gameAccount = gameAccount;
+                    }
+                }
+                if (!string.IsNullOrEmpty(advertisementStatusId))
+                {
+                    var advertisementStatus = await _advertisementStatusRepository.GetAsync(Guid.Parse(advertisementStatusId));
+                    if (advertisementStatus != null)
+                    {
+                        advertisementForSales.advertisementStatus = advertisementStatus;
                     }
                 }
 
@@ -76,13 +88,16 @@ namespace TeamManager.Controllers
             {
                 return NotFound();
             }
+            ViewBag.GameAccounts = (await _gameAccountRepository.GetAllAsync()).ToList();
+            ViewBag.AdvertisementStatuses = (await _advertisementStatusRepository.GetAllAsync()).ToList();
+
             return View(advertisementForSales);
         }
 
         // POST: AdvertisementForSales/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, AdvertisementForSales advertisementForSales, IFormFile imageFile)
+        public async Task<IActionResult> Edit(Guid id, AdvertisementForSales advertisementForSales, IFormFile imageFile, string gameAccountId, string advertisementStatusId)
         {
             if (id != advertisementForSales.Id)
             {
@@ -105,6 +120,18 @@ namespace TeamManager.Controllers
                         advertisementForSales.MainImage = "img/" + uniqueFileName;
                     }
 
+                    var gameAccount = await _gameAccountRepository.GetAsync(Guid.Parse(gameAccountId));
+                    if (gameAccount != null)
+                    {
+                        advertisementForSales.gameAccount = gameAccount;
+                    }
+
+                    var advertisementStatus = await _advertisementStatusRepository.GetAsync(Guid.Parse(advertisementStatusId));
+                    if (advertisementStatus != null)
+                    {
+                        advertisementForSales.advertisementStatus = advertisementStatus;
+                    }
+
                     await _advertisementForSalesRepository.UpdateAsync(advertisementForSales);
                 }
                 catch (Exception)
@@ -120,6 +147,9 @@ namespace TeamManager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.GameAccounts = (await _gameAccountRepository.GetAllAsync()).ToList();
+            ViewBag.AdvertisementStatuses = (await _advertisementStatusRepository.GetAllAsync()).ToList();
+
             return View(advertisementForSales);
         }
 

@@ -11,7 +11,7 @@ namespace TeamManager.Core.Entities
         [ForeignKey(nameof(User))]
         public Guid? userId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public virtual Platform accountPlatform { get; set; }
+        public virtual Platform? accountPlatform { get; set; }
 
         [ForeignKey(nameof(accountPlatform))]
 

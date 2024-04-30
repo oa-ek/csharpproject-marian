@@ -1,9 +1,14 @@
-﻿@model List<TeamManager.Core.Entities.GameAccount>
-@using TeamManager.Core.Entities
+﻿@using TeamManager.Core.Entities
+
+@model List<GameAccount>
 
 @{
     ViewData["Title"] = "List of Game Accounts";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    List<Game>? games = ViewBag.Games as List<Game>;
 }
 
 <a href="@Url.Action("Create", "GameAccount")" class="btn btn-success float-end">Add Game Account</a>

@@ -5,8 +5,8 @@
     ViewData["Title"] = "Create Game Account";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    List<Game>? games = ViewBag.Games as List<Game>;
-    List<Platform>? platforms = ViewBag.Platforms as List<Platform>;
+    List<Game> games = ViewBag.Games as List<Game>;
+    List<Platform> platforms = ViewBag.Platforms as List<Platform>;
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -24,7 +24,7 @@
             <option value="">Select Account Platform</option>
             @foreach (var platform in platforms)
             {
-                <!option value="@platform.Id">@platform.Name</!option>
+                <option value="@platform.Id">@platform.Name</option>
             }
         </select>
     </div>
@@ -37,6 +37,7 @@
 
     <div class="mb-3">
         <label for="games">Select Games:</label>
+        @Html.DisplayNameFor(model => model.Games)
 
         <select id="games" class="form-select" name="Games" multiple>
             @foreach (var game in games)
