@@ -141,6 +141,29 @@ namespace TeamManager.Core.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("45a782ae-6283-4547-a692-5c951ad8bdd5"),
+                            ConcurrencyStamp = "45a782ae-6283-4547-a692-5c951ad8bdd5",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = new Guid("61584baa-c843-4a17-a17b-468842c3639f"),
+                            ConcurrencyStamp = "61584baa-c843-4a17-a17b-468842c3639f",
+                            Name = "Finder",
+                            NormalizedName = "FINDER"
+                        },
+                        new
+                        {
+                            Id = new Guid("f30e87bc-e432-4efc-8b4c-6d6d57b5a78a"),
+                            ConcurrencyStamp = "f30e87bc-e432-4efc-8b4c-6d6d57b5a78a",
+                            Name = "Seller",
+                            NormalizedName = "SELLER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -227,6 +250,18 @@ namespace TeamManager.Core.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("3fe97f4d-88cc-4b8e-b6c8-498fcc9f6ec6"),
+                            RoleId = new Guid("45a782ae-6283-4547-a692-5c951ad8bdd5")
+                        },
+                        new
+                        {
+                            UserId = new Guid("3fe97f4d-88cc-4b8e-b6c8-498fcc9f6ec6"),
+                            RoleId = new Guid("61584baa-c843-4a17-a17b-468842c3639f")
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -307,6 +342,18 @@ namespace TeamManager.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AdvertisementStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2b7284f9-bab0-4a8e-9aa7-f592a41ea0ec"),
+                            Name = "For Rent"
+                        },
+                        new
+                        {
+                            Id = new Guid("8404f287-1749-4078-b801-b602bd195c65"),
+                            Name = "For Sale"
+                        });
                 });
 
             modelBuilder.Entity("TeamManager.Core.Entities.AdvertisementToFind", b =>
@@ -352,6 +399,58 @@ namespace TeamManager.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Developers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b59c1875-516a-4220-bd4f-0c68fea59d98"),
+                            Name = "Rockstar Games"
+                        },
+                        new
+                        {
+                            Id = new Guid("a4aa6f1b-30bf-43c0-a904-95ca2aa840be"),
+                            Name = "Ubisoft"
+                        },
+                        new
+                        {
+                            Id = new Guid("17dfbdf2-7a34-4f29-b4c2-31c0abc758ca"),
+                            Name = "Electronic Arts"
+                        },
+                        new
+                        {
+                            Id = new Guid("8a74fbaa-052f-4edc-af8d-a9ef61831421"),
+                            Name = "Square Enix"
+                        },
+                        new
+                        {
+                            Id = new Guid("7c5d2c0e-4cf5-4b22-8cf5-afe1bf10e06b"),
+                            Name = "CD Projekt"
+                        },
+                        new
+                        {
+                            Id = new Guid("d15165f3-0b48-4b18-a424-362c5b28bebb"),
+                            Name = "Nintendo"
+                        },
+                        new
+                        {
+                            Id = new Guid("692777b7-5721-49df-a4bd-a76a838a12aa"),
+                            Name = "Naughty Dog"
+                        },
+                        new
+                        {
+                            Id = new Guid("3096b5a9-332c-41c8-9019-b9e708b67ff8"),
+                            Name = "Valve Corporation"
+                        },
+                        new
+                        {
+                            Id = new Guid("f5ba7e89-669e-451e-8798-d31616a183a7"),
+                            Name = "Epic Games"
+                        },
+                        new
+                        {
+                            Id = new Guid("0aeb4110-11ef-4209-9233-00d2be47f0fb"),
+                            Name = "Activision Blizzard"
+                        });
                 });
 
             modelBuilder.Entity("TeamManager.Core.Entities.Game", b =>
@@ -409,7 +508,7 @@ namespace TeamManager.Core.Migrations
 
                     b.HasIndex("userId");
 
-                    b.ToTable("UserAccounts");
+                    b.ToTable("GameAccounts");
                 });
 
             modelBuilder.Entity("TeamManager.Core.Entities.Genre", b =>
@@ -425,6 +524,58 @@ namespace TeamManager.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f1fa89be-9de6-4ca6-8c76-d27908ead91a"),
+                            Name = "Action"
+                        },
+                        new
+                        {
+                            Id = new Guid("8a43adeb-e76e-484c-8271-491594ec91d7"),
+                            Name = "Adventure"
+                        },
+                        new
+                        {
+                            Id = new Guid("90bbe734-c8ed-45d4-bbf4-eb35508beea5"),
+                            Name = "Role-playing"
+                        },
+                        new
+                        {
+                            Id = new Guid("6cdd6ddf-e1c2-421f-af51-3295d239810e"),
+                            Name = "Strategy"
+                        },
+                        new
+                        {
+                            Id = new Guid("8c27a891-99ec-4be6-98ca-e6fdf0879c04"),
+                            Name = "Simulation"
+                        },
+                        new
+                        {
+                            Id = new Guid("47cc8e7f-cc3a-4eed-bd68-6a7362adfe35"),
+                            Name = "Sports"
+                        },
+                        new
+                        {
+                            Id = new Guid("9d291527-a4c1-4589-81cf-e15adb4403d8"),
+                            Name = "Racing"
+                        },
+                        new
+                        {
+                            Id = new Guid("c92de8f1-2d15-4957-92eb-9647a53421ff"),
+                            Name = "Puzzle"
+                        },
+                        new
+                        {
+                            Id = new Guid("f8922d6f-42e0-4815-82dd-d8b15ab2a918"),
+                            Name = "Fighting"
+                        },
+                        new
+                        {
+                            Id = new Guid("614e6460-7b22-40c2-a554-f6963673ab87"),
+                            Name = "Horror"
+                        });
                 });
 
             modelBuilder.Entity("TeamManager.Core.Entities.Language", b =>
@@ -440,6 +591,58 @@ namespace TeamManager.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Languages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("5e72adf2-87c9-4d3a-bc7b-5dbfb6305b5b"),
+                            Name = "English"
+                        },
+                        new
+                        {
+                            Id = new Guid("e7804577-4848-42aa-a08f-281b29eb4ecd"),
+                            Name = "Spanish"
+                        },
+                        new
+                        {
+                            Id = new Guid("b38677d1-40c7-40e3-8c8a-c4e3c27aeade"),
+                            Name = "French"
+                        },
+                        new
+                        {
+                            Id = new Guid("47089659-0fa2-4a1e-814c-5d0e33473d29"),
+                            Name = "German"
+                        },
+                        new
+                        {
+                            Id = new Guid("cf853273-e363-4f86-adb6-7a6fcd20f9e6"),
+                            Name = "Japanese"
+                        },
+                        new
+                        {
+                            Id = new Guid("3f0a10f0-d896-4c37-a7c0-9354fc95e769"),
+                            Name = "Chinese"
+                        },
+                        new
+                        {
+                            Id = new Guid("581204b4-232c-4547-8077-815c8c45e80c"),
+                            Name = "Russian"
+                        },
+                        new
+                        {
+                            Id = new Guid("a9b428f9-5db6-4c7d-8ebe-b1e0a5a98cb2"),
+                            Name = "Italian"
+                        },
+                        new
+                        {
+                            Id = new Guid("183d8e83-a40f-4b6f-a8f3-088b8622fa5a"),
+                            Name = "Korean"
+                        },
+                        new
+                        {
+                            Id = new Guid("6b4d3fe1-896d-4ac1-9c66-00c5dbf380c3"),
+                            Name = "Portuguese"
+                        });
                 });
 
             modelBuilder.Entity("TeamManager.Core.Entities.Platform", b =>
@@ -455,6 +658,58 @@ namespace TeamManager.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Platforms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("1316f9a3-ca53-4d81-ad2d-d390db9abe67"),
+                            Name = "PlayStation 5"
+                        },
+                        new
+                        {
+                            Id = new Guid("c5e95b96-666e-46f2-bb2f-5f9319b0fdbc"),
+                            Name = "Xbox Series X"
+                        },
+                        new
+                        {
+                            Id = new Guid("b0c36c00-85bf-4ba3-8451-e9d155e35adc"),
+                            Name = "Nintendo Switch"
+                        },
+                        new
+                        {
+                            Id = new Guid("7d6f0b84-ca67-4dc8-8e70-5934cc835761"),
+                            Name = "PC"
+                        },
+                        new
+                        {
+                            Id = new Guid("464a73e8-b515-4769-b3ee-5098c836d8a9"),
+                            Name = "PlayStation 4"
+                        },
+                        new
+                        {
+                            Id = new Guid("c38efca0-1f12-423d-8c55-3774d44f15cc"),
+                            Name = "Xbox One"
+                        },
+                        new
+                        {
+                            Id = new Guid("b96ad9f2-c1e1-444d-9cbe-b93e3b0e53be"),
+                            Name = "Mobile"
+                        },
+                        new
+                        {
+                            Id = new Guid("a65c4f91-140b-44ea-a705-5022259297c8"),
+                            Name = "Google Stadia"
+                        },
+                        new
+                        {
+                            Id = new Guid("1865fe98-2950-4c53-84de-1d82f73eeeb6"),
+                            Name = "VR"
+                        },
+                        new
+                        {
+                            Id = new Guid("9b9c7101-68d2-4320-b36f-92690b740b8e"),
+                            Name = "Mac"
+                        });
                 });
 
             modelBuilder.Entity("TeamManager.Core.Entities.User", b =>
@@ -476,6 +731,9 @@ namespace TeamManager.Core.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -521,6 +779,42 @@ namespace TeamManager.Core.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("3fe97f4d-88cc-4b8e-b6c8-498fcc9f6ec6"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b8bb4f1d-0d8e-42dc-9258-1b5bfa326ae6",
+                            Email = "admin@projects.kleban.page",
+                            EmailConfirmed = true,
+                            FullName = "Юрій Клебан",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@PROJECTS.KLEBAN.PAGE",
+                            NormalizedUserName = "ADMIN@PROJECTS.KLEBAN.PAGE",
+                            PasswordHash = "AQAAAAIAAYagAAAAEH+DfgErrY7vva+bcXnpYva61k+J5Fv0n1vbxJ1Jln20YmGpXUgJHsMVNECkXMuoeg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1a2f5060-8cf8-44f6-a5b6-bf576d19bfa0",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@projects.kleban.page"
+                        },
+                        new
+                        {
+                            Id = new Guid("1aa9cc56-12e3-44b8-b2b3-aefb4792a04e"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a6b29972-ef56-4f8c-8cd9-f5808f6dedbc",
+                            Email = "teacher@projects.kleban.page",
+                            EmailConfirmed = true,
+                            FullName = "Іван Петренко",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TEACHER@PROJECTS.KLEBAN.PAGE",
+                            NormalizedUserName = "TEACHER@PROJECTS.KLEBAN.PAGE",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBiM08lRLuQ0Sgdk70jo6YSubQL3hLySWVI4ai7aFfLyBxiaCi4DP+/wiFy5GQSF0Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e06dbaac-8ce9-45cf-9ff8-11c9a8ae9aef",
+                            TwoFactorEnabled = false,
+                            UserName = "teacher@projects.kleban.page"
+                        });
                 });
 
             modelBuilder.Entity("TeamManager.Core.Entities.UserGroup", b =>

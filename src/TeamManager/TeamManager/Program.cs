@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TeamManager.Core.Contrext;
 using TeamManager.Core.Entities;
-using TeamManager.Repository.Common;
+using TeamManager.Repository;
 
 
 namespace TeamManager
@@ -20,11 +20,19 @@ namespace TeamManager
                 options.UseLazyLoadingProxies().UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<ProjectContext>().AddDefaultTokenProviders();
+            builder.Services.AddDefaultIdentity<User>(
+             options => {
+                 options.SignIn.RequireConfirmedAccount = false;
+                 options.Password.RequireDigit = false;
+                 options.Password.RequireLowercase = false;
+                 options.Password.RequireUppercase = false;
+                 options.Password.RequireNonAlphanumeric = false;
+                 options.Password.RequiredLength = 5;
+             }).AddRoles<IdentityRole<Guid>>()
+             .AddEntityFrameworkStores<ProjectContext>();
 
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+            builder.Services.AddRepositories();
 
             var app = builder.Build();
 
