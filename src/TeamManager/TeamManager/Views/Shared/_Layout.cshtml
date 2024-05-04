@@ -28,38 +28,66 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li> *@
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AdvertisementToFind" asp-action="Index">AdToFind</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AdvertisementForSales" asp-action="Index">AdForSale</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="UserGroup" asp-action="Index">Groups</a>
-                        </li>
+                        @if (User.IsInRole("Admin") && (User.IsInRole("Seller")))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AdvertisementForSales" asp-action="Index">AdsForSale</a>
+                            </li>
+                        }
 
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="AccountPlatform" asp-action="Index">AccountPlatform</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AdvertisementStatus" asp-action="Index">AdvertisementsStatus</a>
                             </li>
                         }
-                        
+
+                        @if (User.IsInRole("Admin") && (User.IsInRole("Finder")))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AdvertisementToFind" asp-action="Index">AdsToFind</a>
+                            </li>
+                        }
+
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="AdvertisementStatus" asp-action="Index">AdvertisementStatus</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Developer" asp-action="Index">Developers</a>
                             </li>
                         }
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Game" asp-action="Index">Game</a>
-                        </li>
-
-                         @if (User.IsInRole("Seller"))
+                        @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="GameAccount" asp-action="Index">GameAccount</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Game" asp-action="Index">Games</a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Seller") && User.IsInRole("Finder") && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="GameAccount" asp-action="Index">GameAccounts</a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Genre" asp-action="Index">Genres</a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Language" asp-action="Index">Languages</a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Platform" asp-action="Index">Platforms</a>
                             </li>
                         }
 
@@ -67,6 +95,13 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Користувачі</a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin") && User.IsInRole("Finder"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="UserGroup" asp-action="Index">Groups</a>
                             </li>
                         }
                     </ul>
