@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using TeamManager.Core.Entities;
 
 namespace TeamManager.Core.Contrext
@@ -13,7 +10,7 @@ namespace TeamManager.Core.Contrext
         {
             var (adminRoleId, finderRoleId, sellerRoleId) = SeedRoles(builder);
 
-            var teacherId = SeedTeachers(builder, finderRoleId, adminRoleId);
+            var usersId = SeedUsers(builder, finderRoleId, adminRoleId);
 
             SeedGenres(builder);
             SeedLanguages(builder);
@@ -56,54 +53,55 @@ namespace TeamManager.Core.Contrext
             return (adminRoleId, finderRoleId, sellerRoleId);
         }
 
-        private static Guid SeedTeachers(ModelBuilder builder, Guid finderRoleId, Guid adminRoleId)
+        private static Guid SeedUsers(ModelBuilder builder, Guid finderRoleId, Guid adminRoleId)
         {
+            var adminId = Guid.NewGuid();
             var finderId = Guid.NewGuid();
 
-            var finder1 = new User
+            var admin = new User
             {
-                Id = finderId,
-                UserName = "admin@projects.kleban.page",
+                Id = adminId,
+                UserName = "admin@example",
                 EmailConfirmed = true,
-                NormalizedUserName = "admin@projects.kleban.page".ToUpper(),
-                Email = "admin@projects.kleban.page",
-                NormalizedEmail = "admin@projects.kleban.page".ToUpper(),
+                NormalizedUserName = "admin@example".ToUpper(),
+                Email = "admin@example",
+                NormalizedEmail = "admin@example".ToUpper(),
                 SecurityStamp = Guid.NewGuid().ToString(),
-                FullName = "Юрій Клебан"
+                FullName = "Jack Rell"
             };
 
-            var finder2 = new User
+            var finder = new User
             {
-                Id = Guid.NewGuid(),
-                UserName = "teacher@projects.kleban.page",
+                Id = finderId,
+                UserName = "finder@example",
                 EmailConfirmed = true,
-                NormalizedUserName = "teacher@projects.kleban.page".ToUpper(),
-                Email = "teacher@projects.kleban.page",
-                NormalizedEmail = "teacher@projects.kleban.page".ToUpper(),
+                NormalizedUserName = "finder@example".ToUpper(),
+                Email = "finder@example",
+                NormalizedEmail = "finder@example".ToUpper(),
                 SecurityStamp = Guid.NewGuid().ToString(),
-                FullName = "Іван Петренко"
+                FullName = "Tom Morgan"
             };
 
             PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
-            finder1.PasswordHash = passwordHasher.HashPassword(finder1, "Pr0#et1n1t");
-            finder2.PasswordHash = passwordHasher.HashPassword(finder2, "Pr0#et1n1t");
+            finder.PasswordHash = passwordHasher.HashPassword(finder, "Pr0#et1n1t");
+            admin.PasswordHash = passwordHasher.HashPassword(admin, "Pr0#et1n1t");
 
             builder.Entity<User>()
-                .HasData(finder1, finder2);
+                .HasData(admin,finder);
 
             builder.Entity<IdentityUserRole<Guid>>()
-              .HasData(
-                  new IdentityUserRole<Guid>
-                  {
-                      RoleId = adminRoleId,
-                      UserId = finderId
-                  },
-                  new IdentityUserRole<Guid>
-                  {
-                      RoleId = finderRoleId,
-                      UserId = finderId
-                  }
-              );
+            .HasData(
+                new IdentityUserRole<Guid>
+                {
+                    RoleId = adminRoleId,
+                    UserId = adminId
+                },
+                new IdentityUserRole<Guid>
+                {
+                    RoleId = finderRoleId,
+                    UserId = finderId
+                }
+            );
 
             return finderId;
         }
