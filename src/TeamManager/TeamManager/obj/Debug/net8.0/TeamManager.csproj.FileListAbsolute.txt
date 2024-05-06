@@ -131,7 +131,6 @@ D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\obj\Debug\net8.0\stat
 D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.TeamManager.props
 D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.TeamManager.props
 D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\obj\Debug\net8.0\staticwebassets.pack.json
-D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\obj\Debug\net8.0\scopedcss\bundle\TeamManager.styles.css
 D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\obj\Debug\net8.0\scopedcss\projectbundle\TeamManager.bundle.scp.css
 D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\obj\Debug\net8.0\TeamMana.C8B0E7D5.Up2Date
@@ -293,3 +292,5 @@ D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\bin\Debug\net8.0\runt
 D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\bin\Debug\net8.0\runtimes\win-arm64\native\e_sqlite3.dll
 D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\bin\Debug\net8.0\runtimes\win-x64\native\e_sqlite3.dll
 D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\bin\Debug\net8.0\runtimes\win-x86\native\e_sqlite3.dll
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout__.cshtml.rz.scp.css
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
