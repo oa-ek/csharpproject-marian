@@ -14,7 +14,7 @@
     List<Platform>? platforms = ViewBag.Platforms as List<Platform>;
 }
 
-<a href="@Url.Action("Create", "Game")" class="btn btn-success float-end">Add Game</a>
+<a href="@Url.Action("Create", "Game")" class="btn btn-primary float-end">Add Game</a>
 
 <h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
 
@@ -72,7 +72,7 @@
                     </li>
                 </ul>
                 <div class="card-body">
-                    <a href="@Url.Action("Edit", "Game", new { id = game.Id })" class="card-link btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Edit", "Game", new { id = game.Id })" class="card-link btn btn-warning">Edit</a>
                     <a href="@Url.Action("Delete", "Game", new { id = game.Id })" class="card-link btn btn-danger">Delete</a>
                 </div>
             </div>

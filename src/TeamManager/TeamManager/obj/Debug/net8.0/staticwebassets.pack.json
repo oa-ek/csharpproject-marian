@@ -1001,6 +1001,10 @@
       "PackagePath": "staticwebassets\\theme\\assets\\images\\carousel\\banner_9.jpg"
     },
     {
+      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\theme\\assets\\images\\creative-teamwork-logo-unique-color-transitions-leadership-corporate-logo-template-vector_396016-3198.jpg",
+      "PackagePath": "staticwebassets\\theme\\assets\\images\\creative-teamwork-logo-unique-color-transitions-leadership-corporate-logo-template-vector_396016-3198.jpg"
+    },
+    {
       "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\theme\\assets\\images\\dashboard\\Group126@2x.png",
       "PackagePath": "staticwebassets\\theme\\assets\\images\\dashboard\\Group126@2x.png"
     },
@@ -1319,14 +1323,6 @@
     {
       "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\theme\\assets\\images\\lightbox\\thumb-v-y-2.jpg",
       "PackagePath": "staticwebassets\\theme\\assets\\images\\lightbox\\thumb-v-y-2.jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\theme\\assets\\images\\logo-mini.svg",
-      "PackagePath": "staticwebassets\\theme\\assets\\images\\logo-mini.svg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\theme\\assets\\images\\logo.svg",
-      "PackagePath": "staticwebassets\\theme\\assets\\images\\logo.svg"
     },
     {
       "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\theme\\assets\\images\\samples\\1280x768\\1.jpg",
