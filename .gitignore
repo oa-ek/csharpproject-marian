@@ -6,3 +6,4 @@
 /src/TeamManager/TeamManager.Repository/obj
 /src/TeamManager/TeamManager.Repository/bin
  
+src/TeamManager/TeamManager/bin/Debug/net8.0/TeamManager.Core.pdb

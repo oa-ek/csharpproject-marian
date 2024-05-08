@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TeamManager.Core.Entities
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<div class="">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar p-0 fixed-top d-flex flex-row">
+        <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="/theme/assets/images/logo-mini.svg" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="mdi mdi-menu"></span>
+            </button>
+            <ul class="navbar-nav w-100">
+                <li class="nav-item w-100">
+                    <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
+                        <input type="text" class="form-control" placeholder="Search...">
+                    </form>
+                </li>
+            </ul>
+
+  
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button type="submit" class="nav-link btn btn-link text-white">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            }
+            else
+            {
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                    </li>
+                </ul>
+            }
+
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <span class="mdi mdi-format-line-spacing"></span>
+            </button>
+        </div>
+    </nav>
+</div>
