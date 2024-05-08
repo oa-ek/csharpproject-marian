@@ -13,68 +13,8 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\02e5876e-269b-4139-83ba-d0597be970df_M_ Lineham Art.jpg",
-      "PackagePath": "staticwebassets\\img\\02e5876e-269b-4139-83ba-d0597be970df_M_ Lineham Art.jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\41f80294-0080-43ef-86d2-b875d2cd6239_Жарчинський.png",
-      "PackagePath": "staticwebassets\\img\\41f80294-0080-43ef-86d2-b875d2cd6239_Жарчинський.png"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\4adf3290-ea2c-462a-82f5-d5aaccd8050d_istockphoto-1337920042-612x612.jpg",
-      "PackagePath": "staticwebassets\\img\\4adf3290-ea2c-462a-82f5-d5aaccd8050d_istockphoto-1337920042-612x612.jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\55193afc-c21b-4502-a04c-d535abd82eae_sculptingDog.jpg",
-      "PackagePath": "staticwebassets\\img\\55193afc-c21b-4502-a04c-d535abd82eae_sculptingDog.jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\66744fd5-5c20-4f5d-b52a-174941e3dd59_header (1).jpg",
-      "PackagePath": "staticwebassets\\img\\66744fd5-5c20-4f5d-b52a-174941e3dd59_header (1).jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\6c6beb90-45ce-4538-93f1-59be29894dfb_header.jpg",
-      "PackagePath": "staticwebassets\\img\\6c6beb90-45ce-4538-93f1-59be29894dfb_header.jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\7c6b118e-bc55-4b3f-b8ee-b21d7bdec92d_Lab7UML.png",
-      "PackagePath": "staticwebassets\\img\\7c6b118e-bc55-4b3f-b8ee-b21d7bdec92d_Lab7UML.png"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\96046076-b3f0-406c-b547-b9cf21063f1f_6896e005f10f604bc3d4218ebe8598f9.jpg",
-      "PackagePath": "staticwebassets\\img\\96046076-b3f0-406c-b547-b9cf21063f1f_6896e005f10f604bc3d4218ebe8598f9.jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\bdc6b672-dbb1-4cd3-9be2-3cca7fc5d823_7c5b665a3122f108012148b163f057a4.jpg",
-      "PackagePath": "staticwebassets\\img\\bdc6b672-dbb1-4cd3-9be2-3cca7fc5d823_7c5b665a3122f108012148b163f057a4.jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\be6e4cad-7875-4c1b-a296-c082f8ace45d_89195e75d31375331a381706590fb50f.jpg",
-      "PackagePath": "staticwebassets\\img\\be6e4cad-7875-4c1b-a296-c082f8ace45d_89195e75d31375331a381706590fb50f.jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\c1c3a78a-f715-4ea6-8a02-9b05a46803c3_Lab7UML.png",
-      "PackagePath": "staticwebassets\\img\\c1c3a78a-f715-4ea6-8a02-9b05a46803c3_Lab7UML.png"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\dc2db58b-d213-432c-9931-2027d4f727ec_header (1).jpg",
-      "PackagePath": "staticwebassets\\img\\dc2db58b-d213-432c-9931-2027d4f727ec_header (1).jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\dcfa3507-09a3-49ef-a037-51c27a0fd243_header.jpg",
-      "PackagePath": "staticwebassets\\img\\dcfa3507-09a3-49ef-a037-51c27a0fd243_header.jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\dd0ecafb-6083-40ba-862a-3b60fd9520bd_header (1).jpg",
-      "PackagePath": "staticwebassets\\img\\dd0ecafb-6083-40ba-862a-3b60fd9520bd_header (1).jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\e0184922-e852-4456-8d0f-fe809f51622a_header (1).jpg",
-      "PackagePath": "staticwebassets\\img\\e0184922-e852-4456-8d0f-fe809f51622a_header (1).jpg"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\ea7a13f4-4fa7-4118-8be2-54abc0306295_header (1).jpg",
-      "PackagePath": "staticwebassets\\img\\ea7a13f4-4fa7-4118-8be2-54abc0306295_header (1).jpg"
+      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\5bf89843-a3a5-4574-8927-f436adb2906d_Lab8UML.png",
+      "PackagePath": "staticwebassets\\img\\5bf89843-a3a5-4574-8927-f436adb2906d_Lab8UML.png"
     },
     {
       "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\img\\noPhoto.jpg",
@@ -1325,6 +1265,14 @@
       "PackagePath": "staticwebassets\\theme\\assets\\images\\lightbox\\thumb-v-y-2.jpg"
     },
     {
+      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\theme\\assets\\images\\logo-mini.svg",
+      "PackagePath": "staticwebassets\\theme\\assets\\images\\logo-mini.svg"
+    },
+    {
+      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\theme\\assets\\images\\logo.svg",
+      "PackagePath": "staticwebassets\\theme\\assets\\images\\logo.svg"
+    },
+    {
       "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\theme\\assets\\images\\samples\\1280x768\\1.jpg",
       "PackagePath": "staticwebassets\\theme\\assets\\images\\samples\\1280x768\\1.jpg"
     },
@@ -1551,10 +1499,6 @@
     {
       "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\theme\\assets\\images\\sprites\\jsgrid-icons.png",
       "PackagePath": "staticwebassets\\theme\\assets\\images\\sprites\\jsgrid-icons.png"
-    },
-    {
-      "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\theme\\assets\\images\\sprites\\logo-mini.svg",
-      "PackagePath": "staticwebassets\\theme\\assets\\images\\sprites\\logo-mini.svg"
     },
     {
       "Id": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\wwwroot\\theme\\assets\\images\\sprites\\red.png",

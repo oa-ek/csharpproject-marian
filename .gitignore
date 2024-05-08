@@ -1,4 +1,7 @@
-
+/src/TeamManager/TeamManager/obj
+/src/TeamManager/TeamManager/bin
 /src/TeamManager/TeamManager.Core/obj
 /src/TeamManager/.vs
 /src/TeamManager/TeamManager.Core/bin
+/src/TeamManager/TeamManager.Repository/obj
+/src/TeamManager/TeamManager.Repository/bin
