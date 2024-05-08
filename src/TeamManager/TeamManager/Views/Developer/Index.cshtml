@@ -1,0 +1,31 @@
+﻿@model List<TeamManager.Core.Entities.Developer>
+
+@{
+    ViewData["Title"] = "List of Developers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a href="@Url.Action("Create", "Developer")" class="btn btn-primary float-end">Add Developer</a>
+
+<h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var developer in Model)
+        {
+            <tr>
+                <td>@developer.Name</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Developer", new { id = developer.Id })" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", "Developer", new { id = developer.Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
