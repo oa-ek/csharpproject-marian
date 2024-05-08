@@ -1,0 +1,16 @@
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\bin\Debug\net8.0\TeamManager.Repository.deps.json
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\bin\Debug\net8.0\TeamManager.Repository.dll
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\bin\Debug\net8.0\TeamManager.Repository.pdb
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\bin\Debug\net8.0\TeamManager.Core.dll
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\bin\Debug\net8.0\TeamManager.Core.pdb
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\obj\Debug\net8.0\TeamManager.Repository.csproj.AssemblyReference.cache
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\obj\Debug\net8.0\TeamManager.Repository.GeneratedMSBuildEditorConfig.editorconfig
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\obj\Debug\net8.0\TeamManager.Repository.AssemblyInfoInputs.cache
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\obj\Debug\net8.0\TeamManager.Repository.AssemblyInfo.cs
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\obj\Debug\net8.0\TeamManager.Repository.csproj.CoreCompileInputs.cache
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\obj\Debug\net8.0\TeamManager.Repository.sourcelink.json
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\obj\Debug\net8.0\TeamMana.FD31ECA1.Up2Date
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\obj\Debug\net8.0\TeamManager.Repository.dll
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\obj\Debug\net8.0\refint\TeamManager.Repository.dll
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\obj\Debug\net8.0\TeamManager.Repository.pdb
+D:\GitHub\csharpproject-marian\src\TeamManager\TeamManager.Repository\obj\Debug\net8.0\ref\TeamManager.Repository.dll
