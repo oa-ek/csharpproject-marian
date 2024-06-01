@@ -43,16 +43,16 @@
         </select>
         <span asp-validation-for="gameAccountId" class="text-danger"></span>
     </div>
-
     <div class="form-group">
         <label>Select Advertisement Status:</label>
-        <select name="advertisementStatusId" class="form-control">
+        <select asp-for="advertisementStatusId" class="form-control">
             <option value="">Select Advertisement Status</option>
             @foreach (var status in advertisementStatuses)
             {
                 <option value="@status.Id">@status.Name</option>
             }
         </select>
+        <span asp-validation-for="advertisementStatusId" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label>

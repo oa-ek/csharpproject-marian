@@ -28,49 +28,47 @@
                     <h5 class="card-title">@game.Name</h5>
                     <p class="card-text">@game.Description</p>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Price: @game.Price</li>
-                    <li class="list-group-item">Released Date: @game.ReleasedDate.ToString("yyyy-MM-dd")</li>
-                    <li class="list-group-item">
+                <ul class="list-group list-group-flush bg-white">
+                    <li class="list-group-item text-dark">Price: @game.Price</li>
+                    <li class="list-group-item text-dark">Released Date: @game.ReleasedDate.ToString("yyyy-MM-dd")</li>
+                    <li class="list-group-item text-dark">
                         Platforms:
-                        <ul>
-                                @foreach (var platform in game.Platforms){
-                                            
-                                   
-                                    <li>@platform.Name</li>
-                                }
+                        <ul class="list-unstyled">
+                            @foreach (var platform in game.Platforms)
+                            {
+                                <li class="text-dark">@platform.Name</li>
+                            }
                         </ul>
                     </li>
-                    <li class="list-group-item">
+                    <li class="list-group-item text-dark">
                         Genres:
-                        <ul>
-                                @foreach (var genre in game.Genres)
-                                {
-                                    <li>@genre.Name</li>
-                                }
+                        <ul class="list-unstyled">
+                            @foreach (var genre in game.Genres)
+                            {
+                                <li class="text-dark">@genre.Name</li>
+                            }
                         </ul>
                     </li>
-                    <li class="list-group-item">
+                    <li class="list-group-item text-dark">
                         Developers:
-                        <ul>
-
-                                @foreach (var developer in game.Developers)
-                                {
-                                    <li>@developer.Name</li>
-                                }
-
+                        <ul class="list-unstyled">
+                            @foreach (var developer in game.Developers)
+                            {
+                                <li class="text-dark">@developer.Name</li>
+                            }
                         </ul>
                     </li>
-                    <li class="list-group-item">
+                    <li class="list-group-item text-dark">
                         Languages:
-                        <ul>
-                                @foreach (var language in game.Languages)
-                                {
-                                    <li>@language.Name</li>
-                                }
+                        <ul class="list-unstyled">
+                            @foreach (var language in game.Languages)
+                            {
+                                <li class="text-dark">@language.Name</li>
+                            }
                         </ul>
                     </li>
                 </ul>
+
                 <div class="card-body">
                     <a href="@Url.Action("Edit", "Game", new { id = game.Id })" class="card-link btn btn-warning">Edit</a>
                     <a href="@Url.Action("Delete", "Game", new { id = game.Id })" class="card-link btn btn-danger">Delete</a>

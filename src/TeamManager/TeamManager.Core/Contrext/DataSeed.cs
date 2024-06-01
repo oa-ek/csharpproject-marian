@@ -8,9 +8,9 @@ namespace TeamManager.Core.Contrext
     {
         public static void Seed(this ModelBuilder builder)
         {
-            var (adminRoleId, finderRoleId, sellerRoleId) = SeedRoles(builder);
+            var (adminRoleId, userRoleId) = SeedRoles(builder);
 
-            var usersId = SeedUsers(builder, finderRoleId, adminRoleId);
+            var usersId = SeedUsers(builder, userRoleId, adminRoleId);
 
             SeedGenres(builder);
             SeedLanguages(builder);
@@ -19,11 +19,10 @@ namespace TeamManager.Core.Contrext
             SeedAdvertisementStatuses(builder);
         }
 
-        private static (Guid, Guid, Guid) SeedRoles(ModelBuilder builder)
+        private static (Guid, Guid) SeedRoles(ModelBuilder builder)
         {
             var adminRoleId = Guid.NewGuid();
-            var finderRoleId = Guid.NewGuid();
-            var sellerRoleId = Guid.NewGuid();
+            var userRoleId = Guid.NewGuid();
 
             builder.Entity<IdentityRole<Guid>>()
                .HasData(
@@ -36,27 +35,20 @@ namespace TeamManager.Core.Contrext
                    },
                    new IdentityRole<Guid>
                    {
-                       Id = finderRoleId,
-                       Name = "Finder",
-                       NormalizedName = "FINDER",
-                       ConcurrencyStamp = finderRoleId.ToString()
-                   },
-                   new IdentityRole<Guid>
-                   {
-                       Id = sellerRoleId,
-                       Name = "Seller",
-                       NormalizedName = "SELLER",
-                       ConcurrencyStamp = sellerRoleId.ToString()
+                       Id = userRoleId,
+                       Name = "User",
+                       NormalizedName = "USER",
+                       ConcurrencyStamp = userRoleId.ToString()
                    }
                );
 
-            return (adminRoleId, finderRoleId, sellerRoleId);
+            return (adminRoleId, userRoleId);
         }
 
-        private static Guid SeedUsers(ModelBuilder builder, Guid finderRoleId, Guid adminRoleId)
+        private static Guid SeedUsers(ModelBuilder builder, Guid userRoleId, Guid adminRoleId)
         {
             var adminId = Guid.NewGuid();
-            var finderId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
 
             var admin = new User
             {
@@ -70,24 +62,24 @@ namespace TeamManager.Core.Contrext
                 FullName = "Jack Rell"
             };
 
-            var finder = new User
+            var user = new User
             {
-                Id = finderId,
-                UserName = "finder@example",
+                Id = userId,
+                UserName = "user1@example",
                 EmailConfirmed = true,
-                NormalizedUserName = "finder@example".ToUpper(),
-                Email = "finder@example",
-                NormalizedEmail = "finder@example".ToUpper(),
+                NormalizedUserName = "user1@example".ToUpper(),
+                Email = "user1@example",
+                NormalizedEmail = "user1@example".ToUpper(),
                 SecurityStamp = Guid.NewGuid().ToString(),
                 FullName = "Tom Morgan"
             };
 
             PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
-            finder.PasswordHash = passwordHasher.HashPassword(finder, "Pr0#et1n1t");
+            user.PasswordHash = passwordHasher.HashPassword(user, "Pr0#et1n1t");
             admin.PasswordHash = passwordHasher.HashPassword(admin, "Pr0#et1n1t");
 
             builder.Entity<User>()
-                .HasData(admin,finder);
+                .HasData(admin,user);
 
             builder.Entity<IdentityUserRole<Guid>>()
             .HasData(
@@ -98,12 +90,12 @@ namespace TeamManager.Core.Contrext
                 },
                 new IdentityUserRole<Guid>
                 {
-                    RoleId = finderRoleId,
-                    UserId = finderId
+                    RoleId = userRoleId,
+                    UserId = userId
                 }
             );
 
-            return finderId;
+            return userId;
         }
 
         private static void SeedGenres(ModelBuilder builder)

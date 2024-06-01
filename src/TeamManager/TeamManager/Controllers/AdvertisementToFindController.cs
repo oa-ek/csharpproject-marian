@@ -1,47 +1,62 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using TeamManager.Core.Entities;
 using TeamManager.Repository.Common;
 
 namespace TeamManager.Controllers
 {
+    [Authorize]
     public class AdvertisementToFindController : Controller
     {
         private readonly IRepository<AdvertisementToFind, Guid> _advertisementToFindRepository;
         private readonly IRepository<Game, Guid> _gameRepository;
+        private readonly UserManager<User> _userManager;
 
         public AdvertisementToFindController(
-
             IRepository<AdvertisementToFind, Guid> advertisementToFindRepository,
-            IRepository<Game, Guid> gameRepository
-            )
+            IRepository<Game, Guid> gameRepository,
+            UserManager<User> userManager)
         {
             _advertisementToFindRepository = advertisementToFindRepository;
             _gameRepository = gameRepository;
+            _userManager = userManager;
         }
 
-        // GET: Projects
+        // GET: AdvertisementToFind
         public async Task<IActionResult> Index()
         {
             var advertisementToFind = await _advertisementToFindRepository.GetAllAsync();
+            var currentUser = await _userManager.GetUserAsync(User);
+            ViewBag.CurrentUserId = currentUser?.Id;
+
             return View(advertisementToFind);
         }
 
-        // GET: Projects/Create
+        // GET: AdvertisementToFind/Create
         public async Task<IActionResult> CreateAsync()
         {
             ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
-
             return View(new AdvertisementToFind());
         }
 
-        // POST: Projects/Create
+        // POST: AdvertisementToFind/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AdvertisementToFind advertisementToFind, string[] Games)
         {
             if (ModelState.IsValid)
             {
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser != null)
+                {
+                    advertisementToFind.User = currentUser;
+                    advertisementToFind.userId = currentUser.Id;
+                }
+
                 foreach (var gameId in Games)
                 {
                     if (!string.IsNullOrEmpty(gameId))
@@ -53,13 +68,15 @@ namespace TeamManager.Controllers
                         }
                     }
                 }
+
                 await _advertisementToFindRepository.CreateAsync(advertisementToFind);
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
             return View(advertisementToFind);
         }
 
-        // GET: Projects/Edit/5
+        // GET: AdvertisementToFind/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
             var advertisementToFind = await _advertisementToFindRepository.GetAsync(id);
@@ -68,12 +85,11 @@ namespace TeamManager.Controllers
                 return NotFound();
             }
 
-            ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList(); // Додайте цей рядок для передачі списку ігор у представлення
-
+            ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
             return View(advertisementToFind);
         }
 
-        // POST: Projects/Edit/5
+        // POST: AdvertisementToFind/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, AdvertisementToFind advertisementToFind, string[] Games)
@@ -127,12 +143,11 @@ namespace TeamManager.Controllers
                     }
                 }
             }
-            ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList(); // Передати список ігор у вигляд, якщо є помилки в ModelState
+            ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
             return View(advertisementToFind);
         }
 
-
-        // GET: Projects/Delete/5
+        // GET: AdvertisementToFind/Delete/5
         public async Task<IActionResult> Delete(Guid id)
         {
             var advertisementToFind = await _advertisementToFindRepository.GetAsync(id);
@@ -143,7 +158,7 @@ namespace TeamManager.Controllers
             return View(advertisementToFind);
         }
 
-        // POST: Projects/Delete/5
+        // POST: AdvertisementToFind/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -154,8 +169,34 @@ namespace TeamManager.Controllers
 
         private bool AdvertisementExists(Guid id)
         {
-            return true;
+            return _advertisementToFindRepository.GetAsync(id) != null;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> JoinGroup(Guid id)
+        {
+            var advertisement = await _advertisementToFindRepository.GetAsync(id);
+            if (advertisement == null)
+            {
+                return NotFound();
+            }
+
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null)
+            {
+                return Forbid();
+            }
+
+            advertisement.User?.UserGroups.Add(new UserGroup
+            {
+                Name = $"Group for {advertisement.Name}",
+                Description = $"Group created from advertisement {advertisement.Name}",
+                Users = new List<User> { currentUser }
+            });
+
+            await _advertisementToFindRepository.UpdateAsync(advertisement);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
-

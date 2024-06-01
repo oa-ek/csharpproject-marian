@@ -24,13 +24,13 @@
                     <h5 class="card-title">@account.Name</h5>
                     <p class="card-text">Platform: @(account.accountPlatform != null ? account.accountPlatform.Name : "Unknown")</p>
                     <p class="card-text">Main Image: <img src="~/@Url.Content(account.MainImage)" class="img-fluid" alt="Main Image" /></p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
+                    <ul class="list-group list-group-flush bg-white">
+                        <li class="list-group-item text-dark">
                             Games:
-                            <ul>
+                            <ul class="list-unstyled">
                                 @foreach (var game in account.Games)
                                 {
-                                    <li>@game.Name</li>
+                                    <li class="text-dark">@game.Name</li>
                                 }
                             </ul>
                         </li>

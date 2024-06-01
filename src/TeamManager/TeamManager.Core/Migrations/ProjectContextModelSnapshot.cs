@@ -145,24 +145,17 @@ namespace TeamManager.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4fa527d4-3fca-44ee-a8b0-ffd47b2fbd36"),
-                            ConcurrencyStamp = "4fa527d4-3fca-44ee-a8b0-ffd47b2fbd36",
+                            Id = new Guid("68cc050b-fc6b-4ae2-87c1-de7ec10b7716"),
+                            ConcurrencyStamp = "68cc050b-fc6b-4ae2-87c1-de7ec10b7716",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("a567e4e2-b863-4d23-be56-a42ed2bdf07b"),
-                            ConcurrencyStamp = "a567e4e2-b863-4d23-be56-a42ed2bdf07b",
-                            Name = "Finder",
-                            NormalizedName = "FINDER"
-                        },
-                        new
-                        {
-                            Id = new Guid("4d139ca3-4b26-4ab0-96ef-4a4ab1ca8a4a"),
-                            ConcurrencyStamp = "4d139ca3-4b26-4ab0-96ef-4a4ab1ca8a4a",
-                            Name = "Seller",
-                            NormalizedName = "SELLER"
+                            Id = new Guid("49451424-0919-46f4-91eb-48906087f15e"),
+                            ConcurrencyStamp = "49451424-0919-46f4-91eb-48906087f15e",
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 
@@ -254,13 +247,13 @@ namespace TeamManager.Core.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("8a26ca90-342f-46e2-8baf-6833760bd301"),
-                            RoleId = new Guid("4fa527d4-3fca-44ee-a8b0-ffd47b2fbd36")
+                            UserId = new Guid("dbef642f-e61b-498a-8b4c-16e978900806"),
+                            RoleId = new Guid("68cc050b-fc6b-4ae2-87c1-de7ec10b7716")
                         },
                         new
                         {
-                            UserId = new Guid("425c81db-c14c-42a7-a5d7-33f34e1607dd"),
-                            RoleId = new Guid("a567e4e2-b863-4d23-be56-a42ed2bdf07b")
+                            UserId = new Guid("2fc8878d-f3d4-4526-b4bc-30fc244c9bac"),
+                            RoleId = new Guid("49451424-0919-46f4-91eb-48906087f15e")
                         });
                 });
 
@@ -346,12 +339,12 @@ namespace TeamManager.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("06921c4b-0398-434d-8420-1c2eae237391"),
+                            Id = new Guid("e1e45757-bb8e-4c97-832e-531b0217572a"),
                             Name = "For Rent"
                         },
                         new
                         {
-                            Id = new Guid("129b6d7f-a9e1-4649-927d-a683dd54ca77"),
+                            Id = new Guid("99888dd7-122d-4850-a197-8acd0c34f304"),
                             Name = "For Sale"
                         });
                 });
@@ -403,52 +396,52 @@ namespace TeamManager.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a2f25ba9-3313-48cd-a18d-c1fb61bfe7a1"),
+                            Id = new Guid("e9ffa80b-92e8-4614-bed6-2a9519bf8110"),
                             Name = "Rockstar Games"
                         },
                         new
                         {
-                            Id = new Guid("35cab4c9-db5f-4d0c-8865-60035a1c7a15"),
+                            Id = new Guid("e5ba3a4d-edb6-4500-a648-2be169085308"),
                             Name = "Ubisoft"
                         },
                         new
                         {
-                            Id = new Guid("a5f5599f-3624-42e7-a900-1cda9dd23816"),
+                            Id = new Guid("d59fa275-3870-4702-8caa-3f7206db4d63"),
                             Name = "Electronic Arts"
                         },
                         new
                         {
-                            Id = new Guid("f449d784-43bb-485d-9a45-465c43799795"),
+                            Id = new Guid("da2fcea1-6f75-4dc3-b946-eefc7e5547d2"),
                             Name = "Square Enix"
                         },
                         new
                         {
-                            Id = new Guid("f21a16ef-e111-424b-b251-d8bd45176395"),
+                            Id = new Guid("d7f64d42-b167-4dc1-8155-6f08c6b4a3b1"),
                             Name = "CD Projekt"
                         },
                         new
                         {
-                            Id = new Guid("bdb52390-e687-4ff5-ba79-c78fdd9b5ee9"),
+                            Id = new Guid("cb214254-635c-45bc-859d-101f25ce5116"),
                             Name = "Nintendo"
                         },
                         new
                         {
-                            Id = new Guid("c5b9e6d6-6fa6-42d3-a23d-beb1c6a4faf1"),
+                            Id = new Guid("92c2bf4c-324c-4182-8d46-c1f47b200e97"),
                             Name = "Naughty Dog"
                         },
                         new
                         {
-                            Id = new Guid("cc3b2959-68c7-49b2-8ecf-39ec1e04ee04"),
+                            Id = new Guid("8c216926-adc3-4808-89aa-f7626eafcc53"),
                             Name = "Valve Corporation"
                         },
                         new
                         {
-                            Id = new Guid("37832d8a-b075-4ca5-970f-9d4f476b99c5"),
+                            Id = new Guid("89a033a9-24c3-4e52-aa3e-665835be0011"),
                             Name = "Epic Games"
                         },
                         new
                         {
-                            Id = new Guid("409fb89d-6c25-4990-ac5f-a2fae80ee8d0"),
+                            Id = new Guid("a8b72c4c-2a09-4712-b162-95e31c12ac7c"),
                             Name = "Activision Blizzard"
                         });
                 });
@@ -528,52 +521,52 @@ namespace TeamManager.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0616763f-bece-4bea-b0db-017fb4eb260c"),
+                            Id = new Guid("aae8b551-4306-4019-85d5-43b56f903192"),
                             Name = "Action"
                         },
                         new
                         {
-                            Id = new Guid("338165ff-1216-40ee-9cc2-8b6ef1704ec7"),
+                            Id = new Guid("726c0b16-4e37-4600-a9f0-580b9629fe3d"),
                             Name = "Adventure"
                         },
                         new
                         {
-                            Id = new Guid("0f9c711d-622a-4b6a-b8ca-3af0de0b32d6"),
+                            Id = new Guid("a3511446-cf44-432a-b459-a29ba3f70969"),
                             Name = "Role-playing"
                         },
                         new
                         {
-                            Id = new Guid("21a95737-eed0-4a8a-8509-ef2bd39615c3"),
+                            Id = new Guid("dc313176-066c-4d0b-b0e0-9581a0aeca04"),
                             Name = "Strategy"
                         },
                         new
                         {
-                            Id = new Guid("06539677-bd73-4c35-b857-8b63751e3113"),
+                            Id = new Guid("74f7dbb2-a00e-4a71-82a8-407de00745cd"),
                             Name = "Simulation"
                         },
                         new
                         {
-                            Id = new Guid("996a1a17-6422-4135-baf6-21576e59498e"),
+                            Id = new Guid("4afc6dce-20bc-433d-b171-b176312031ff"),
                             Name = "Sports"
                         },
                         new
                         {
-                            Id = new Guid("7f27fa01-7ec6-41cd-97a2-188e407e46b6"),
+                            Id = new Guid("1edfb79e-4a29-4783-8855-47c0d8891865"),
                             Name = "Racing"
                         },
                         new
                         {
-                            Id = new Guid("764b09de-2c07-4027-be0d-e5a1ac8d126c"),
+                            Id = new Guid("a7b64688-1e48-4c86-b110-4d837259bbca"),
                             Name = "Puzzle"
                         },
                         new
                         {
-                            Id = new Guid("57c50244-4968-4aad-81cb-39958bcdc7fe"),
+                            Id = new Guid("354776f0-6094-40fa-81f8-e2750aa0e26b"),
                             Name = "Fighting"
                         },
                         new
                         {
-                            Id = new Guid("20762f4e-d15a-423e-a235-80d476e99df0"),
+                            Id = new Guid("c71d28e3-43cd-4000-9d8f-0eff560133b5"),
                             Name = "Horror"
                         });
                 });
@@ -595,52 +588,52 @@ namespace TeamManager.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("08022f4d-ae3d-4258-ba53-5d21cc65050b"),
+                            Id = new Guid("1576f9f1-b37c-4749-98fe-257b6d068fef"),
                             Name = "English"
                         },
                         new
                         {
-                            Id = new Guid("b4c43182-a089-4c15-affd-47d50c9aa915"),
+                            Id = new Guid("e055371e-6371-41b2-b5f9-ac0096433ff7"),
                             Name = "Spanish"
                         },
                         new
                         {
-                            Id = new Guid("e524fa40-d22d-4504-b7f6-b3f481397748"),
+                            Id = new Guid("0ab83f18-2c3d-402a-8a36-cc6395ba3350"),
                             Name = "French"
                         },
                         new
                         {
-                            Id = new Guid("f0f7221f-f152-48ed-a2c6-9f480bae3e53"),
+                            Id = new Guid("9bea7b75-abb3-48b7-8fd3-cf54006fab71"),
                             Name = "German"
                         },
                         new
                         {
-                            Id = new Guid("21cd1d7d-181d-44c8-8e43-22eec772a3d1"),
+                            Id = new Guid("8acbb263-97e7-4863-8b6f-2d42a1bcab75"),
                             Name = "Japanese"
                         },
                         new
                         {
-                            Id = new Guid("f84e3f5d-ccf8-466c-a842-4bd630f75ba5"),
+                            Id = new Guid("801c8420-bb82-4da4-8157-4b6163d4d6f3"),
                             Name = "Chinese"
                         },
                         new
                         {
-                            Id = new Guid("0859bb4d-d6e5-48a1-97cd-b978fc7d5cc6"),
+                            Id = new Guid("c2b654e0-86dc-46f6-8217-c5bc180ecea5"),
                             Name = "Russian"
                         },
                         new
                         {
-                            Id = new Guid("3cc0f342-d349-4b32-a5c1-c1b901d06f00"),
+                            Id = new Guid("2ffd7b3c-7a3d-4b9c-beaf-77cadb6b06cb"),
                             Name = "Italian"
                         },
                         new
                         {
-                            Id = new Guid("55ab9fa4-310b-41a3-a6c4-39859f2327c1"),
+                            Id = new Guid("8eb67f59-456a-48bc-9c47-bdcf7214e351"),
                             Name = "Korean"
                         },
                         new
                         {
-                            Id = new Guid("bd4e6e3c-142f-4b2a-9c8d-6e10fe5b2e84"),
+                            Id = new Guid("04289793-bc71-4c4c-aed9-a16434598211"),
                             Name = "Portuguese"
                         });
                 });
@@ -662,52 +655,52 @@ namespace TeamManager.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f71ac820-2077-4cef-ba40-9dc5d7ed1e3d"),
+                            Id = new Guid("13b5d9ea-e57e-4f99-aab4-e837f49c1763"),
                             Name = "PlayStation 5"
                         },
                         new
                         {
-                            Id = new Guid("e7fc5b06-ab60-468a-9af1-69440a1e31ef"),
+                            Id = new Guid("15de726c-5ea1-4310-b535-3c587dc44a40"),
                             Name = "Xbox Series X"
                         },
                         new
                         {
-                            Id = new Guid("03edc1bb-725a-489a-a1e6-da16042f7c57"),
+                            Id = new Guid("d470381a-eaaf-4eb2-9e0c-e4a0fd4b2afd"),
                             Name = "Nintendo Switch"
                         },
                         new
                         {
-                            Id = new Guid("454da605-3919-466a-9341-def4777e8d45"),
+                            Id = new Guid("119b9f73-26a4-4bf8-9084-c576b04c7137"),
                             Name = "PC"
                         },
                         new
                         {
-                            Id = new Guid("8c09730e-f5f1-45bf-9145-33a21ea17336"),
+                            Id = new Guid("34aa2855-6f9d-4e4f-a6db-6b635c5ba0c6"),
                             Name = "PlayStation 4"
                         },
                         new
                         {
-                            Id = new Guid("ef954be8-1280-4605-bb4f-57de307957ba"),
+                            Id = new Guid("22b18efd-b15a-4234-ac2f-f00fdf6ad0d8"),
                             Name = "Xbox One"
                         },
                         new
                         {
-                            Id = new Guid("ec7f160f-0a09-4076-a022-15cb76978572"),
+                            Id = new Guid("2636e7ed-c87b-4729-b7ef-7defe98e1b44"),
                             Name = "Mobile"
                         },
                         new
                         {
-                            Id = new Guid("3ef672fb-13a2-4c86-b073-4cc0ecb35e92"),
+                            Id = new Guid("4a33ca99-9cf0-4a4d-9c12-0d718eb5d663"),
                             Name = "Google Stadia"
                         },
                         new
                         {
-                            Id = new Guid("75640dbb-8325-440f-9bdb-85febf36c4d7"),
+                            Id = new Guid("b0ce6b62-0e1a-4845-acde-614711619283"),
                             Name = "VR"
                         },
                         new
                         {
-                            Id = new Guid("863a4429-12eb-483d-9f98-09c825669b6b"),
+                            Id = new Guid("4b36df91-9b50-42c9-b599-115664112e4b"),
                             Name = "Mac"
                         });
                 });
@@ -783,37 +776,37 @@ namespace TeamManager.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8a26ca90-342f-46e2-8baf-6833760bd301"),
+                            Id = new Guid("dbef642f-e61b-498a-8b4c-16e978900806"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a5b22dc9-a650-44ec-acf9-20ebd4f8ab17",
+                            ConcurrencyStamp = "fed13273-8728-448d-80e5-2596a4c852f1",
                             Email = "admin@example",
                             EmailConfirmed = true,
                             FullName = "Jack Rell",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE",
                             NormalizedUserName = "ADMIN@EXAMPLE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEM0xzr8jMoLXY+yQDZZdqh7Ecsz0u0ugAXfGDE+SEipKyPo9Ym2xeGq3zPquIG6lMw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEARSzxeQCvCi/5DEcFo/aDqz67PdjcgiY3T14eV1RYbUVdkBtuqbHauDRQqfMjQP7w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c0ee28ca-28a4-486d-bca8-234addd41373",
+                            SecurityStamp = "9141bac4-bbb4-4971-86d8-7abe874f5756",
                             TwoFactorEnabled = false,
                             UserName = "admin@example"
                         },
                         new
                         {
-                            Id = new Guid("425c81db-c14c-42a7-a5d7-33f34e1607dd"),
+                            Id = new Guid("2fc8878d-f3d4-4526-b4bc-30fc244c9bac"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a971cf36-1ab5-46de-8120-7ad3bcfa3e47",
-                            Email = "finder@example",
+                            ConcurrencyStamp = "d891977c-d46a-48b3-9c5e-c66caf4cd8b2",
+                            Email = "user1@example",
                             EmailConfirmed = true,
                             FullName = "Tom Morgan",
                             LockoutEnabled = false,
-                            NormalizedEmail = "FINDER@EXAMPLE",
-                            NormalizedUserName = "FINDER@EXAMPLE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDYxtbBbrgHuGTQ6wwldhH+4ZNZSCRg26gfbf3iIaZ2ZeoolgxclraYtBiBiJzCCjw==",
+                            NormalizedEmail = "USER1@EXAMPLE",
+                            NormalizedUserName = "USER1@EXAMPLE",
+                            PasswordHash = "AQAAAAIAAYagAAAAELG6a46Yma5mxgU7sMWAzQhbPeL+zCp1sUIwyO2nU004xhGcvoLCQ1YEZyUSUTf2Eg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "72d5a34a-a42e-4886-86ab-749756718dfd",
+                            SecurityStamp = "3f18c068-56c7-4cfb-9509-828e4f3dc5f1",
                             TwoFactorEnabled = false,
-                            UserName = "finder@example"
+                            UserName = "user1@example"
                         });
                 });
 

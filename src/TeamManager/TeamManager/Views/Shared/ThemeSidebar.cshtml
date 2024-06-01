@@ -18,7 +18,7 @@
             <span class="nav-link">Navigation</span>
         </li>
         <li class="nav-item menu-items">
-            @if (User.IsInRole("Admin") || User.IsInRole("Seller"))
+            @if (User.IsInRole("Admin") || User.IsInRole("User"))
             {
                 <a class="nav-link text-grey" asp-area="" asp-controller="AdvertisementForSales" asp-action="Index">
                     <span class="menu-icon">
@@ -52,7 +52,7 @@
        
 
         <li class="nav-item menu-items">
-            @if (User.IsInRole("Admin") || User.IsInRole("Finder"))
+            @if (User.IsInRole("Admin") || User.IsInRole("User"))
             {
                 <a class="nav-link text-grey" asp-area="" asp-controller="AdvertisementToFind" asp-action="Index">
                     <span class="menu-icon">
@@ -99,7 +99,7 @@
         </li>
 
         <li class="nav-item menu-items">
-            @if (User.IsInRole("Seller") || User.IsInRole("Finder") || User.IsInRole("Admin"))
+            @if ( User.IsInRole("Admin") || User.IsInRole("User"))
             {
                 <a class="nav-link text-grey" asp-area="" asp-controller="GameAccount" asp-action="Index">
                     <span class="menu-icon">
@@ -132,7 +132,7 @@
 
         <li class="nav-item menu-items">
 
-            @if (User.IsInRole("Admin") && User.IsInRole("Finder"))
+            @if (User.IsInRole("Admin") || User.IsInRole("User"))
             {
                 <a class="nav-link text-grey" asp-area="" asp-controller="UserGroup" asp-action="Index">
                     <span class="menu-icon">

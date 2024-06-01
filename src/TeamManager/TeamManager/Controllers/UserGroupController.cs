@@ -1,45 +1,58 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using TeamManager.Core.Entities;
 using TeamManager.Repository.Common;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace TeamManager.Controllers
 {
+    [Authorize]
     public class UserGroupController : Controller
     {
-        private readonly IRepository<UserGroup, Guid> _UserGroupRepository;
+        private readonly IRepository<UserGroup, Guid> _userGroupRepository;
+        private readonly UserManager<User> _userManager;
         private readonly IWebHostEnvironment _environment;
 
-
         public UserGroupController(
-
             IRepository<UserGroup, Guid> userGroupRepository,
-            IWebHostEnvironment environment
-            )
+            UserManager<User> userManager,
+            IWebHostEnvironment environment)
         {
-            _UserGroupRepository = userGroupRepository;
+            _userGroupRepository = userGroupRepository;
+            _userManager = userManager;
             _environment = environment;
         }
 
-        // GET: Projects
+        // GET: UserGroups
         public async Task<IActionResult> Index()
         {
-            var userGroup = await _UserGroupRepository.GetAllAsync();
-            return View(userGroup);
+            var userGroups = await _userGroupRepository.GetAllAsync();
+            return View(userGroups);
         }
 
-        // GET: Projects/Create
+        // GET: UserGroups/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Projects/Create
+        // POST: UserGroups/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-       public async Task<IActionResult> Create(UserGroup userGroup, IFormFile imageFile)
+        public async Task<IActionResult> Create(UserGroup userGroup, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
+                // Get the current logged-in user
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser != null)
+                {
+                    userGroup.Users.Add(currentUser);
+                }
+
                 if (imageFile != null && imageFile.Length > 0)
                 {
                     // Save uploaded image to wwwroot/img directory
@@ -53,16 +66,16 @@ namespace TeamManager.Controllers
                     userGroup.MainImage = "img/" + uniqueFileName;
                 }
 
-                await _UserGroupRepository.CreateAsync(userGroup);
+                await _userGroupRepository.CreateAsync(userGroup);
                 return RedirectToAction(nameof(Index));
             }
             return View(userGroup);
         }
 
-        // GET: Projects/Edit/5
+        // GET: UserGroups/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
-            var userGroup = await _UserGroupRepository.GetAsync(id);
+            var userGroup = await _userGroupRepository.GetAsync(id);
             if (userGroup == null)
             {
                 return NotFound();
@@ -70,7 +83,7 @@ namespace TeamManager.Controllers
             return View(userGroup);
         }
 
-        // POST: Projects/Edit/5
+        // POST: UserGroups/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, UserGroup userGroup, IFormFile imageFile)
@@ -101,11 +114,11 @@ namespace TeamManager.Controllers
                         userGroup.MainImage = "/uploads/" + uniqueFileName;
                     }
 
-                    await _UserGroupRepository.UpdateAsync(userGroup);
+                    await _userGroupRepository.UpdateAsync(userGroup);
                 }
                 catch (Exception)
                 {
-                    if (!AdvertisementExists(userGroup.Id))
+                    if (!UserGroupExists(userGroup.Id))
                     {
                         return NotFound();
                     }
@@ -118,12 +131,11 @@ namespace TeamManager.Controllers
             }
             return View(userGroup);
         }
-    
 
-    // GET: Projects/Delete/5
-    public async Task<IActionResult> Delete(Guid id)
+        // GET: UserGroups/Delete/5
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var userGroup = await _UserGroupRepository.GetAsync(id);
+            var userGroup = await _userGroupRepository.GetAsync(id);
             if (userGroup == null)
             {
                 return NotFound();
@@ -131,18 +143,18 @@ namespace TeamManager.Controllers
             return View(userGroup);
         }
 
-        // POST: Projects/Delete/5
+        // POST: UserGroups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            await _UserGroupRepository.DeleteAsync(id);
+            await _userGroupRepository.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AdvertisementExists(Guid id)
+        private bool UserGroupExists(Guid id)
         {
-            return true;
+            return _userGroupRepository.GetAsync(id) != null;
         }
     }
 }

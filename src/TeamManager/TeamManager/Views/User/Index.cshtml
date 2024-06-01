@@ -1,10 +1,10 @@
-﻿@using TeamManager.Repository.Models
-
+﻿
+@using TeamManager.Repository.Models
 @model IEnumerable<UserListItemModel>
 
-<a href="/user/create" class="btn btn-primary float-end">Створити</a>
+<a href="/user/create" class="btn btn-primary float-end">Create new User</a>
 
-<h1>Користувачі</h1>
+<h1>Users</h1>
 
 <table class="table table-bordered">
     <thead>
@@ -27,7 +27,7 @@
                 <td><input class="form-check-input" @(u.IsEmailConfirmed ? "checked" : "") type="checkbox" disabled></td>
                 <td>
                     <a href="/user/edit/@u.Id" class="btn btn-warning">Edit</a>
-                    <a href="#" data-id="@u.Id" data-email="@u.Email" class="btn btn-danger btn-remove-user">Remove</a>
+                    <a href="#" class="btn btn-danger btn-remove-user" data-id="@u.Id" data-email="@u.Email">Remove</a>
                 </td>
             </tr>
         }
@@ -63,7 +63,7 @@
                 <p>Чи справді Ви бажаєте назавжди видалити користувача <strong class="userName">-</strong>?</p>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn-primary btn btn-remove-approve">Так! Видаляємо!</a>
+                <button type="button" class="btn-primary btn btn-remove-approve">Yes,delete</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
             </div>
         </div>
@@ -86,15 +86,7 @@
                 user_email = $(this).attr("data-email");
                 $(".userName").html(user_email);
 
-                $.post("/user/checkdelete", { id: user_id }, function (data) {
-
-                    if (data == 0) {
-                        $("#modalError").modal("show");
-                    }
-                    else {
-                        $("#modalQuestion").modal("show");
-                    }
-                });
+                $("#modalQuestion").modal("show");
             });
 
             $(".btn-remove-approve").click(function () {
@@ -115,3 +107,5 @@
     </script>
 
 }
+
+

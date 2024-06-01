@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<a href="@Url.Action("Create")" class="btn btn-success float-end">Add User Group</a>
+<a href="@Url.Action("Create")" class="btn btn-primary float-end">Add User Group</a>
 
 <h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
 
@@ -23,7 +23,7 @@
                     <p class="card-text">@userGroup.Description</p>
 
                     <a href="@Url.Action("Delete", new { id = userGroup.Id })" class="btn btn-danger">Delete</a>
-                    <a href="@Url.Action("Edit", new { id = userGroup.Id })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Edit", new { id = userGroup.Id })" class="btn btn-warning">Edit</a>
                 </div>
             </div>
         </div>
