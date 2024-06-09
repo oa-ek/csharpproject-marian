@@ -1,5 +1,4 @@
-﻿
-@using TeamManager.Repository.Models
+﻿@using TeamManager.Repository.Models
 @model IEnumerable<UserListItemModel>
 
 <a href="/user/create" class="btn btn-primary float-end">Create new User</a>
@@ -19,93 +18,20 @@
     <tbody>
         @foreach (var u in Model)
         {
-            <tr>
-                <td>@u.FullName</td>
-                <td>@u.Email</td>
-
-                <td>@string.Join(", ", u.Roles)</td>
-                <td><input class="form-check-input" @(u.IsEmailConfirmed ? "checked" : "") type="checkbox" disabled></td>
-                <td>
-                    <a href="/user/edit/@u.Id" class="btn btn-warning">Edit</a>
-                    <a href="#" class="btn btn-danger btn-remove-user" data-id="@u.Id" data-email="@u.Email">Remove</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>@u.FullName</td>
+                    <td>@u.Email</td>
+                    <td>@string.Join(", ", u.Roles)</td>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input confirmed-checkbox" @(u.IsEmailConfirmed ? "checked" : "") type="checkbox">
+                        </div>
+                    </td>
+                    <td>
+                        <a href="/user/edit/@u.Id" class="btn btn-warning">Edit</a>
+                        <a href="/user/delete/@u.Id" class="btn btn-danger">Remove</a>
+                    </td>
+                </tr>
         }
     </tbody>
 </table>
-
-
-<div class="modal" tabindex="-1" id="modalError">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Помилка!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Не можливо видалити користувача <strong class="userName">-</strong>.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" tabindex="-1" id="modalQuestion">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Видалення</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Чи справді Ви бажаєте назавжди видалити користувача <strong class="userName">-</strong>?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-primary btn btn-remove-approve">Yes,delete</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-
-    <script>
-        $(function () {
-
-            var user_id = "";
-            var user_email = "";
-            var row = null;
-
-            $(".btn-remove-user").click(function () {
-
-                row = $(this).closest("tr");
-                user_id = $(this).attr("data-id");
-                user_email = $(this).attr("data-email");
-                $(".userName").html(user_email);
-
-                $("#modalQuestion").modal("show");
-            });
-
-            $(".btn-remove-approve").click(function () {
-
-                $.ajax({
-                    url: '/user/delete',
-                    type: 'DELETE',
-                    data: { id: user_id },
-                    success: function (result) {
-                        row.fadeOut();
-                        $("#modalQuestion").modal("hide");
-                    }
-                });
-
-            });
-
-        })
-    </script>
-
-}
-
-

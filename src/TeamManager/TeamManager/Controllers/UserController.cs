@@ -64,17 +64,23 @@ namespace TeamManager.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<int> CheckDelete(Guid id)
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var check = await userRepository.CheckUser(id);
-            return check ? 1 : 0;
+            var user = await userRepository.GetOneWithRolesAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
         }
 
-        [HttpDelete]
-        public async Task Delete(Guid id)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             await userRepository.DeleteUser(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

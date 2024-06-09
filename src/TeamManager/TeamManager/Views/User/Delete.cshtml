@@ -12,30 +12,9 @@
     <h4>Username:</h4>
     <p>@Model.FullName</p>
 
-    <form id="deleteForm">
+    <form asp-action="Delete" method="post">
         <input type="hidden" asp-for="Id" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-action="Index" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
-
-@section Scripts {
-    <script>
-        $(function () {
-            $('#deleteForm').submit(function (e) {
-                e.preventDefault();
-                var userId = $(this).find('input[name="Id"]').val();
-                $.ajax({
-                    url: '/User/Delete/' + userId,
-                    type: 'DELETE',
-                    success: function () {
-                        window.location.href = '/User/Index';
-                    },
-                    error: function () {
-                        alert('An error occurred while deleting the user.');
-                    }
-                });
-            });
-        });
-    </script>
-}

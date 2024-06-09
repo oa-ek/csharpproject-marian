@@ -13,7 +13,6 @@
         <div class="container-fluid page-body-wrapper">
             <!-- partial:../../partials/_navbar.html -->
             <nav class="navbar p-0 fixed-top d-flex flex-row">
-                
                 <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
                     <partial name="ThemeNavbar" />
                 </div>
@@ -21,10 +20,13 @@
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
+                    @if (IsSectionDefined("Carousel"))
+                    {
+                        @RenderSection("Carousel", required: false)
+                    }
                     @RenderBody()
                 </div>
                 <!-- content-wrapper ends -->
-               
             </div>
             <!-- main-panel ends -->
         </div>
