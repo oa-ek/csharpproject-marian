@@ -17,6 +17,7 @@ namespace TeamManager.Core.Entities
 
         public Guid? accountPlatformId { get; set; }
         public virtual ICollection<Game> Games { get; set; } = new HashSet<Game>();
+        public virtual ICollection<AdvertisementForSales> AdvertisementForSales { get; set; } = new HashSet<AdvertisementForSales>();
 
         public string MainImage { get; set; } = $"img\\noPhoto.jpg";
         [NotMapped]

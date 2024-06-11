@@ -502,8 +502,8 @@ namespace TeamManager.Core.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("99888dd7-122d-4850-a197-8acd0c34f304"), "For Sale" },
-                    { new Guid("e1e45757-bb8e-4c97-832e-531b0217572a"), "For Rent" }
+                    { new Guid("46d438d4-d5b9-42cf-b9f6-302ab1cbef7e"), "For Sale" },
+                    { new Guid("d1c04aee-ef66-4c56-b86f-15bf8851f800"), "For Rent" }
                 });
 
             migrationBuilder.InsertData(
@@ -511,8 +511,8 @@ namespace TeamManager.Core.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("49451424-0919-46f4-91eb-48906087f15e"), "49451424-0919-46f4-91eb-48906087f15e", "User", "USER" },
-                    { new Guid("68cc050b-fc6b-4ae2-87c1-de7ec10b7716"), "68cc050b-fc6b-4ae2-87c1-de7ec10b7716", "Admin", "ADMIN" }
+                    { new Guid("9045aa92-53c7-4cbf-937e-5a14db9ee8dd"), "9045aa92-53c7-4cbf-937e-5a14db9ee8dd", "User", "USER" },
+                    { new Guid("a6f4e915-ca2e-41a1-8cc4-12326708d222"), "a6f4e915-ca2e-41a1-8cc4-12326708d222", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -520,8 +520,8 @@ namespace TeamManager.Core.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("2fc8878d-f3d4-4526-b4bc-30fc244c9bac"), 0, "d891977c-d46a-48b3-9c5e-c66caf4cd8b2", "user1@example", true, "Tom Morgan", false, null, "USER1@EXAMPLE", "USER1@EXAMPLE", "AQAAAAIAAYagAAAAELG6a46Yma5mxgU7sMWAzQhbPeL+zCp1sUIwyO2nU004xhGcvoLCQ1YEZyUSUTf2Eg==", null, false, "3f18c068-56c7-4cfb-9509-828e4f3dc5f1", false, "user1@example" },
-                    { new Guid("dbef642f-e61b-498a-8b4c-16e978900806"), 0, "fed13273-8728-448d-80e5-2596a4c852f1", "admin@example", true, "Jack Rell", false, null, "ADMIN@EXAMPLE", "ADMIN@EXAMPLE", "AQAAAAIAAYagAAAAEARSzxeQCvCi/5DEcFo/aDqz67PdjcgiY3T14eV1RYbUVdkBtuqbHauDRQqfMjQP7w==", null, false, "9141bac4-bbb4-4971-86d8-7abe874f5756", false, "admin@example" }
+                    { new Guid("7422c656-7bd9-48c5-b0f7-8a357b255fbc"), 0, "d13f8d0b-7b7f-4a59-8b69-ce13794907b4", "admin@example", true, "Jack Rell", false, null, "ADMIN@EXAMPLE", "ADMIN@EXAMPLE", "AQAAAAIAAYagAAAAEFfXHQWA2WmDwstGn35mjHYUS9WjB0uoaw0s7WQnlQ6l136cWN8hUjHpWx/NATZOOQ==", null, false, "a5cd82eb-2cfc-4fe6-bf0e-226d6ceeb654", false, "admin@example" },
+                    { new Guid("7b652e71-2e95-4c5b-b6bf-97b276e2f4e1"), 0, "06a75df1-b59c-4841-8e62-73c3c1a0b08d", "user1@example", true, "Tom Morgan", false, null, "USER1@EXAMPLE", "USER1@EXAMPLE", "AQAAAAIAAYagAAAAECkSsnpNNCNA5HBfj1Ro67MirN+S2ov2f5w0MhlnTDNvMUJZL1jwtYGwHmuJQrOmhA==", null, false, "4a3be8b4-3644-4a28-9293-c7ea085d8ce2", false, "user1@example" }
                 });
 
             migrationBuilder.InsertData(
@@ -529,16 +529,16 @@ namespace TeamManager.Core.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("89a033a9-24c3-4e52-aa3e-665835be0011"), "Epic Games" },
-                    { new Guid("8c216926-adc3-4808-89aa-f7626eafcc53"), "Valve Corporation" },
-                    { new Guid("92c2bf4c-324c-4182-8d46-c1f47b200e97"), "Naughty Dog" },
-                    { new Guid("a8b72c4c-2a09-4712-b162-95e31c12ac7c"), "Activision Blizzard" },
-                    { new Guid("cb214254-635c-45bc-859d-101f25ce5116"), "Nintendo" },
-                    { new Guid("d59fa275-3870-4702-8caa-3f7206db4d63"), "Electronic Arts" },
-                    { new Guid("d7f64d42-b167-4dc1-8155-6f08c6b4a3b1"), "CD Projekt" },
-                    { new Guid("da2fcea1-6f75-4dc3-b946-eefc7e5547d2"), "Square Enix" },
-                    { new Guid("e5ba3a4d-edb6-4500-a648-2be169085308"), "Ubisoft" },
-                    { new Guid("e9ffa80b-92e8-4614-bed6-2a9519bf8110"), "Rockstar Games" }
+                    { new Guid("09de799b-a01d-4792-aef1-c25e8a5a126a"), "Nintendo" },
+                    { new Guid("0c1c92f2-82c2-4e33-90f2-585685c39133"), "Naughty Dog" },
+                    { new Guid("307ce386-2cd9-4656-9918-9e33fee121ff"), "CD Projekt" },
+                    { new Guid("5ed61fc8-7796-49bc-be87-4aab4577e994"), "Ubisoft" },
+                    { new Guid("74e4ae96-e4c6-40f6-ac0f-f92848dd1bf1"), "Electronic Arts" },
+                    { new Guid("85e42204-1a95-41c6-b497-7e92e538a222"), "Activision Blizzard" },
+                    { new Guid("b54b951a-a501-4f6a-bbad-c55c665c3ea1"), "Rockstar Games" },
+                    { new Guid("bd7a4c5e-a4eb-48a0-a8e1-de9eb2ea753b"), "Epic Games" },
+                    { new Guid("d49f6ca3-2933-4f58-9c71-a068a447c4c1"), "Square Enix" },
+                    { new Guid("ead91a0b-7f8c-47e6-8fd8-30482e863cf6"), "Valve Corporation" }
                 });
 
             migrationBuilder.InsertData(
@@ -546,16 +546,16 @@ namespace TeamManager.Core.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("1edfb79e-4a29-4783-8855-47c0d8891865"), "Racing" },
-                    { new Guid("354776f0-6094-40fa-81f8-e2750aa0e26b"), "Fighting" },
-                    { new Guid("4afc6dce-20bc-433d-b171-b176312031ff"), "Sports" },
-                    { new Guid("726c0b16-4e37-4600-a9f0-580b9629fe3d"), "Adventure" },
-                    { new Guid("74f7dbb2-a00e-4a71-82a8-407de00745cd"), "Simulation" },
-                    { new Guid("a3511446-cf44-432a-b459-a29ba3f70969"), "Role-playing" },
-                    { new Guid("a7b64688-1e48-4c86-b110-4d837259bbca"), "Puzzle" },
-                    { new Guid("aae8b551-4306-4019-85d5-43b56f903192"), "Action" },
-                    { new Guid("c71d28e3-43cd-4000-9d8f-0eff560133b5"), "Horror" },
-                    { new Guid("dc313176-066c-4d0b-b0e0-9581a0aeca04"), "Strategy" }
+                    { new Guid("0a387b63-9236-48f0-85b0-3387a17ee1ba"), "Horror" },
+                    { new Guid("0db78115-acb6-44f9-8ffa-cc3f3db7073a"), "Action" },
+                    { new Guid("23075d1e-a61a-4402-a24b-64c2a72a2f68"), "Adventure" },
+                    { new Guid("2940dae4-0311-4ab0-b657-e0209819cf7a"), "Strategy" },
+                    { new Guid("2ff38ee2-573c-4e85-894f-c73f16517757"), "Sports" },
+                    { new Guid("53c0bf54-ee89-478a-aec2-003b182eaf29"), "Simulation" },
+                    { new Guid("8418089d-0305-40b2-bc07-4ae35c0c5643"), "Puzzle" },
+                    { new Guid("a79565e8-801b-40f7-afee-a23734048997"), "Role-playing" },
+                    { new Guid("bcf12f77-dcd3-4f48-b649-92eabeeff190"), "Racing" },
+                    { new Guid("e978e806-21ac-49ce-be19-a6f0a4fc2b1f"), "Fighting" }
                 });
 
             migrationBuilder.InsertData(
@@ -563,16 +563,16 @@ namespace TeamManager.Core.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("04289793-bc71-4c4c-aed9-a16434598211"), "Portuguese" },
-                    { new Guid("0ab83f18-2c3d-402a-8a36-cc6395ba3350"), "French" },
-                    { new Guid("1576f9f1-b37c-4749-98fe-257b6d068fef"), "English" },
-                    { new Guid("2ffd7b3c-7a3d-4b9c-beaf-77cadb6b06cb"), "Italian" },
-                    { new Guid("801c8420-bb82-4da4-8157-4b6163d4d6f3"), "Chinese" },
-                    { new Guid("8acbb263-97e7-4863-8b6f-2d42a1bcab75"), "Japanese" },
-                    { new Guid("8eb67f59-456a-48bc-9c47-bdcf7214e351"), "Korean" },
-                    { new Guid("9bea7b75-abb3-48b7-8fd3-cf54006fab71"), "German" },
-                    { new Guid("c2b654e0-86dc-46f6-8217-c5bc180ecea5"), "Russian" },
-                    { new Guid("e055371e-6371-41b2-b5f9-ac0096433ff7"), "Spanish" }
+                    { new Guid("11bc7c55-9e45-4222-bdcd-2c3724397cbe"), "French" },
+                    { new Guid("138d7131-df09-4306-a3fe-f0e59d636823"), "Chinese" },
+                    { new Guid("1442f295-4419-46a2-82c7-88803f9f609c"), "Russian" },
+                    { new Guid("29d081b4-1d77-41f0-8da4-5e9198758026"), "English" },
+                    { new Guid("33ad071e-8a1c-449a-ae07-520859d45122"), "Italian" },
+                    { new Guid("8912123e-4dba-46e4-8935-59a4553d8efa"), "Korean" },
+                    { new Guid("8ee36d93-8983-4d9c-81dd-5dbce710b57f"), "German" },
+                    { new Guid("c69671a6-cb6d-44d9-9b76-23adffdd55bb"), "Japanese" },
+                    { new Guid("d05c8a83-d2b7-4bd8-b036-324679c43e5c"), "Spanish" },
+                    { new Guid("d503957f-8d1c-407c-ad1f-b2fd0971edc4"), "Portuguese" }
                 });
 
             migrationBuilder.InsertData(
@@ -580,16 +580,16 @@ namespace TeamManager.Core.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("119b9f73-26a4-4bf8-9084-c576b04c7137"), "PC" },
-                    { new Guid("13b5d9ea-e57e-4f99-aab4-e837f49c1763"), "PlayStation 5" },
-                    { new Guid("15de726c-5ea1-4310-b535-3c587dc44a40"), "Xbox Series X" },
-                    { new Guid("22b18efd-b15a-4234-ac2f-f00fdf6ad0d8"), "Xbox One" },
-                    { new Guid("2636e7ed-c87b-4729-b7ef-7defe98e1b44"), "Mobile" },
-                    { new Guid("34aa2855-6f9d-4e4f-a6db-6b635c5ba0c6"), "PlayStation 4" },
-                    { new Guid("4a33ca99-9cf0-4a4d-9c12-0d718eb5d663"), "Google Stadia" },
-                    { new Guid("4b36df91-9b50-42c9-b599-115664112e4b"), "Mac" },
-                    { new Guid("b0ce6b62-0e1a-4845-acde-614711619283"), "VR" },
-                    { new Guid("d470381a-eaaf-4eb2-9e0c-e4a0fd4b2afd"), "Nintendo Switch" }
+                    { new Guid("068bc1ac-00bd-44dc-bbd9-317c8fb515e3"), "Mobile" },
+                    { new Guid("1ba25d53-0f71-45ae-896f-ebd6a808b0f5"), "Nintendo Switch" },
+                    { new Guid("2fad8c04-3f12-4dd0-9c6f-5a8102eb7da3"), "Xbox One" },
+                    { new Guid("34f9247e-ee09-4541-86da-acdbdc6f9240"), "PlayStation 5" },
+                    { new Guid("57b93897-6dc3-454e-95c2-8b9aea1459a2"), "PC" },
+                    { new Guid("5eb320c0-8180-4ffa-b2c3-aba3250d4e0e"), "Google Stadia" },
+                    { new Guid("729e1423-fb69-4d8b-ba1b-0829a003b620"), "Mac" },
+                    { new Guid("c3a672b6-1d3c-4dfd-9d87-b49fbb35661d"), "Xbox Series X" },
+                    { new Guid("d0a6e504-cf98-4724-93a5-fbcb2057b996"), "PlayStation 4" },
+                    { new Guid("dab05315-9a85-4c33-be4b-da7db98df8fb"), "VR" }
                 });
 
             migrationBuilder.InsertData(
@@ -597,8 +597,8 @@ namespace TeamManager.Core.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("49451424-0919-46f4-91eb-48906087f15e"), new Guid("2fc8878d-f3d4-4526-b4bc-30fc244c9bac") },
-                    { new Guid("68cc050b-fc6b-4ae2-87c1-de7ec10b7716"), new Guid("dbef642f-e61b-498a-8b4c-16e978900806") }
+                    { new Guid("a6f4e915-ca2e-41a1-8cc4-12326708d222"), new Guid("7422c656-7bd9-48c5-b0f7-8a357b255fbc") },
+                    { new Guid("9045aa92-53c7-4cbf-937e-5a14db9ee8dd"), new Guid("7b652e71-2e95-4c5b-b6bf-97b276e2f4e1") }
                 });
 
             migrationBuilder.CreateIndex(

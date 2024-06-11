@@ -8,5 +8,7 @@ namespace TeamManager.Core.Entities
         public virtual ICollection<UserGroup> UserGroups { get; set; } = new HashSet<UserGroup>();
         public virtual ICollection<AdvertisementToFind> AdvertisementsToFind{ get; set; } = new HashSet<AdvertisementToFind>();
         public virtual ICollection<GameAccount> GameAccounts { get; set; } = new HashSet<GameAccount>();
+        public virtual ICollection<AdvertisementForSales> AdvertisementForSales { get; set; } = new HashSet<AdvertisementForSales>();
+
     }
 }

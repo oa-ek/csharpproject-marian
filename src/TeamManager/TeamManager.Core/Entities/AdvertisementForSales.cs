@@ -17,7 +17,7 @@ namespace TeamManager.Core.Entities
 
         [ForeignKey(nameof(gameAccount))]
         public Guid? gameAccountId { get; set; }
-        public virtual AdvertisementStatus advertisementStatus { get; set; }
+        public virtual AdvertisementStatus? advertisementStatus { get; set; }
 
         [ForeignKey(nameof(advertisementStatus))]
         public Guid? advertisementStatusId { get; set; }

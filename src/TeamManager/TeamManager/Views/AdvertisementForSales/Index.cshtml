@@ -28,10 +28,20 @@
                 <ul class="list-group list-group-flush bg-white">
                     <li class="list-group-item text-dark">Price: @item.Price</li>
                     <li class="list-group-item text-dark">IsActive: @item.IsActive</li>
-        
+
                     @if (item.gameAccount != null)
                     {
                         <li class="list-group-item text-dark">Game Account: @item.gameAccount.Name</li>
+                        @if (item.gameAccount.Games.Any())
+                        {
+                            <li class="list-group-item text-dark">Games:</li>
+                            <ul class="list-group">
+                                @foreach (var game in item.gameAccount.Games)
+                                {
+                                    <li class="list-group-item text-dark">@game.Name</li>
+                                }
+                            </ul>
+                        }
                     }
                     @if (item.advertisementStatus != null)
                     {
@@ -48,4 +58,5 @@
             </div>
         </div>
     }
+
 </div>
