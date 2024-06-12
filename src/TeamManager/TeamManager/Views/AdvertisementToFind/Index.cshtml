@@ -16,7 +16,6 @@
 <div class="row">
     @if (User.IsInRole("Admin"))
     {
-        <!-- Адміністратор має повний доступ до всіх оголошень -->
         @foreach (var advertisement in Model)
         {
             <div class="col-md-3">
@@ -26,7 +25,7 @@
                         <p class="card-text">@advertisement.Description</p>
                         <p class="card-text">Price: @advertisement.Price</p>
                         <p class="card-text">Status: @(advertisement.IsActive ? "Active" : "Passive")</p>
-                        <p class="card-text">Group: @advertisement.userGroup.Name</p> <!-- Додали виведення назви групи -->
+                        <p class="card-text">Group: @advertisement.userGroup.Name</p>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item text-dark bg-white">
                                 Games:
@@ -47,7 +46,6 @@
     }
     else
     {
-        <!-- Користувачі без ролі адміністратора мають обмежений доступ -->
         @foreach (var advertisement in Model)
         {
             <div class="col-md-3">
@@ -57,7 +55,7 @@
                         <p class="card-text">@advertisement.Description</p>
                         <p class="card-text">Price: @advertisement.Price</p>
                         <p class="card-text">Status: @(advertisement.IsActive ? "Active" : "Passive")</p>
-                        <p class="card-text">Group: @advertisement.userGroup.Name</p> <!-- Додали виведення назви групи -->
+                        <p class="card-text">Group: @advertisement.userGroup.Name</p>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item text-dark bg-white">
                                 Games:

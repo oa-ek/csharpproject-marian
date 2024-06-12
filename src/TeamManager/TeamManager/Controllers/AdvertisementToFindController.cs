@@ -179,7 +179,7 @@ namespace TeamManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> JoinGroup(Guid id, Guid groupId)
+        public async Task<IActionResult> JoinGroup(Guid id)
         {
             var advertisement = await _advertisementToFindRepository.GetAsync(id);
             if (advertisement == null)
@@ -193,19 +193,20 @@ namespace TeamManager.Controllers
                 return Forbid();
             }
 
-            var userGroup = await _userGroupRepository.GetAsync(groupId); // Отримати групу за її Id
+            var userGroup = await _userGroupRepository.GetAsync(advertisement.userGroupId.Value);
 
             if (userGroup == null)
             {
                 return NotFound("Group not found");
             }
 
-            userGroup.Users.Add(currentUser); // Додати користувача до групи
+            userGroup.Users.Add(currentUser);
+            await _userGroupRepository.UpdateAsync(userGroup);
 
-            await _userGroupRepository.UpdateAsync(userGroup); // Оновити групу в репозиторії
-
-            return RedirectToAction(nameof(Index));
+            return Ok(); // Return OK status for the AJAX request
         }
+
+
 
     }
 }

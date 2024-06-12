@@ -1,4 +1,5 @@
-﻿@model IEnumerable<TeamManager.Core.Entities.UserGroup>
+﻿@using System.Security.Claims
+@model IEnumerable<TeamManager.Core.Entities.UserGroup>
 
 @{
     ViewData["Title"] = "List of User Groups";
@@ -21,9 +22,30 @@
                 <div class="card-body">
                     <h5 class="card-title">@userGroup.Name</h5>
                     <p class="card-text">@userGroup.Description</p>
-
-                    <a href="@Url.Action("Delete", new { id = userGroup.Id })" class="btn btn-danger">Delete</a>
+                    <ul class="list-group list-group-flush text-dark">
+                        @if (userGroup.Users.Any())
+                        {
+                            @foreach (var user in userGroup.Users)
+                            {
+                                <li class="list-group-item">@user.FullName (@user.Email)</li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="list-group-item">No members in this group</li>
+                        }
+                    </ul>
                     <a href="@Url.Action("Edit", new { id = userGroup.Id })" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = userGroup.Id })" class="btn btn-danger">Delete</a>
+
+                    @* Додано кнопку "Вийти з групи" *@
+                    @if (!userGroup.Users.Any(u => u.Id == Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))))
+                    {
+                        <form asp-action="LeaveGroup" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@userGroup.Id" />
+                            <button type="submit" class="btn btn-secondary">Leave Group</button>
+                        </form>
+                    }
                 </div>
             </div>
         </div>
