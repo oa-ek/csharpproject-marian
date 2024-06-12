@@ -9,7 +9,7 @@
 
 @{
     List<Game>? games = ViewBag.Games as List<Game>;
-    var currentUserId = ViewBag.CurrentUserId as Guid?;
+    var currentUserId = ViewBag.CurrentUserId as string;
 }
 
 <a href="@Url.Action("Create", "AdvertisementToFind")" class="btn btn-primary float-end">Add advertisements to find</a>
@@ -37,16 +37,20 @@
                             </ul>
                         </li>
                     </ul>
-                    <a href="@Url.Action("Edit", "AdvertisementToFind", new { id = advertisement.Id })" class="btn btn-warning">Редагувати</a>
-                    <a href="@Url.Action("Delete", "AdvertisementToFind", new { id = advertisement.Id })" class="btn btn-danger">Видалити</a>
 
-                    @if (advertisement.userId != currentUserId)
+                    @if (advertisement.userId.ToString() == currentUserId)
+                    {
+                        <a href="@Url.Action("Edit", "AdvertisementToFind", new { id = advertisement.Id })" class="btn btn-warning">Редагувати</a>
+                        <a href="@Url.Action("Delete", "AdvertisementToFind", new { id = advertisement.Id })" class="btn btn-danger">Видалити</a>
+                    }
+
+                    @* @if (advertisement.userId.ToString() != currentUserId)
                     {
                         <form asp-action="JoinGroup" asp-controller="AdvertisementToFind" method="post" class="d-inline">
                             <input type="hidden" name="id" value="@advertisement.Id" />
                             <button type="submit" class="btn btn-success">Приєднатися до групи</button>
                         </form>
-                    }
+                    } *@
                 </div>
             </div>
         </div>

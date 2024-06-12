@@ -8,6 +8,7 @@
 }
 
 @{
+    var currentUserId = ViewBag.CurrentUserId as string;
     List<Game>? games = ViewBag.Games as List<Game>;
 }
 
@@ -35,10 +36,15 @@
                             </ul>
                         </li>
                     </ul>
-                    <a href="@Url.Action("Delete", "GameAccount", new { id = account.Id })" class="btn btn-danger">Delete</a>
-                    <a href="@Url.Action("Edit", "GameAccount", new { id = account.Id })" class="btn btn-warning">Edit</a>
+
+                    @if (account.userId.ToString() == currentUserId)
+                    {
+                        <a href="@Url.Action("Delete", "GameAccount", new { id = account.Id })" class="btn btn-danger">Delete</a>
+                        <a href="@Url.Action("Edit", "GameAccount", new { id = account.Id })" class="btn btn-warning">Edit</a>
+                    }
                 </div>
             </div>
         </div>
     }
+    
 </div>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TeamManager.Core.Entities;
 using TeamManager.Repository.Common;
 
@@ -27,8 +28,10 @@ namespace TeamManager.Controllers
         public async Task<IActionResult> Index()
         {
             var advertisementsForSales = await _advertisementForSalesRepository.GetAllAsync();
+            ViewBag.CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return View(advertisementsForSales);
         }
+
 
         // GET: AdvertisementForSales/Create
         public async Task<IActionResult> CreateAsync()
@@ -74,11 +77,15 @@ namespace TeamManager.Controllers
                     }
                 }
 
+                // Призначення ідентифікатора користувача
+                advertisementForSales.userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
                 await _advertisementForSalesRepository.CreateAsync(advertisementForSales);
                 return RedirectToAction(nameof(Index));
             }
             return View(advertisementForSales);
         }
+
 
         // GET: AdvertisementForSales/Edit/5
         public async Task<IActionResult> Edit(Guid id)

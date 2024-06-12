@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TeamManager.Core.Entities;
 using TeamManager.Repository.Common;
@@ -26,15 +27,13 @@ namespace TeamManager.Controllers
             _userManager = userManager;
         }
 
-        // GET: AdvertisementToFind
         public async Task<IActionResult> Index()
         {
-            var advertisementToFind = await _advertisementToFindRepository.GetAllAsync();
-            var currentUser = await _userManager.GetUserAsync(User);
-            ViewBag.CurrentUserId = currentUser?.Id;
-
-            return View(advertisementToFind);
+            var advertisementsToFind = await _advertisementToFindRepository.GetAllAsync();
+            ViewBag.CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return View(advertisementsToFind);
         }
+
 
         // GET: AdvertisementToFind/Create
         public async Task<IActionResult> CreateAsync()
@@ -46,27 +45,17 @@ namespace TeamManager.Controllers
         // POST: AdvertisementToFind/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AdvertisementToFind advertisementToFind, string[] Games)
+        public async Task<IActionResult> Create(AdvertisementToFind advertisementToFind, List<Guid> selectedGameIds)
         {
             if (ModelState.IsValid)
             {
-                var currentUser = await _userManager.GetUserAsync(User);
-                if (currentUser != null)
-                {
-                    advertisementToFind.User = currentUser;
-                    advertisementToFind.userId = currentUser.Id;
-                }
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                advertisementToFind.userId = Guid.Parse(userId);
 
-                foreach (var gameId in Games)
+                if (selectedGameIds != null && selectedGameIds.Count > 0)
                 {
-                    if (!string.IsNullOrEmpty(gameId))
-                    {
-                        var game = await _gameRepository.GetAsync(Guid.Parse(gameId));
-                        if (game != null)
-                        {
-                            advertisementToFind.Games.Add(game);
-                        }
-                    }
+                    var selectedGames = await _gameRepository.GetAllAsync();
+                    advertisementToFind.Games = selectedGames.Where(g => selectedGameIds.Contains(g.Id)).ToList();
                 }
 
                 await _advertisementToFindRepository.CreateAsync(advertisementToFind);
@@ -75,6 +64,9 @@ namespace TeamManager.Controllers
             ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
             return View(advertisementToFind);
         }
+
+        // GET: AdvertisementToFind/Index
+
 
         // GET: AdvertisementToFind/Edit/5
         public async Task<IActionResult> Edit(Guid id)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TeamManager.Core.Entities;
 using TeamManager.Repository.Common;
 
@@ -27,8 +28,10 @@ namespace TeamManager.Controllers
         public async Task<IActionResult> Index()
         {
             var gameAccounts = await _gameAccountRepository.GetAllAsync();
+            ViewBag.CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return View(gameAccounts);
         }
+
 
         // GET: GameAccounts/Create
         public async Task<IActionResult> CreateAsync()
@@ -69,6 +72,8 @@ namespace TeamManager.Controllers
                     }
                 }
 
+                gameAccount.userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
                 await _gameAccountRepository.CreateAsync(gameAccount);
                 return RedirectToAction(nameof(Index));
             }
@@ -78,6 +83,7 @@ namespace TeamManager.Controllers
 
             return View(gameAccount);
         }
+
 
         // GET: GameAccounts/Edit/5
         public async Task<IActionResult> Edit(Guid id)
