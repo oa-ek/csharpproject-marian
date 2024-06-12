@@ -1,5 +1,4 @@
 ﻿@using TeamManager.Core.Entities
-
 @model List<GameAccount>
 
 @{
@@ -9,6 +8,7 @@
 
 @{
     var currentUserId = ViewBag.CurrentUserId as string;
+    var isAdmin = User.IsInRole("Admin");
     List<Game>? games = ViewBag.Games as List<Game>;
 }
 
@@ -19,32 +19,38 @@
 <div class="row">
     @foreach (var account in Model)
     {
-        <div class="col-md-3">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">@account.Name</h5>
-                    <p class="card-text">Platform: @(account.accountPlatform != null ? account.accountPlatform.Name : "Unknown")</p>
-                    <p class="card-text">Main Image: <img src="~/@Url.Content(account.MainImage)" class="img-fluid" alt="Main Image" /></p>
-                    <ul class="list-group list-group-flush bg-white">
-                        <li class="list-group-item text-dark">
-                            Games:
-                            <ul class="list-unstyled">
-                                @foreach (var game in account.Games)
-                                {
-                                    <li class="text-dark">@game.Name</li>
-                                }
-                            </ul>
-                        </li>
-                    </ul>
-
-                    @if (account.userId.ToString() == currentUserId)
-                    {
-                        <a href="@Url.Action("Delete", "GameAccount", new { id = account.Id })" class="btn btn-danger">Delete</a>
-                        <a href="@Url.Action("Edit", "GameAccount", new { id = account.Id })" class="btn btn-warning">Edit</a>
-                    }
+        @if (account.userId.ToString() == currentUserId || isAdmin)
+        {
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">@account.Name</h5>
+                        <p class="card-text">Platform: @(account.accountPlatform != null ? account.accountPlatform.Name : "Unknown")</p>
+                        <p class="card-text">Main Image: <img src="~/@Url.Content(account.MainImage)" class="img-fluid" alt="Main Image" /></p>
+                        <ul class="list-group list-group-flush bg-white">
+                            <li class="list-group-item text-dark">
+                                Games:
+                                <ul class="list-unstyled">
+                                    @foreach (var game in account.Games)
+                                    {
+                                        <li class="text-dark">@game.Name</li>
+                                    }
+                                </ul>
+                            </li>
+                        </ul>
+                        @if (isAdmin)
+                        {
+                            <a href="@Url.Action("Delete", "GameAccount", new { id = account.Id })" class="btn btn-danger">Delete</a>
+                            <a href="@Url.Action("Edit", "GameAccount", new { id = account.Id })" class="btn btn-warning">Edit</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Delete", "GameAccount", new { id = account.Id })" class="btn btn-danger">Delete</a>
+                            <a href="@Url.Action("Edit", "GameAccount", new { id = account.Id })" class="btn btn-warning">Edit</a>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     }
-    
 </div>

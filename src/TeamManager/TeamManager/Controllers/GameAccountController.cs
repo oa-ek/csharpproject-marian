@@ -1,7 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using TeamManager.Core.Entities;
 using TeamManager.Repository.Common;
+using System.Security.Claims;
 
 namespace TeamManager.Controllers
 {
@@ -32,7 +39,6 @@ namespace TeamManager.Controllers
             return View(gameAccounts);
         }
 
-
         // GET: GameAccounts/Create
         public async Task<IActionResult> CreateAsync()
         {
@@ -48,6 +54,9 @@ namespace TeamManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                gameAccount.userId = Guid.Parse(currentUserId);
+
                 if (imageFile != null && imageFile.Length > 0)
                 {
                     var uploadsDir = Path.Combine(_environment.WebRootPath, "img");
@@ -72,8 +81,6 @@ namespace TeamManager.Controllers
                     }
                 }
 
-                gameAccount.userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
                 await _gameAccountRepository.CreateAsync(gameAccount);
                 return RedirectToAction(nameof(Index));
             }
@@ -83,7 +90,6 @@ namespace TeamManager.Controllers
 
             return View(gameAccount);
         }
-
 
         // GET: GameAccounts/Edit/5
         public async Task<IActionResult> Edit(Guid id)
@@ -113,18 +119,19 @@ namespace TeamManager.Controllers
             {
                 try
                 {
+                    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    gameAccount.userId = Guid.Parse(currentUserId);
+
                     var gameAccountToUpdate = await _gameAccountRepository.GetAsync(id);
                     if (gameAccountToUpdate == null)
                     {
                         return NotFound();
                     }
 
-                    // Оновлення властивостей моделі gameAccountToUpdate з отриманими з форми значеннями
                     gameAccountToUpdate.Name = gameAccount.Name;
                     gameAccountToUpdate.accountPlatformId = gameAccount.accountPlatformId;
-
-                    // Очистка списку ігор та додавання нових
                     gameAccountToUpdate.Games.Clear();
+
                     foreach (var gameId in Games)
                     {
                         if (!string.IsNullOrEmpty(gameId))
@@ -137,7 +144,6 @@ namespace TeamManager.Controllers
                         }
                     }
 
-                    // Перевірка і завантаження зображення, якщо воно було вибрано
                     if (imageFile != null && imageFile.Length > 0)
                     {
                         var uploadsDir = Path.Combine(_environment.WebRootPath, "img");
@@ -150,15 +156,12 @@ namespace TeamManager.Controllers
                         gameAccountToUpdate.MainImage = "img/" + uniqueFileName;
                     }
 
-                    // Оновлення моделі в репозиторії
                     await _gameAccountRepository.UpdateAsync(gameAccountToUpdate);
 
-                    // Перенаправлення на дію Index після успішного оновлення
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception)
                 {
-                    // Обробка винятку у разі невдачі оновлення
                     if (!GameAccountExists(gameAccount.Id))
                     {
                         return NotFound();
@@ -170,11 +173,20 @@ namespace TeamManager.Controllers
                 }
             }
 
-            // Якщо ModelState не є валідним, повертаємо форму знову з поточними значеннями
             ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
             return View(gameAccount);
         }
 
+        // GET: GameAccounts/Delete/5
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var gameAccount = await _gameAccountRepository.GetAsync(id);
+            if (gameAccount == null)
+            {
+                return NotFound();
+            }
+            return View(gameAccount);
+        }
 
         // POST: GameAccounts/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -187,7 +199,7 @@ namespace TeamManager.Controllers
 
         private bool GameAccountExists(Guid id)
         {
-            return true;
+            return _gameAccountRepository.GetAsync(id) != null;
         }
     }
 }

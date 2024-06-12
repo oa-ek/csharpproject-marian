@@ -5,11 +5,8 @@
 @{
     ViewData["Title"] = "List of advertisements to find";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
-@{
-    List<Game>? games = ViewBag.Games as List<Game>;
-    var currentUserId = ViewBag.CurrentUserId as string;
+    var currentUserId = ViewBag.CurrentUserId as Guid?;
 }
 
 <a href="@Url.Action("Create", "AdvertisementToFind")" class="btn btn-primary float-end">Add advertisements to find</a>
@@ -17,42 +14,76 @@
 <h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
 
 <div class="row">
-    @foreach (var advertisement in Model)
+    @if (User.IsInRole("Admin"))
     {
-        <div class="col-md-3">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">@advertisement.Name</h5>
-                    <p class="card-text">@advertisement.Description</p>
-                    <p class="card-text">Price: @advertisement.Price</p>
-                    <p class="card-text">Status: @(advertisement.IsActive ? "Active" : "Passive")</p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item text-dark bg-white">
-                            Games:
-                            <ul class="list-unstyled">
-                                @foreach (var game in advertisement.Games)
-                                {
-                                    <li class="text-dark">@game.Name</li>
-                                }
-                            </ul>
-                        </li>
-                    </ul>
-
-                    @if (advertisement.userId.ToString() == currentUserId)
-                    {
-                        <a href="@Url.Action("Edit", "AdvertisementToFind", new { id = advertisement.Id })" class="btn btn-warning">Редагувати</a>
-                        <a href="@Url.Action("Delete", "AdvertisementToFind", new { id = advertisement.Id })" class="btn btn-danger">Видалити</a>
-                    }
-
-                    @* @if (advertisement.userId.ToString() != currentUserId)
-                    {
-                        <form asp-action="JoinGroup" asp-controller="AdvertisementToFind" method="post" class="d-inline">
-                            <input type="hidden" name="id" value="@advertisement.Id" />
-                            <button type="submit" class="btn btn-success">Приєднатися до групи</button>
-                        </form>
-                    } *@
+        <!-- Адміністратор має повний доступ до всіх оголошень -->
+        @foreach (var advertisement in Model)
+        {
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">@advertisement.Name</h5>
+                        <p class="card-text">@advertisement.Description</p>
+                        <p class="card-text">Price: @advertisement.Price</p>
+                        <p class="card-text">Status: @(advertisement.IsActive ? "Active" : "Passive")</p>
+                        <p class="card-text">Group: @advertisement.userGroup.Name</p> <!-- Додали виведення назви групи -->
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-dark bg-white">
+                                Games:
+                                <ul class="list-unstyled">
+                                    @foreach (var game in advertisement.Games)
+                                    {
+                                        <li class="text-dark">@game.Name</li>
+                                    }
+                                </ul>
+                            </li>
+                        </ul>
+                        <a href="@Url.Action("Edit", "AdvertisementToFind", new { id = advertisement.Id })" class="btn btn-warning">Edit</a>
+                        <a href="@Url.Action("Delete", "AdvertisementToFind", new { id = advertisement.Id })" class="btn btn-danger">Delete</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+    }
+    else
+    {
+        <!-- Користувачі без ролі адміністратора мають обмежений доступ -->
+        @foreach (var advertisement in Model)
+        {
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">@advertisement.Name</h5>
+                        <p class="card-text">@advertisement.Description</p>
+                        <p class="card-text">Price: @advertisement.Price</p>
+                        <p class="card-text">Status: @(advertisement.IsActive ? "Active" : "Passive")</p>
+                        <p class="card-text">Group: @advertisement.userGroup.Name</p> <!-- Додали виведення назви групи -->
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-dark bg-white">
+                                Games:
+                                <ul class="list-unstyled">
+                                    @foreach (var game in advertisement.Games)
+                                    {
+                                        <li class="text-dark">@game.Name</li>
+                                    }
+                                </ul>
+                            </li>
+                        </ul>
+                        @if (advertisement.userId == currentUserId)
+                        {
+                            <a href="@Url.Action("Edit", "AdvertisementToFind", new { id = advertisement.Id })" class="btn btn-warning">Edit</a>
+                            <a href="@Url.Action("Delete", "AdvertisementToFind", new { id = advertisement.Id })" class="btn btn-danger">Delete</a>
+                        }
+                        else
+                        {
+                            <form asp-action="JoinGroup" asp-controller="AdvertisementToFind" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@advertisement.Id" />
+                                <button type="submit" class="btn btn-success">Join Group</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
     }
 </div>

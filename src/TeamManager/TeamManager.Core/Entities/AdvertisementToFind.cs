@@ -14,6 +14,11 @@ namespace TeamManager.Core.Entities
         public Guid? userId { get; set; }
         public bool IsActive { get; set; }
         public virtual ICollection<Game> Games { get; set; } = new HashSet<Game>();
+        public virtual UserGroup? userGroup { get; set; }
+
+        [ForeignKey(nameof(userGroup))]
+
+        public Guid? userGroupId { get; set; }
 
     }
 }

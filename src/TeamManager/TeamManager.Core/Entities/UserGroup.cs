@@ -12,5 +12,10 @@ namespace TeamManager.Core.Entities
         public string MainImage { get; set; } = $"img\\noPhoto.jpg";
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
+        public virtual AdvertisementToFind? advertisementToFind { get; set; }
+
+        [ForeignKey(nameof(advertisementToFind))]
+
+        public Guid? advertisementToFindId { get; set; }
     }
 }

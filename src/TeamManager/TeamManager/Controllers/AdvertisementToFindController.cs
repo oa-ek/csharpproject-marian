@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using TeamManager.Core.Entities;
 using TeamManager.Repository.Common;
@@ -16,46 +15,63 @@ namespace TeamManager.Controllers
         private readonly IRepository<AdvertisementToFind, Guid> _advertisementToFindRepository;
         private readonly IRepository<Game, Guid> _gameRepository;
         private readonly UserManager<User> _userManager;
+        private readonly IRepository<UserGroup, Guid> _userGroupRepository;
 
         public AdvertisementToFindController(
             IRepository<AdvertisementToFind, Guid> advertisementToFindRepository,
             IRepository<Game, Guid> gameRepository,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            IRepository<UserGroup, Guid> userGroupRepository)
         {
             _advertisementToFindRepository = advertisementToFindRepository;
             _gameRepository = gameRepository;
             _userManager = userManager;
+            _userGroupRepository = userGroupRepository;
         }
 
+        // GET: AdvertisementToFind
         public async Task<IActionResult> Index()
         {
-            var advertisementsToFind = await _advertisementToFindRepository.GetAllAsync();
-            ViewBag.CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return View(advertisementsToFind);
-        }
+            var advertisementToFind = await _advertisementToFindRepository.GetAllAsync();
+            var currentUser = await _userManager.GetUserAsync(User);
+            ViewBag.CurrentUserId = currentUser?.Id;
 
+            return View(advertisementToFind);
+        }
 
         // GET: AdvertisementToFind/Create
         public async Task<IActionResult> CreateAsync()
         {
             ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
+            ViewBag.UserGroups = (await _userGroupRepository.GetAllAsync()).ToList(); // Додайте цей рядок для передачі списку груп користувачів в ViewBag
             return View(new AdvertisementToFind());
         }
+
 
         // POST: AdvertisementToFind/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AdvertisementToFind advertisementToFind, List<Guid> selectedGameIds)
+        public async Task<IActionResult> Create(AdvertisementToFind advertisementToFind, string[] Games)
         {
             if (ModelState.IsValid)
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                advertisementToFind.userId = Guid.Parse(userId);
-
-                if (selectedGameIds != null && selectedGameIds.Count > 0)
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser != null)
                 {
-                    var selectedGames = await _gameRepository.GetAllAsync();
-                    advertisementToFind.Games = selectedGames.Where(g => selectedGameIds.Contains(g.Id)).ToList();
+                    advertisementToFind.User = currentUser;
+                    advertisementToFind.userId = currentUser.Id;
+                }
+
+                foreach (var gameId in Games)
+                {
+                    if (!string.IsNullOrEmpty(gameId))
+                    {
+                        var game = await _gameRepository.GetAsync(Guid.Parse(gameId));
+                        if (game != null)
+                        {
+                            advertisementToFind.Games.Add(game);
+                        }
+                    }
                 }
 
                 await _advertisementToFindRepository.CreateAsync(advertisementToFind);
@@ -64,9 +80,6 @@ namespace TeamManager.Controllers
             ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
             return View(advertisementToFind);
         }
-
-        // GET: AdvertisementToFind/Index
-
 
         // GET: AdvertisementToFind/Edit/5
         public async Task<IActionResult> Edit(Guid id)
@@ -166,7 +179,7 @@ namespace TeamManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> JoinGroup(Guid id)
+        public async Task<IActionResult> JoinGroup(Guid id, Guid groupId)
         {
             var advertisement = await _advertisementToFindRepository.GetAsync(id);
             if (advertisement == null)
@@ -180,15 +193,19 @@ namespace TeamManager.Controllers
                 return Forbid();
             }
 
-            advertisement.User?.UserGroups.Add(new UserGroup
-            {
-                Name = $"Group for {advertisement.Name}",
-                Description = $"Group created from advertisement {advertisement.Name}",
-                Users = new List<User> { currentUser }
-            });
+            var userGroup = await _userGroupRepository.GetAsync(groupId); // Отримати групу за її Id
 
-            await _advertisementToFindRepository.UpdateAsync(advertisement);
+            if (userGroup == null)
+            {
+                return NotFound("Group not found");
+            }
+
+            userGroup.Users.Add(currentUser); // Додати користувача до групи
+
+            await _userGroupRepository.UpdateAsync(userGroup); // Оновити групу в репозиторії
+
             return RedirectToAction(nameof(Index));
         }
+
     }
 }

@@ -75,8 +75,8 @@ namespace TeamManager.Core.Contrext
             };
 
             PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
-            user.PasswordHash = passwordHasher.HashPassword(user, "123456");
-            admin.PasswordHash = passwordHasher.HashPassword(admin, "123456");
+            user.PasswordHash = passwordHasher.HashPassword(user, "Pr0#et1n1t");
+            admin.PasswordHash = passwordHasher.HashPassword(admin, "Pr0#et1n1t");
 
             builder.Entity<User>()
                 .HasData(admin,user);
