@@ -61,13 +61,14 @@
                             <button type="submit" class="card-link btn btn-danger">Delete</button>
                         </form>
                     }
-                    else
+                    else if (item.userId.HasValue && ViewBag.UserEmails.ContainsKey(item.userId.Value))
+                   
                     {
-                        <p class="text-muted">You do not have permission to edit or delete this advertisement.</p>
+                    var userEmail = ViewBag.UserEmails[item.userId.Value];
+                    <a href="mailto:@userEmail" class="btn btn-secondary">Want to buy</a>
                     }
                 </div>
             </div>
         </div>
     }
-
 </div>

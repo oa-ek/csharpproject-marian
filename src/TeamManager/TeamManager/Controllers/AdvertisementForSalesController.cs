@@ -43,6 +43,23 @@ namespace TeamManager.Controllers
             var advertisements = await _advertisementRepository.GetAllAsync();
             ViewBag.CurrentUserId = currentUser?.Id;
 
+            var userEmails = new Dictionary<Guid, string>();
+            var userIds = advertisements.Select(a => a.userId).Distinct();
+
+            foreach (var userIdNullable in userIds)
+            {
+                if (userIdNullable.HasValue)
+                {
+                    var userId = userIdNullable.Value;
+                    var user = await _userManager.FindByIdAsync(userId.ToString());
+                    if (user != null)
+                    {
+                        userEmails.Add(userId, user.Email);
+                    }
+                }
+            }
+
+            ViewBag.UserEmails = userEmails;
             return View(advertisements);
         }
 
