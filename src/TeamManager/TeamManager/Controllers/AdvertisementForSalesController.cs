@@ -1,39 +1,58 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using TeamManager.Core.Entities;
 using TeamManager.Repository.Common;
 
 namespace TeamManager.Controllers
 {
+    [Authorize]
     public class AdvertisementForSalesController : Controller
     {
-        private readonly IRepository<AdvertisementForSales, Guid> _advertisementForSalesRepository;
+        private readonly IRepository<AdvertisementForSales, Guid> _advertisementRepository;
         private readonly IRepository<GameAccount, Guid> _gameAccountRepository;
         private readonly IRepository<AdvertisementStatus, Guid> _advertisementStatusRepository;
+        private readonly UserManager<User> _userManager;
         private readonly IWebHostEnvironment _environment;
 
         public AdvertisementForSalesController(
-            IRepository<AdvertisementForSales, Guid> advertisementForSalesRepository,
+            IRepository<AdvertisementForSales, Guid> advertisementRepository,
             IRepository<GameAccount, Guid> gameAccountRepository,
             IRepository<AdvertisementStatus, Guid> advertisementStatusRepository,
+            UserManager<User> userManager,
             IWebHostEnvironment environment)
         {
-            _advertisementForSalesRepository = advertisementForSalesRepository;
+            _advertisementRepository = advertisementRepository;
             _gameAccountRepository = gameAccountRepository;
             _advertisementStatusRepository = advertisementStatusRepository;
+            _userManager = userManager;
             _environment = environment;
         }
 
         // GET: AdvertisementForSales
         public async Task<IActionResult> Index()
         {
-            var advertisementsForSales = await _advertisementForSalesRepository.GetAllAsync();
-            return View(advertisementsForSales);
+            var currentUser = await _userManager.GetUserAsync(User);
+            var advertisements = await _advertisementRepository.GetAllAsync();
+            ViewBag.CurrentUserId = currentUser?.Id;
+
+            return View(advertisements);
         }
 
         // GET: AdvertisementForSales/Create
         public async Task<IActionResult> CreateAsync()
         {
-            ViewBag.GameAccounts = (await _gameAccountRepository.GetAllAsync()).ToList();
+            var currentUser = await _userManager.GetUserAsync(User);
+            var gameAccounts = await _gameAccountRepository.GetAllAsync();
+
+            ViewBag.GameAccounts = gameAccounts.ToList();
             ViewBag.AdvertisementStatuses = (await _advertisementStatusRepository.GetAllAsync()).ToList();
 
             return View(new AdvertisementForSales());
@@ -42,64 +61,73 @@ namespace TeamManager.Controllers
         // POST: AdvertisementForSales/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AdvertisementForSales advertisementForSales, IFormFile imageFile, string gameAccountId, string advertisementStatusId)
+        public async Task<IActionResult> Create(AdvertisementForSales advertisement, IFormFile imageFile, string advertisementStatusId)
         {
             if (ModelState.IsValid)
             {
-                if (imageFile != null && imageFile.Length > 0)
+                var currentUser = await _userManager.GetUserAsync(User);
+                advertisement.User = currentUser;
+                advertisement.userId = currentUser.Id;
+
+                if (imageFile != null)
                 {
-                    var uploadsDir = Path.Combine(_environment.WebRootPath, "img");
-                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
-                    var filePath = Path.Combine(uploadsDir, uniqueFileName);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await imageFile.CopyToAsync(fileStream);
-                    }
-                    advertisementForSales.MainImage = "img/" + uniqueFileName;
-                }
-                if (!string.IsNullOrEmpty(gameAccountId))
-                {
-                    var gameAccount = await _gameAccountRepository.GetAsync(Guid.Parse(gameAccountId));
-                    if (gameAccount != null)
-                    {
-                        advertisementForSales.gameAccount = gameAccount;
-                    }
-                }
-                if (!string.IsNullOrEmpty(advertisementStatusId))
-                {
-                    var advertisementStatus = await _advertisementStatusRepository.GetAsync(Guid.Parse(advertisementStatusId));
-                    if (advertisementStatus != null)
-                    {
-                        advertisementForSales.advertisementStatus = advertisementStatus;
-                    }
+                    advertisement.MainImage = await SaveImageAsync(imageFile);
                 }
 
-                await _advertisementForSalesRepository.CreateAsync(advertisementForSales);
+                await _advertisementRepository.CreateAsync(advertisement);
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(advertisementForSales);
+            if (!string.IsNullOrEmpty(advertisementStatusId))
+            {
+                var advertisementStatus = await _advertisementStatusRepository.GetAsync(Guid.Parse(advertisementStatusId));
+                if (advertisementStatus != null)
+                {
+                    advertisement.advertisementStatus = advertisementStatus;
+                }
+            }
+
+            var gameAccounts = await _gameAccountRepository.GetAllAsync();
+            var advertisementStatuses = await _advertisementStatusRepository.GetAllAsync();
+
+            ViewBag.GameAccounts = gameAccounts.ToList();
+            ViewBag.AdvertisementStatuses = advertisementStatuses.ToList();
+
+            return View(advertisement);
         }
 
         // GET: AdvertisementForSales/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
-            var advertisementForSales = await _advertisementForSalesRepository.GetAsync(id);
-            if (advertisementForSales == null)
+            var advertisement = await _advertisementRepository.GetAsync(id);
+
+            if (advertisement == null)
             {
                 return NotFound();
             }
-            ViewBag.GameAccounts = (await _gameAccountRepository.GetAllAsync()).ToList();
-            ViewBag.AdvertisementStatuses = (await _advertisementStatusRepository.GetAllAsync()).ToList();
 
-            return View(advertisementForSales);
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (advertisement.userId != currentUser.Id && !User.IsInRole("Admin"))
+            {
+                return Forbid();
+            }
+
+            var gameAccounts = await _gameAccountRepository.GetAllAsync();
+            var advertisementStatuses = await _advertisementStatusRepository.GetAllAsync();
+
+            ViewBag.GameAccounts = gameAccounts.ToList();
+            ViewBag.AdvertisementStatuses = advertisementStatuses.ToList();
+
+            return View(advertisement);
         }
 
         // POST: AdvertisementForSales/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, AdvertisementForSales advertisementForSales, IFormFile imageFile, string gameAccountId, string advertisementStatusId)
+        public async Task<IActionResult> Edit(Guid id, AdvertisementForSales advertisement, IFormFile imageFile)
         {
-            if (id != advertisementForSales.Id)
+            if (id != advertisement.Id)
             {
                 return NotFound();
             }
@@ -108,35 +136,39 @@ namespace TeamManager.Controllers
             {
                 try
                 {
-                    if (imageFile != null && imageFile.Length > 0)
+                    var existingAdvertisement = await _advertisementRepository.GetAsync(id);
+
+                    if (existingAdvertisement == null)
                     {
-                        var uploadsDir = Path.Combine(_environment.WebRootPath, "img");
-                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
-                        var filePath = Path.Combine(uploadsDir, uniqueFileName);
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await imageFile.CopyToAsync(fileStream);
-                        }
-                        advertisementForSales.MainImage = "img/" + uniqueFileName;
+                        return NotFound();
                     }
 
-                    var gameAccount = await _gameAccountRepository.GetAsync(Guid.Parse(gameAccountId));
-                    if (gameAccount != null)
+                    var currentUser = await _userManager.GetUserAsync(User);
+
+                    if (existingAdvertisement.userId != currentUser.Id && !User.IsInRole("Admin"))
                     {
-                        advertisementForSales.gameAccount = gameAccount;
+                        return Forbid();
                     }
 
-                    var advertisementStatus = await _advertisementStatusRepository.GetAsync(Guid.Parse(advertisementStatusId));
-                    if (advertisementStatus != null)
+                    existingAdvertisement.Name = advertisement.Name;
+                    existingAdvertisement.Description = advertisement.Description;
+                    existingAdvertisement.Price = advertisement.Price;
+                    existingAdvertisement.IsActive = advertisement.IsActive;
+                    existingAdvertisement.gameAccountId = advertisement.gameAccountId;
+                    existingAdvertisement.advertisementStatusId = advertisement.advertisementStatusId;
+
+                    if (imageFile != null)
                     {
-                        advertisementForSales.advertisementStatus = advertisementStatus;
+                        existingAdvertisement.MainImage = await SaveImageAsync(imageFile);
                     }
 
-                    await _advertisementForSalesRepository.UpdateAsync(advertisementForSales);
+                    await _advertisementRepository.UpdateAsync(existingAdvertisement);
+
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (Exception)
+                catch (DbUpdateConcurrencyException)
                 {
-                    if (!AdvertisementExists(advertisementForSales.Id))
+                    if (!AdvertisementExists(advertisement.Id))
                     {
                         return NotFound();
                     }
@@ -145,23 +177,35 @@ namespace TeamManager.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewBag.GameAccounts = (await _gameAccountRepository.GetAllAsync()).ToList();
-            ViewBag.AdvertisementStatuses = (await _advertisementStatusRepository.GetAllAsync()).ToList();
 
-            return View(advertisementForSales);
+            var gameAccounts = await _gameAccountRepository.GetAllAsync();
+            var advertisementStatuses = await _advertisementStatusRepository.GetAllAsync();
+
+            ViewBag.GameAccounts = gameAccounts.ToList();
+            ViewBag.AdvertisementStatuses = advertisementStatuses.ToList();
+
+            return View(advertisement);
         }
 
         // GET: AdvertisementForSales/Delete/5
         public async Task<IActionResult> Delete(Guid id)
         {
-            var advertisementForSales = await _advertisementForSalesRepository.GetAsync(id);
-            if (advertisementForSales == null)
+            var advertisement = await _advertisementRepository.GetAsync(id);
+
+            if (advertisement == null)
             {
                 return NotFound();
             }
-            return View(advertisementForSales);
+
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (advertisement.userId != currentUser.Id && !User.IsInRole("Admin"))
+            {
+                return Forbid();
+            }
+
+            return View(advertisement);
         }
 
         // POST: AdvertisementForSales/Delete/5
@@ -169,13 +213,42 @@ namespace TeamManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            await _advertisementForSalesRepository.DeleteAsync(id);
+            var advertisement = await _advertisementRepository.GetAsync(id);
+
+            if (advertisement == null)
+            {
+                return NotFound();
+            }
+
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (advertisement.userId != currentUser.Id && !User.IsInRole("Admin"))
+            {
+                return Forbid();
+            }
+
+            await _advertisementRepository.DeleteAsync(id);
+
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<string> SaveImageAsync(IFormFile imageFile)
+        {
+            string uploadsFolder = Path.Combine(_environment.WebRootPath, "img");
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(imageFile.FileName);
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(fileStream);
+            }
+
+            return $"img/{uniqueFileName}";
         }
 
         private bool AdvertisementExists(Guid id)
         {
-            return true;
+            return _advertisementRepository.GetAsync(id) != null;
         }
     }
 }

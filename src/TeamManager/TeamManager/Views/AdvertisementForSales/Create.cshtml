@@ -1,73 +1,50 @@
-﻿@using TeamManager.Core.Entities
-@model TeamManager.Core.Entities.AdvertisementForSales
+﻿@model TeamManager.Core.Entities.AdvertisementForSales
 
 @{
-    ViewData["Title"] = "Create Advertisement For Sales";
+    ViewData["Title"] = "Create Advertisement";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    List<GameAccount>? gameAccounts = ViewBag.GameAccounts as List<GameAccount>;
-    List<AdvertisementStatus>? advertisementStatuses = ViewBag.AdvertisementStatuses as List<AdvertisementStatus>;
 }
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="Create" method="post" enctype="multipart/form-data">
+<form asp-action="Create" enctype="multipart/form-data" method="post">
     <div class="form-group">
-        <label asp-for="Name"></label>
+        <label asp-for="Name" class="control-label"></label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Description"></label>
+        <label asp-for="Description" class="control-label"></label>
         <textarea asp-for="Description" class="form-control"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Price">Price</label>
-        <div class="input-group">
-            <span class="input-group-text">$</span>
-            <input asp-for="Price" type="number" class="form-control" min="0" step="1" />
-        </div>
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" />
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
-
     <div class="form-group">
-        <label>Main Image:</label>
-        <input type="file" name="ImageFile" class="form-control-file" />
-        <span asp-validation-for="ImageFile" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="gameAccountId">Select Game Account:</label>
-        <select asp-for="gameAccountId" class="form-control">
-            <option value="">Select Game Account</option>
-            @foreach (var game in gameAccounts)
-            {
-                <option value="@game.Id">@game.Name</option>
-            }
-        </select>
+        <label asp-for="gameAccountId" class="control-label">Game Account</label>
+        <select asp-for="gameAccountId" class="form-control" asp-items="@(new SelectList(ViewBag.GameAccounts, "Id", "Name"))"></select>
         <span asp-validation-for="gameAccountId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label>Select Advertisement Status:</label>
-        <select asp-for="advertisementStatusId" class="form-control">
-            <option value="">Select Advertisement Status</option>
-            @foreach (var status in advertisementStatuses)
-            {
-                <option value="@status.Id">@status.Name</option>
-            }
-        </select>
+        <label asp-for="advertisementStatusId" class="control-label">Advertisement Status</label>
+        <select asp-for="advertisementStatusId" class="form-control" asp-items="@(new SelectList(ViewBag.AdvertisementStatuses, "Id", "Name"))"></select>
         <span asp-validation-for="advertisementStatusId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label>
-            <input asp-for="IsActive" type="checkbox" /> Is Active
-        </label>
+        <label asp-for="ImageFile" class="control-label">Image</label>
+        <input asp-for="ImageFile" type="file" class="form-control" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
 </form>
 
-<script>
-    function updatePriceValue(value) {
-        document.getElementById('priceValue').textContent = value;
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-</script>
+}

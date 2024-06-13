@@ -9,6 +9,9 @@
 @{
     List<GameAccount>? gameAccounts = ViewBag.GameAccounts as List<GameAccount>;
     List<AdvertisementStatus>? advertisementStatuses = ViewBag.AdvertisementStatuses as List<AdvertisementStatus>;
+
+    var currentUserId = ViewBag.CurrentUserId as Guid?; // Assuming you set ViewBag.CurrentUserId in your controller
+    var isAdmin = User.IsInRole("Admin");
 }
 
 <a href="@Url.Action("Create", "AdvertisementForSales")" class="btn btn-primary float-end">Create New</a>
@@ -45,15 +48,23 @@
                     }
                     @if (item.advertisementStatus != null)
                     {
-                        <li class="list-group-item text-dark">Status: @item.advertisementStatus</li>
+                        <li class="list-group-item text-dark">Status: @item.advertisementStatus.Name</li>
                     }
+
                 </ul>
 
                 <div class="card-body">
-                    <a href="@Url.Action("Edit", "AdvertisementForSales", new { id = item.Id })" class="card-link btn btn-warning">Edit</a>
-                    <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this item?');" class="d-inline">
-                        <button type="submit" class="card-link btn btn-danger">Delete</button>
-                    </form>
+                    @if (item.userId == currentUserId || isAdmin)
+                    {
+                        <a href="@Url.Action("Edit", "AdvertisementForSales", new { id = item.Id })" class="card-link btn btn-warning">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this item?');" class="d-inline">
+                            <button type="submit" class="card-link btn btn-danger">Delete</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <p class="text-muted">You do not have permission to edit or delete this advertisement.</p>
+                    }
                 </div>
             </div>
         </div>
