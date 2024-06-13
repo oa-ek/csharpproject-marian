@@ -39,6 +39,7 @@ namespace TeamManager.Controllers
         {
             var currentUserId = GetCurrentUserId();
             var isAdmin = User.IsInRole("Admin");
+
             IEnumerable<UserGroup> userGroups;
 
             if (isAdmin)
@@ -47,12 +48,16 @@ namespace TeamManager.Controllers
             }
             else
             {
-                userGroups = (await _userGroupRepository.GetAllAsync())
-                              .Where(ug => ug.Users.Any(m => m.Id == Guid.Parse(currentUserId)));
+                userGroups = await _userGroupRepository.GetAllAsync();
+                userGroups = userGroups.Where(ug => ug.Users.Any(u => u.Id == Guid.Parse(currentUserId)));
             }
+
+            ViewBag.CurrentUserId = currentUserId;
+            ViewBag.IsAdmin = isAdmin;
 
             return View(userGroups);
         }
+
 
         // GET: UserGroups/Create
         public IActionResult Create()
@@ -67,6 +72,19 @@ namespace TeamManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Отримуємо поточного користувача
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser == null)
+                {
+                    return NotFound("Current user not found.");
+                }
+
+                // Додаємо поточного користувача до групи (якщо його ще немає в списку)
+                if (!userGroup.Users.Any(u => u.Id == currentUser.Id))
+                {
+                    userGroup.Users.Add(currentUser);
+                }
+
                 if (imageFile != null && imageFile.Length > 0)
                 {
                     var uploadsDir = Path.Combine(_environment.WebRootPath, "img");
@@ -87,14 +105,17 @@ namespace TeamManager.Controllers
             return View(userGroup);
         }
 
+
         // GET: UserGroups/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
             var userGroup = await _userGroupRepository.GetAsync(id);
-            if (userGroup == null || (!User.IsInRole("Admin") && !userGroup.Users.Any(m => m.Id == Guid.Parse(GetCurrentUserId()))))
+            if (userGroup == null)
             {
                 return NotFound();
             }
+
+            ViewBag.CurrentUserId = GetCurrentUserId();
 
             return View(userGroup);
         }
@@ -111,9 +132,8 @@ namespace TeamManager.Controllers
 
             if (ModelState.IsValid)
             {
-                var currentUserId = GetCurrentUserId();
                 var userGroupToUpdate = await _userGroupRepository.GetAsync(id);
-                if (userGroupToUpdate == null || (!User.IsInRole("Admin") && !userGroupToUpdate.Users.Any(m => m.Id == Guid.Parse(currentUserId))))
+                if (userGroupToUpdate == null)
                 {
                     return NotFound();
                 }
@@ -138,6 +158,8 @@ namespace TeamManager.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            ViewBag.CurrentUserId = GetCurrentUserId();
+
             return View(userGroup);
         }
 
@@ -145,10 +167,13 @@ namespace TeamManager.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var userGroup = await _userGroupRepository.GetAsync(id);
-            if (userGroup == null || (!User.IsInRole("Admin") && !userGroup.Users.Any(m => m.Id == Guid.Parse(GetCurrentUserId()))))
+            if (userGroup == null)
             {
                 return NotFound();
             }
+
+            ViewBag.CurrentUserId = GetCurrentUserId();
+
             return View(userGroup);
         }
 
@@ -158,7 +183,7 @@ namespace TeamManager.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var userGroup = await _userGroupRepository.GetAsync(id);
-            if (userGroup == null || (!User.IsInRole("Admin") && !userGroup.Users.Any(m => m.Id == Guid.Parse(GetCurrentUserId()))))
+            if (userGroup == null)
             {
                 return NotFound();
             }

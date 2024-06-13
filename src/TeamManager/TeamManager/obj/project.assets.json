@@ -8825,11 +8825,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\TeamManager.csproj",
+      "projectUniqueName": "D:\\GitHub\\TeamManager\\csharpproject-marian\\src\\TeamManager\\TeamManager\\TeamManager.csproj",
       "projectName": "TeamManager",
-      "projectPath": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\TeamManager.csproj",
+      "projectPath": "D:\\GitHub\\TeamManager\\csharpproject-marian\\src\\TeamManager\\TeamManager\\TeamManager.csproj",
       "packagesPath": "C:\\Users\\Home\\.nuget\\packages\\",
-      "outputPath": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager\\obj\\",
+      "outputPath": "D:\\GitHub\\TeamManager\\csharpproject-marian\\src\\TeamManager\\TeamManager\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Home\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -8847,11 +8847,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager.Core\\TeamManager.Core.csproj": {
-              "projectPath": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager.Core\\TeamManager.Core.csproj"
+            "D:\\GitHub\\TeamManager\\csharpproject-marian\\src\\TeamManager\\TeamManager.Core\\TeamManager.Core.csproj": {
+              "projectPath": "D:\\GitHub\\TeamManager\\csharpproject-marian\\src\\TeamManager\\TeamManager.Core\\TeamManager.Core.csproj"
             },
-            "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager.Repository\\TeamManager.Repository.csproj": {
-              "projectPath": "D:\\GitHub\\csharpproject-marian\\src\\TeamManager\\TeamManager.Repository\\TeamManager.Repository.csproj"
+            "D:\\GitHub\\TeamManager\\csharpproject-marian\\src\\TeamManager\\TeamManager.Repository\\TeamManager.Repository.csproj": {
+              "projectPath": "D:\\GitHub\\TeamManager\\csharpproject-marian\\src\\TeamManager\\TeamManager.Repository\\TeamManager.Repository.csproj"
             }
           }
         }

@@ -1,4 +1,4 @@
-﻿@using System.Security.Claims
+﻿@using System
 @model IEnumerable<TeamManager.Core.Entities.UserGroup>
 
 @{
@@ -35,16 +35,10 @@
                             <li class="list-group-item">No members in this group</li>
                         }
                     </ul>
-                    <a href="@Url.Action("Edit", new { id = userGroup.Id })" class="btn btn-warning">Edit</a>
-                    <a href="@Url.Action("Delete", new { id = userGroup.Id })" class="btn btn-danger">Delete</a>
-
-                    @* Додано кнопку "Вийти з групи" *@
-                    @if (!userGroup.Users.Any(u => u.Id == Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))))
+                    @if ((bool)ViewBag.IsAdmin || userGroup.Users.Any(u => u.Id == new Guid(ViewBag.CurrentUserId)))
                     {
-                        <form asp-action="LeaveGroup" method="post" class="d-inline">
-                            <input type="hidden" name="id" value="@userGroup.Id" />
-                            <button type="submit" class="btn btn-secondary">Leave Group</button>
-                        </form>
+                        <a href="@Url.Action("Edit", new { id = userGroup.Id })" class="btn btn-warning">Edit</a>
+                        <a href="@Url.Action("Delete", new { id = userGroup.Id })" class="btn btn-danger">Delete</a>
                     }
                 </div>
             </div>
