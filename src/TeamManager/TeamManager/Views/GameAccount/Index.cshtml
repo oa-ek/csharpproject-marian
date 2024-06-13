@@ -12,6 +12,13 @@
     List<Game>? games = ViewBag.Games as List<Game>;
 }
 
+<form asp-controller="GameAccount" asp-action="Index" method="get">
+    <div class="input-group mb-3">
+        <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" class="form-control" placeholder="Search by filter" />
+        <button class="btn btn-outline-secondary m-0" type="submit">Search</button>
+    </div>
+</form>
+
 <a href="@Url.Action("Create", "GameAccount")" class="btn btn-primary float-end">Add Game Account</a>
 
 <h2 class="mt-3 mb-3">@ViewData["Title"]</h2>

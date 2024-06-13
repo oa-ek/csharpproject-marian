@@ -37,14 +37,19 @@ namespace TeamManager.Controllers
         }
 
         // GET: AdvertisementForSales
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm = null)
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var advertisements = await _advertisementRepository.GetAllAsync();
+            var advertisements = (await _advertisementRepository.GetAllAsync()).ToList();
             ViewBag.CurrentUserId = currentUser?.Id;
 
             var userEmails = new Dictionary<Guid, string>();
             var userIds = advertisements.Select(a => a.userId).Distinct();
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                advertisements = advertisements.Where(gf => gf.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            ViewBag.SearchTerm = searchTerm;
 
             foreach (var userIdNullable in userIds)
             {

@@ -37,7 +37,7 @@
     </div>
     <div class="mb-3">
         <label for="games">Select Games:</label>
-        <select id="games" class="form-select" name="selectedGameIds" multiple>
+        <select id="games" class="form-select" name="Games" multiple>
             @foreach (var game in games)
             {
                 <option value="@game.Id">@game.Name</option>
@@ -64,9 +64,5 @@
         $(function () {
             $("#games").select2();
         });
-
-        function updatePriceValue(value) {
-            document.getElementById('priceValue').textContent = value;
-        }
     </script>
 }

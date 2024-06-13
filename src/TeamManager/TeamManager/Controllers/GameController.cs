@@ -31,9 +31,16 @@ namespace TeamManager.Controllers
         }
 
         // GET: Projects
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm = null)
         {
-            var game = await _gameRepository.GetAllAsync();
+            var game = (await _gameRepository.GetAllAsync()).ToList();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                game = game.Where(gf => gf.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            ViewBag.SearchTerm = searchTerm;
+
             return View(game);
         }
 

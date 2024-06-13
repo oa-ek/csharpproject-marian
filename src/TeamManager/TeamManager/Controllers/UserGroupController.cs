@@ -35,7 +35,7 @@ namespace TeamManager.Controllers
         }
 
         // GET: UserGroups
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm = null)
         {
             var currentUserId = GetCurrentUserId();
             var isAdmin = User.IsInRole("Admin");
@@ -44,13 +44,20 @@ namespace TeamManager.Controllers
 
             if (isAdmin)
             {
-                userGroups = await _userGroupRepository.GetAllAsync();
+                userGroups = (await _userGroupRepository.GetAllAsync()).ToList();
             }
             else
             {
-                userGroups = await _userGroupRepository.GetAllAsync();
+                userGroups = (await _userGroupRepository.GetAllAsync()).ToList();
                 userGroups = userGroups.Where(ug => ug.Users.Any(u => u.Id == Guid.Parse(currentUserId)));
             }
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                userGroups = userGroups.Where(gf => gf.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            ViewBag.SearchTerm = searchTerm;
 
             ViewBag.CurrentUserId = currentUserId;
             ViewBag.IsAdmin = isAdmin;

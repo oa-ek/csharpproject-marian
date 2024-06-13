@@ -32,10 +32,17 @@ namespace TeamManager.Controllers
         }
 
         // GET: GameAccounts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm = null)
         {
-            var gameAccounts = await _gameAccountRepository.GetAllAsync();
+            var gameAccounts = (await _gameAccountRepository.GetAllAsync()).ToList();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                gameAccounts = gameAccounts.Where(gf => gf.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
             ViewBag.CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewBag.SearchTerm = searchTerm;
             return View(gameAccounts);
         }
 

@@ -30,11 +30,17 @@ namespace TeamManager.Controllers
         }
 
         // GET: AdvertisementToFind
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm = null)
         {
-            var advertisementToFind = await _advertisementToFindRepository.GetAllAsync();
+            var advertisementToFind = (await _advertisementToFindRepository.GetAllAsync()).ToList();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                advertisementToFind = advertisementToFind.Where(gf => gf.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
             var currentUser = await _userManager.GetUserAsync(User);
             ViewBag.CurrentUserId = currentUser?.Id;
+            ViewBag.SearchTerm = searchTerm;
 
             return View(advertisementToFind);
         }
@@ -43,10 +49,9 @@ namespace TeamManager.Controllers
         public async Task<IActionResult> CreateAsync()
         {
             ViewBag.Games = (await _gameRepository.GetAllAsync()).ToList();
-            ViewBag.UserGroups = (await _userGroupRepository.GetAllAsync()).ToList(); // Додайте цей рядок для передачі списку груп користувачів в ViewBag
+            ViewBag.UserGroups = (await _userGroupRepository.GetAllAsync()).ToList();
             return View(new AdvertisementToFind());
         }
-
 
         // POST: AdvertisementToFind/Create
         [HttpPost]
@@ -62,6 +67,7 @@ namespace TeamManager.Controllers
                     advertisementToFind.userId = currentUser.Id;
                 }
 
+                advertisementToFind.Games = new List<Game>();
                 foreach (var gameId in Games)
                 {
                     if (!string.IsNullOrEmpty(gameId))
@@ -203,10 +209,7 @@ namespace TeamManager.Controllers
             userGroup.Users.Add(currentUser);
             await _userGroupRepository.UpdateAsync(userGroup);
 
-            return Ok(); // Return OK status for the AJAX request
+            return Ok();
         }
-
-
-
     }
 }
